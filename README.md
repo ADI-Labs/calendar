@@ -18,8 +18,15 @@ To run the app, follow the these steps:
 vagrant ssh
 cd /vagrant
 source config/settings.dev
-cd calendar
-python calendar.py
+python run.py
+```
+
+To setup the database, run:
+```bash
+vagrant ssh
+cd /vagrant
+source config/settings.dev
+python create.py
 ```
 
 
