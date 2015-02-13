@@ -7,10 +7,11 @@ class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    location = db.String(64)
     start = db.Column(db.DateTime, nullable=False)
     end = db.Column(db.DateTime)
-    url = db.String()
+    location = db.Column(db.String(64))
+    url = db.Column(db.String(128), unique=True)
+    name = db.Column(db.String(128))
 
 class User(db.Model):
     __tablename__ = "user"
