@@ -21,9 +21,3 @@ class User(db.Model):
     events = db.relationship("Event", backref="user")
     # name = db.Column(db.String(64), unique=True)
     url = db.Column(db.String, unique=True)
-
-
-if __name__ == "__main__":
-    from run import app
-    with app.app_context():
-        db.create_all()
