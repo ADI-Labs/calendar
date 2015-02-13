@@ -1,9 +1,10 @@
 import datetime as dt
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, g, jsonify, render_template, json, request
 import flask.ext.whooshalchemy as whooshalchemy
 
-from cal.schema import db, Event
+
+from cal.schema import db, Event, User
 from cal.fb import update_fb_events
 from celery import Celery
 
@@ -61,7 +62,7 @@ def after_request(resp):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return "Page not found"
+    return jsonify(error="Page not found")
 
 
 @app.route('/')
@@ -86,3 +87,4 @@ def users():
 
     users = {event.user for event in events}    # use set to make users unique
     return jsonify(data=[user.to_json() for user in users])
+
