@@ -18,8 +18,8 @@ To run the app, follow the these steps:
 vagrant ssh
 cd /vagrant
 source config/settings.dev
-cd calendar
-python calendar.py
+cd cal
+python cal.py
 ```
 
 
