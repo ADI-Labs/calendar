@@ -27,6 +27,7 @@ vagrant ssh
 cd /vagrant
 source config/settings.dev
 python create.py
+=======
 ```
 
 
@@ -35,17 +36,11 @@ python create.py
 TODO
 
 
-
-
-
 ## Routes
 TODO
 
 
-
-
 ## Data Sources
-
 TODO
 
 # app structure
