@@ -15,7 +15,7 @@ def before_request():
 @app.after_request
 def after_request(resp):
     """ Do something after every request """
-    return
+    return resp
 
 
 @app.errorhandler(404)
