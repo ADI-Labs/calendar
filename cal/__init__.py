@@ -1,12 +1,14 @@
+from os import path
+
 from flask import Flask, g, jsonify, render_template, json, request
 from schema import db
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///events.db"
-db.init_app(app)
 
 # do import early to check that all env variables are present
 app.config.from_object('config.flask_config')
+
+db.init_app(app)
 
 # library imports here
 
@@ -36,7 +38,3 @@ def internal_error(e):
 @app.route('/')
 def home():
     return jsonify(message="Hello world!")
-
-
-if __name__ == '__main__':
-    app.run(host=app.config['HOST'])

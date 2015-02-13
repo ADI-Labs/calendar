@@ -18,8 +18,16 @@ To run the app, follow the these steps:
 vagrant ssh
 cd /vagrant
 source config/settings.dev
-cd cal
-python cal.py
+python run.py
+```
+
+To setup the database, run:
+```bash
+vagrant ssh
+cd /vagrant
+source config/settings.dev
+python create.py
+=======
 ```
 
 
@@ -28,17 +36,11 @@ python cal.py
 TODO
 
 
-
-
-
 ## Routes
 TODO
 
 
-
-
 ## Data Sources
-
 TODO
 
 # app structure
