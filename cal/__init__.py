@@ -1,11 +1,11 @@
 import datetime as dt
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, g, jsonify, render_template, json, request
 import flask.ext.whooshalchemy as whooshalchemy
-
-from cal.schema import db, Event
 from cal.fb import update_fb_events
 from celery import Celery
+from os import path
+from schema import db, Event
 
 # Initialize the app
 app = Flask(__name__)
