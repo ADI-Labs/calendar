@@ -1,20 +1,136 @@
 <!DOCTYPE html>
 <head>
 		<title>Columbia University Calendar</title>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" href={{ url_for('static', filename='bootstrap-3.3.2-dist/css/bootstrap.min.css') }}>
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
 </head>
 
 <body>
 	<div class="container main-body">
 		<h1> Columbia University Calendar</h1>
 	</div>
-	<ul id="days">
-		<li>Monday</li>
-		<li>Tuesday</li>
-		<li>Wednesday</li>
-		<li>Thursday</li>
-		<li>Friday</li>
-		<li>Saturday</li>
-		<li>Sunday</li>
-	</ul>
+	<div class="row">
+	<div class="col-md-10">
+	<table class="table table-bordered">
+ 		<tr>
+    		<td><h3>Monday</h3></td>
+    		<td><h3>Tuesday</h3></td> 
+    		<td><h3>Wednesday</h3></td>
+    		<td><h3>Thursday</h3></td>
+    		<td><h3>Friday</h3></td>
+    		<td><h3>Saturday</h3></td>
+    		<td><h3>Sunday</h3></td>
+  		</tr>
+  		<tr>
+    		<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+  		</tr>
+  		<tr>
+    		<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+			<td>
+    			<div class="event">
+					<p>Title</p>
+					<p>Location</p>
+					<p>Time</p>
+				</div>
+			</td>
+  		</tr>
+	</table>
+	</div>
+	<div class="col-md-2">
+		<h4>Filter your search</h4>
+		<ul>
+			<li>Talks</li>
+			<li>Clubs</li>
+		</ul>
+	</div>
+	</div>
 </body>
