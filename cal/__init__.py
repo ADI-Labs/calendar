@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, render_template
-from schema import db, Event, User
-from cal.fb import update_fb_events
+from os import path
+
+from flask import Flask, g, jsonify, render_template, json, request
+from schema import db, Event
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -27,6 +28,7 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
+<<<<<<< HEAD
     events = Event.query.all()
     return render_template('index.html', events=events)
 
