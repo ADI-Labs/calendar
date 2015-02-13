@@ -1,7 +1,7 @@
 from os import path
 
 from flask import Flask, g, jsonify, render_template, json, request
-from schema import db
+from schema import db, Event
 
 app = Flask(__name__)
 
@@ -29,12 +29,7 @@ def page_not_found(e):
     return jsonify(error="Page not found")
 
 
-@app.errorhandler(500)
-@app.errorhandler(Exception)
-def internal_error(e):
-    return jsonify(error="Something went wrong.")
-
-
 @app.route('/')
 def home():
-    return render_template('index.html')
+    events = Event.query.order_by(Event.start).all()
+    return render_template('index.html', events=events)
