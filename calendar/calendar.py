@@ -31,7 +31,7 @@ def internal_error(e):
 
 @app.route('/')
 def home():
-    return jsonify(message="Hello world!")
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
