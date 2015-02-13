@@ -25,8 +25,7 @@ apt-get update
 sudo pip install -r /vagrant/config/requirements.txt
 pip install flake8  # for local testing
 
-
 # install vim
-install vim
+apt-get install -y vim
 
 exit 0
