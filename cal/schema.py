@@ -20,10 +20,13 @@ class Event(db.Model):
 
     def to_JSON(self):
         eastern = timezone('EST')
+        end_time = self.end
+        if end_time:
+            end_time = end_time.replace(tzinfo=eastern).isoformat()
         return {
             "id": self.id,
             "start": self.start.replace(tzinfo=eastern).isoformat(),
-            "end": self.end.replace(tzinfo=eastern).isoformat(),
+            "end": end_time,
             "location": self.location,
             "url": self.url,
             "name": self.name,
