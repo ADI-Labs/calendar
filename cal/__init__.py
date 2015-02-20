@@ -1,16 +1,11 @@
-from os import path
-
-from flask import Flask, g, jsonify, render_template, json, request
+from flask import Flask, render_template
 from schema import db, Event, User
 
 app = Flask(__name__)
-
-# do import early to check that all env variables are present
 app.config.from_object('config.flask_config')
 
 db.init_app(app)
 
-# library imports here
 
 @app.before_request
 def before_request():
@@ -26,13 +21,7 @@ def after_request(resp):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return jsonify(error="Page not found")
-
-
-@app.errorhandler(500)
-@app.errorhandler(Exception)
-def internal_error(e):
-    return jsonify(error="Something went wrong.")
+    return "Page not found"
 
 
 @app.route('/')
