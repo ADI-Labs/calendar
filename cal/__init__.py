@@ -83,6 +83,5 @@ def users():
     now = dt.datetime.now()
     events = Event.query.filter(Event.start > now)\
         .filter(Event.start < now + dt.timedelta(weeks=1))
-
     users = {event.user for event in events}    # use set to make users unique
     return jsonify(data=[user.to_json() for user in users])
