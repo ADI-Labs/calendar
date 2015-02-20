@@ -1,7 +1,7 @@
-Density
+Calendar
 ---
 
-Density is a project to provide easy access to campus events at a centralized location.
+Calendar is a project to provide easy access to campus events at a centralized location.
 
 
 
