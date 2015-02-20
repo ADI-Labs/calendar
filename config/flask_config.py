@@ -16,6 +16,7 @@ try:
     PORT = environ['PORT']
     SECRET_KEY = environ['SECRET_KEY']
     DEBUG = True if environ['DEBUG'] == 'TRUE' else False
+    FACEBOOK_ACCESS_TOKEN = environ['FACEBOOK_ACCESS_TOKEN']
 
     BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
