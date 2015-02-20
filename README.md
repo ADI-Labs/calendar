@@ -62,3 +62,5 @@ TODO
 - Kevin Lin
 - David Hao
 - Alan Du
+- Angela Wang
+- Emily Pakulski
