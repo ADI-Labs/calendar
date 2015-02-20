@@ -10,14 +10,16 @@
 		<h1> Columbia University Calendar</h1>
                 <h2> {{ monday_events }} </h2>
 	</div>
+
 	<div class="row">
 	<div class="col-md-10">
 	<table class="table table-bordered">
  		<tr>
+ 			{% for day in events %}
     		<td>
     			<h3>Monday</h3>
     			<ul id="event">
-    				{% for event in monday_events %}
+    				{% for event in day %}
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
@@ -26,7 +28,8 @@
 					{% endfor %}
     			</ul>
     		</td>
-    		<td>
+    		{% endfor %}
+    		<!-- <td>
     			<h3>Tuesday</h3>
     			<ul>
     				{% for event in tuesday_events %}
@@ -97,7 +100,7 @@
 					</li>
 					{% endfor %}
     			</ul>
-    		</td>
+    		</td> -->
   		</tr>
 	</table>
 	</div>

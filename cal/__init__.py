@@ -40,5 +40,4 @@ def home():
 
     events = [sunday_events, monday_events, tuesday_events, wednesday_events, thursday_events, friday_events, saturday_events]
 
-    #return render_template('index.html', events=events, monday_events=monday_events, tuesday_events=tuesday_events, wednesday_events=wednesday_events, thursday_events=thursday_events, friday_events=friday_events, saturday_events=saturday_events, sunday_events=sunday_events)
     return render_template('index.html', events=events)
