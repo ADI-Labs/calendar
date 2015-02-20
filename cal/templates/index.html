@@ -8,14 +8,37 @@
 <body>
 	<div class="container main-body">
 		<h1> Columbia University Calendar</h1>
-                <h2> {{ events }} </h2>
 	</div>
 	<div class="row">
 	<div class="col-md-10">
 	<table class="table table-bordered">
  		<tr>
-    		<td><h3>Monday</h3></td>
-    		<td><h3>Tuesday</h3></td> 
+    		<td>
+    			<h3>Monday</h3>
+    			<ul>
+    				{% for event in events %}
+    				<li>
+    					<p>{{ event.name }}</p>
+						<p>{{ event.location }}</p>
+						<p>{{ event.start.weekday() }}</p>
+						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
+					</li>
+					{% endfor %}
+    			</ul>
+    		</td>
+    		<td>
+    			<h3>Tuesday</h3>
+    			<ul>
+    				{% for event in events %}
+    				<li>
+    					<p>{{ event.name }}</p>
+						<p>{{ event.location }}</p>
+						<p>{{ event.start.weekday() }}</p>
+						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
+					</li>
+					{% endfor %}
+    			</ul>
+    		</td> 
     		<td><h3>Wednesday</h3></td>
     		<td><h3>Thursday</h3></td>
     		<td><h3>Friday</h3></td>
@@ -23,13 +46,16 @@
     		<td><h3>Sunday</h3></td>
   		</tr>
   		<tr>
-    		<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
+  			{% for event in events %}
+    			<td>
+    				<div class="event">
+						<p>{{ event.name }}</p>
+						<p>{{ event.location }}</p>
+						<p>{{ event.start.weekday() }}</p>
+						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
+					</div>
+				</td>
+			{% endfor %}
 			<td>
     			<div class="event">
 					<p>Title</p>

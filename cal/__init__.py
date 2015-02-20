@@ -28,7 +28,6 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
-<<<<<<< HEAD
     events = Event.query.all()
     return render_template('index.html', events=events)
 
@@ -41,4 +40,5 @@ def update():
 
 @app.route('/events')
 def events():
-    return jsonify({"events": map(lambda x: x.to_JSON(), Event.query.all())})
+	events = Event.query.order_by(Event.start).all()
+	return render_template('index.html', events=events)
