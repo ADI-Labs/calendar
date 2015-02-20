@@ -87,4 +87,3 @@ def users():
 
     users = {event.user for event in events}    # use set to make users unique
     return jsonify(data=[user.to_json() for user in users])
-
