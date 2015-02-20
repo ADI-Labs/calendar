@@ -128,9 +128,7 @@ def update_events():
             # Parse the start and end times.
             start_time = iso8601.parse_date(event['start_time']).replace(tzinfo=None)
             end_time = event.get('end_time', None)
-            if not end_time:
-                end_time = start_time + timedelta(days=1)
-            else:
+            if end_time:
                 end_time = iso8601.parse_date(end_time).replace(tzinfo=None)
 
             # Update all the fields.
