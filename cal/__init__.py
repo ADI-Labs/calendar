@@ -1,7 +1,7 @@
 from os import path
 
 from flask import Flask, g, jsonify, render_template, json, request
-from schema import db
+from schema import db, Event, User
 
 app = Flask(__name__)
 
@@ -37,4 +37,5 @@ def internal_error(e):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    events = Event.query.all()
+    return render_template('index.html', events=events)

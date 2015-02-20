@@ -11,16 +11,15 @@ install () {
 
 apt-get update
 
-# install git
-install git-core
-install git
+install sqlite3
 
 # install python
-apt-get install -y python \
+install python \
     python-pip \
     python-dev \
     python-software-properties
 
 sudo pip install -r /vagrant/config/requirements.txt
+
 
 exit 0
