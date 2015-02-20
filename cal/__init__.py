@@ -28,17 +28,16 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
-    events = Event.query.all()
-    return render_template('index.html', events=events)
+    events = Event.query.order_by(Event.start).all()
 
+    monday_events = [event for event in events if event.start.weekday() == 1]
+    tuesday_events = [event for event in events if event.start.weekday() == 2]
+    wednesday_events = [event for event in events if event.start.weekday() == 3]
+    thursday_events = [event for event in events if event.start.weekday() == 4]
+    friday_events = [event for event in events if event.start.weekday() == 5]
+    saturday_events = [event for event in events if event.start.weekday() == 6]
+    sunday_events = [event for event in events if event.start.weekday() == 0]
 
-@app.route('/update')
-def update():
-    update_fb_events()
-    return jsonify({"success": True})
-
-
-@app.route('/events')
-def events():
-	events = Event.query.order_by(Event.start).all()
-	return render_template('index.html', events=events)
+    return render_template('index.html', events=events, monday_events=monday_events, tuesday_events=tuesday_events
+    	wednesday_events=wednesday_events, thursday_events=thursday_events, friday_events=friday_events
+    	saturday_events=saturday_events, sunday_events=sunday_events)
