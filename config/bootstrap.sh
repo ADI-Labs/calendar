@@ -23,7 +23,4 @@ apt-get install -y python \
 
 sudo pip install -r /vagrant/config/requirements.txt
 
-# install vim
-apt-get install -y vim
-
 exit 0
