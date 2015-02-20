@@ -5,8 +5,6 @@ import iso8601
 import pytz
 from datetime import timedelta
 
-import pprint
-
 def update_events():
     access_token = cal.app.config['FACEBOOK_ACCESS_TOKEN']
     # List of page ids.
@@ -112,6 +110,19 @@ def update_events():
 
     # Iterate through every page.
     for page_id in page_ids:
+        user = User.query.filter_by(id=page_id).first()
+        if not user:
+            u = graph.get_object(id=page_id)
+            try:
+                user = User(id=page_id, name=u["name"])
+            except KeyError:
+                print u.keys()
+                print page_id
+                print
+                continue
+            db.session.add(user)
+
+        user = graph.get_object(id=page_id)
         events = graph.get_connections(id=page_id, connection_name='events')['data']
 
         # Iterate through every event.
@@ -138,6 +149,7 @@ def update_events():
             current_event.user_id = page_id
             current_event.name = event['name']
             current_event.url = "https://www.facebook.com/" + event['id']
+
             db.session.add(current_event)
     # Commit the session.
     db.session.commit()
