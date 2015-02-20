@@ -26,5 +26,5 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
-    events = Event.query.all()
+    events = Event.query.order_by(Event.start).all()
     return render_template('index.html', events=events)
