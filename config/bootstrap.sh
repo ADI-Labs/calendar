@@ -11,21 +11,15 @@ install () {
 
 apt-get update
 
-# install git
-install git-core
-install git
+install sqlite3
 
 # install python
-apt-get install -y python \
+install python \
     python-pip \
     python-dev \
     python-software-properties
 
-apt-get update
 sudo pip install -r /vagrant/config/requirements.txt
-pip install flake8  # for local testing
 
-# install vim
-apt-get install -y vim
 
 exit 0
