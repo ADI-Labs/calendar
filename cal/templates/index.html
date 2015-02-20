@@ -21,7 +21,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -34,7 +33,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -47,7 +45,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -60,7 +57,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -73,7 +69,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -86,7 +81,6 @@
     				<li>
     					<p>{{ event.name }}</p>
 						<p>{{ event.location }}</p>
-						<p>{{ event.start.weekday() }}</p>
 						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
 					</li>
 					{% endfor %}
@@ -94,7 +88,7 @@
     		</td>
     		<td>
     			<h3>Sunday</h3>
-    			<ul>
+    			<ul class="list-unstyled">
     				{% for event in sunday_events %}
     				<li>
     					<p>{{ event.name }}</p>
