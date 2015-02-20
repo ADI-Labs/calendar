@@ -1,27 +1,15 @@
-from icalendar import Calendar as iCalendar, Event as iEvent
+from icalendar import Calendar as iCalendar, Event as iEvent, vText, vDatetime
 import tempfile, os # being able to write a file
 from cal.schema import Event as OurEvent
 from cal import app
-
-"""
-    id = db.Column(db.Integer, primary_key=True)
-
-    start = db.Column(db.DateTime, nullable=False)
-    end = db.Column(db.DateTime)
-    location = db.Column(db.String(64))
-    url = db.Column(db.String(128), unique=True)
-    name = db.Column(db.String(128), nullable=False)
-""" 
-
-# TODO:
-# set dtstart to something real
-# give calendar a logical name
+from time import strftime
+from datetime import datetime
 
 def main():
     # create Calendar object
     cal = iCalendar()
-    cal['dtstart'] = '20050404T080000'
-    cal['summary'] = 'Calendar for Columbia University.'
+    cal['dtstart'] = vDatetime(datetime.now()) # formats to .ics compatible datetime
+    cal['summary'] = 'Calendar for Columbia University made by ADI (adicu.com).'
 
     events = OurEvent.query.all()
 
@@ -29,12 +17,16 @@ def main():
         # for every event, create an event object
         vevent = iEvent()
         vevent['name'] = e.name
+        vevent['organizer'] = e.user.name
+        vevent['location'] = vText(e.location)
+        vevent['dtstart'] = vDatetime(e.start)
 
         # add each event to calendar
         cal.add_component(vevent)
     
     # write file to calendar
-    f = open('example.ics', 'wb')
+    filename = 'calendar_adi_' + datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.ics'
+    f = open(filename, 'wb')
     f.write(cal.to_ical())
     f.close()
 
