@@ -1,5 +1,3 @@
-from os import path
-
 from flask import Flask, jsonify, render_template
 from schema import db, Event,User
 from fb import fb
