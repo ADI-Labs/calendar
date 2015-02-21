@@ -1,11 +1,10 @@
 from facebook import GraphAPI
 from cal.schema import db, User, Event
-from config import flask_config
-import cal
+from config import FACEBOOK_ACCESS_TOKEN
 import iso8601
 import pytz
 
-access_token = flask_config.FACEBOOK_ACCESS_TOKEN
+graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 page_ids = [
     '76561782869',      # SIPA
     '102471088936',     # CU
@@ -104,9 +103,6 @@ page_ids = [
 ]
 
 def update_fb_events():
-
-    graph = GraphAPI(access_token)
-
     for page_id in page_ids:
         user = User.query.filter_by(id=page_id).first()
         if user is None:

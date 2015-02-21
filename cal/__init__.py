@@ -3,7 +3,7 @@ from schema import db, Event,User
 from cal.fb import update_fb_events
 
 app = Flask(__name__)
-app.config.from_object('config.flask_config')
+app.config.from_object('config')
 
 db.init_app(app)
 
