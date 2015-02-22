@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, render_template
 from schema import db, Event,User
-from fb import fb
+from cal.fb import update_fb_events
 
 app = Flask(__name__)
-app.config.from_object('config.flask_config')
+app.config.from_object('config')
 
 db.init_app(app)
 
@@ -33,7 +33,7 @@ def home():
 
 @app.route('/update')
 def update():
-    fb.update_events()
+    update_fb_events()
     return jsonify({"success": True})
 
 
