@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+
+{% macro output_event(event) -%}
+   <td>
+    	<div class="event">
+			<a href={{event.url}} target=newtab>{{event.name}} </a> 
+			<p>{{event.location}}</p>
+			<p>{{event.start.strftime('%I:%M %P')}}</p>
+		</div>
+	</td>
+{%- endmacro %}
+
+
 <head>
 	<title>Columbia University Calendar</title>
 	<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/style.css') }}>
