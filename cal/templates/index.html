@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+
+{% macro output_event(event) -%}
+   <td>
+    	<div class="event">
+			<a href={{event.url}} target=newtab>{{event.name}} </a> 
+			<p>{{event.location}}</p>
+			<p>{{event.start.strftime('%I:%M %P')}}</p>
+		</div>
+	</td>
+{%- endmacro %}
+
+
 <head>
 		<title>Columbia University Calendar</title>
 		<link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }}>
@@ -8,7 +20,7 @@
 <body>
 	<div class="container main-body">
 		<h1> Columbia University Calendar</h1>
-                <h2> {{ monday_events }} </h2>
+                <h2>  </h2>
 	</div>
 	<div class="row">
 	<div class="col-md-10">
@@ -22,14 +34,12 @@
     		<td><h3>Saturday</h3></td>
     		<td><h3>Sunday</h3></td>
   		</tr>
-  		<tr>
-    		<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
+
+  		{% for event in events %}
+  			  		{{ output_event(event)}}
+		{% endfor %}
+
+
 			<td>
     			<div class="event">
 					<p>Title</p>

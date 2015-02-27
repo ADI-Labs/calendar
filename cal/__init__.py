@@ -29,7 +29,7 @@ def page_not_found(e):
 def home():
     events = Event.query.order_by(Event.start).all()
 
-    sunday_events = [event for event in events if event.start.weekday() == 0]
+    '''sunday_events = [event for event in events if event.start.weekday() == 0]
     monday_events = [event for event in events if event.start.weekday() == 1]
     tuesday_events = [event for event in events if event.start.weekday() == 2]
     wednesday_events = [event for event in events if event.start.weekday() == 3]
@@ -37,7 +37,7 @@ def home():
     friday_events = [event for event in events if event.start.weekday() == 5]
     saturday_events = [event for event in events if event.start.weekday() == 6]
 
-    events = [sunday_events, monday_events, tuesday_events, wednesday_events, thursday_events, friday_events, saturday_events]
+    events = [sunday_events, monday_events, tuesday_events, wednesday_events, thursday_events, friday_events, saturday_events]'''
 
     #return render_template('index.html', events=events, monday_events=monday_events, tuesday_events=tuesday_events, wednesday_events=wednesday_events, thursday_events=thursday_events, friday_events=friday_events, saturday_events=saturday_events, sunday_events=sunday_events)
     return render_template('index.html', events=events)
