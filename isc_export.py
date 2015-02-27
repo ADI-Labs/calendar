@@ -16,10 +16,9 @@ def create_calendar(events):
 
     for e in events:    
         # for every event, create an event object
-        vevent = iEvent(name = e.name, 
-	    organizer = e.user.name, 
-	    location = vText(e.location), 
-	    dtstart = vDatetime(e.start))
+        vevent = iEvent(summary=e.name, organizer=e.user.name, 
+                        location=vText(e.location), dtstart=vDatetime(e.start),
+                        description=e.url)
 
         # add each event to calendar
         cal.add_component(vevent)
