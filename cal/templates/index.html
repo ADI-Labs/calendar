@@ -8,121 +8,42 @@
 <body>
 	<div class="container main-body">
 		<h1> Columbia University Calendar</h1>
+                <h2> {{ monday_events }} </h2>
 	</div>
+
 	<div class="row">
 	<div class="col-md-10">
 	<table class="table table-bordered">
- 		<tr>
-    		<td><h3>Monday</h3></td>
-    		<td><h3>Tuesday</h3></td> 
-    		<td><h3>Wednesday</h3></td>
-    		<td><h3>Thursday</h3></td>
-    		<td><h3>Friday</h3></td>
-    		<td><h3>Saturday</h3></td>
-    		<td><h3>Sunday</h3></td>
-  		</tr>
-  		<tr>
+		<tr>
+			{% for event in events %}
+			<td>
+				<h3>Search Results</h3>
+				<ul id="event">
+					<li>
+						<p>{{ event.name }}</p>
+						<p>{{ event.location }}</p>
+						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
+					</li>
+				</ul>
+			</td>
+			{% endfor %}
+		</tr>
+ 		<!-- <tr>
+ 			{% for day in events %}
     		<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-  		</tr>
-  		<tr>
-    		<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-			<td>
-    			<div class="event">
-					<p>Title</p>
-					<p>Location</p>
-					<p>Time</p>
-				</div>
-			</td>
-  		</tr>
+    			<h3>Monday</h3>
+    			<ul id="event">
+    				{% for event in day %}
+    				<li>
+    					<p>{{ event.name }}</p>
+						<p>{{ event.location }}</p>
+						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
+					</li>
+					{% endfor %}
+    			</ul>
+    		</td>
+    		{% endfor %}
+  		</tr> -->
 	</table>
 	</div>
 	<div class="col-md-2">
