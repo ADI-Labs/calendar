@@ -3,9 +3,10 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 db = SQLAlchemy()
 
+
 class Event(db.Model):
     __tablename__ = "event"
-    __searchable__ = ['location','name']
+    __searchable__ = ['location', 'name']
 
     id = db.Column(db.Integer, primary_key=True)
 
