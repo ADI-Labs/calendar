@@ -32,3 +32,4 @@ bin/python*
 local
 man
 pip-selfcheck.json
+events.db

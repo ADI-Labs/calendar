@@ -14,10 +14,10 @@ apt-get update
 install sqlite3
 
 # install python
-install python \
-    python-pip \
-    python-dev \
-    python-software-properties
+install python
+install python-pip
+install python-dev
+install python-software-properties
 
 sudo pip install -r /vagrant/config/requirements.txt
 

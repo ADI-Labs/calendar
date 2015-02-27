@@ -1,17 +1,7 @@
 from cal import app
-from cal.schema import db, Event, User
-
-from mixer.backend.flask import Mixer
-
-mixer = Mixer(app, session_commit=True)
+from cal.schema import db
+from cal.fb import update_fb_events
 
 with app.app_context():
     db.create_all()
-
-    mixer.init_app(app)
-
-    for i in xrange(5):
-        user = mixer.blend(User)
-
-        for j in xrange(10):
-            event = mixer.blend(Event, user=user)
+    update_fb_events()

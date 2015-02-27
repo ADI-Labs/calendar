@@ -1,8 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template
 from schema import db, Event, User
+from cal.fb import update_fb_events
 
 app = Flask(__name__)
-app.config.from_object('config.flask_config')
+app.config.from_object('config')
 
 db.init_app(app)
 
@@ -41,3 +42,12 @@ def home():
     #return render_template('index.html', events=events, monday_events=monday_events, tuesday_events=tuesday_events, wednesday_events=wednesday_events, thursday_events=thursday_events, friday_events=friday_events, saturday_events=saturday_events, sunday_events=sunday_events)
     return render_template('index.html', events=events)
 
+@app.route('/update')
+def update():
+    update_fb_events()
+    return jsonify({"success": True})
+
+
+@app.route('/events')
+def events():
+    return jsonify({"events": map(lambda x: x.to_JSON(), Event.query.all())})
