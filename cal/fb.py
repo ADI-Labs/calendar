@@ -21,7 +21,7 @@ page_ids = [
     '108772683119',      # School of Social Work
     '13795941507',       # Journalism School
     '123393449987',      # College of Dental Medicine
-    #'15014549949',      # Admissions (Ignoring due to irrelevance)
+    # '15014549949',      # Admissions (Ignoring due to irrelevance)
     '91514290668',       # School of Nursing
     '102009214108',      # Athletics
     '109409079078868',   # Law School
@@ -49,7 +49,7 @@ page_ids = [
     '124968174239226',   # Columbia Korean Student Association
     '496954750365809',   # Hong Kong Students and Scholars Association
     '717330888294259',   # Activities Board at Columbia
-    #'40892339383',       # African Law Students Association
+    # '40892339383',       # African Law Students Association (no access token)
     '320800730384',      # African Students Association
     '296714777168407',   # Aikido
     '520402061427273',   # American Institue of Chemical Engineers
@@ -71,15 +71,15 @@ page_ids = [
     '153912894629817',   # Black Theater Ensemble
     '567567480016627',   # Blue and White
     '359273777483537',   # Blue Key Society
-    #'125787164166676',   # Canterbury Club
+    # '125787164166676',   # Canterbury Club (Unsupported request)
     '360462704017712',   # Caribbean Student Association
     '479184565457877',   # Chicano Caucus
     '238971376152821',   # China Law and Business Association (CCLBA)
-    #'237160662994336',   # Chinese Bible Study Group
+    # '237160662994336',   # Chinese Bible Study Group (AUTH error)
     '36845738820',       # Chinese Students and Scholars Assoiation
     '264877036963661',   # Chinese Students Club
     '324052140074',      # Chowdah Sketch Comedy
-    #'195629250527859',   # Christians on Campus
+    # '195629250527859',   # Christians on Campus (AUTH error)
     '83038617978',       # Clefhangars
     '154909354648149',   # Club Bangla
     '1506111726297876',  # College Democrats
@@ -90,7 +90,7 @@ page_ids = [
     '257020914343135',   # CCSC 2015
     '414584481937511',   # CCSC 2016
     '402055506589690',   # CCSC 2017
-    #'261702970520779',   # Columbia Community Outreach
+    # '261702970520779',   # Columbia Community Outreach (unsupported request)
     '656632027711940',   # Columbia Elections Board
     '58365309913',       # Columbia Daily Spectator
     '406947596037547',   # Columbia Economics Society
