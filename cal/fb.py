@@ -1,7 +1,7 @@
 from facebook import GraphAPI
 from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
-import iso8601
+from iso8601 import iso8601
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 page_ids = [
