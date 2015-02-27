@@ -30,7 +30,12 @@ python run.py
 TODO
 
 ## Routes
-TODO
+Supported routes currently include:
+```
+/       : Calendar homepage with upcoming events
+/update : Update Facebook events
+/events   : Returns all events
+```
 
 ## Data Sources
 For now, we get events from Facebook using their API. The Facebook groups that we get events from are listed `cal/fb.py`

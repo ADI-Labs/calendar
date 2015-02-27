@@ -1,7 +1,7 @@
 from facebook import GraphAPI
 from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
-from iso8601 import iso8601
+import iso8601
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 page_ids = [
@@ -124,7 +124,7 @@ def update_fb_events():
             current_event.start = start.replace(tzinfo=None)
             end = event.get('end_time', None)
             if end is not None:
-                end = iso8601.parse_data(end)
+                end = iso8601.parse_date(end)
                 current_event.end = end.replace(tzinfo=None)
 
             # Update other fields.
