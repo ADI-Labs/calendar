@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template
-from schema import db, Event,User
+from schema import db, Event, User
 from cal.fb import update_fb_events
 
 app = Flask(__name__)

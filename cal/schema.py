@@ -1,5 +1,4 @@
 from flask.ext.sqlalchemy import SQLAlchemy
-import json
 from pytz import timezone
 
 db = SQLAlchemy()
@@ -32,6 +31,7 @@ class Event(db.Model):
             "name": self.name,
             "user_id": self.user_id
         }
+
 
 class User(db.Model):
     __tablename__ = "user"
