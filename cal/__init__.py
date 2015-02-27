@@ -1,13 +1,13 @@
-from os import path
-
-from flask import Flask, g, jsonify, render_template, json, request
-from schema import db, Event
+from flask import Flask, jsonify, render_template
+from schema import db, Event,User
+from cal.fb import update_fb_events
+import flask.ext.whooshalchemy as whooshalchemy
 
 app = Flask(__name__)
 app.config.from_object('config')
 
 db.init_app(app)
-
+whooshalchemy.whoosh_index(app, Event)
 
 @app.before_request
 def before_request():
