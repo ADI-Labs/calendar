@@ -3,62 +3,58 @@ Calendar
 
 Calendar is a project to provide easy access to campus events at a centralized location.
 
+## Development Setup
+We use [vagrant](http://www.vagrantup.com/) to run our server. First install vagrant, and then run `vagrant up` to provision the virtual machine for you.
 
-
+Once vagrant is setup, run:
+```bash
+vagrant ssh
+cd /vagrant
+source config/settings.dev
+```
+and you should be good to go.
 
 ## Local Dev
 
-This is the recommend means of setting up Calendar for development.
-Next, install [vagrant](http://www.vagrantup.com/).
-Once vagrant is installed, you can run `vagrant up`, and vagrant will provision the virtual machine for you.
-
-To run the app, follow the these steps:
-
+To setup the database, run
 ```bash
-vagrant ssh
-cd /vagrant
-source config/settings.dev
-python run.py
-```
-
-To setup the database, run:
-```bash
-vagrant ssh
-cd /vagrant
-source config/settings.dev
 python create.py
-=======
 ```
 
-
+To run the server, run:
+```bash
+python run.py
+````
 
 ## Importing Dev Data
 TODO
 
-
 ## Routes
 TODO
 
-
 ## Data Sources
-TODO
+For now, we get events from Facebook using their API. The Facebook groups that we get events from are listed `cal/fb.py`
 
-# app structure
+## app structure
 
 ```
 |-- config/ (config settings and install scripts)
 |-- README.md (This file)
-|-- calendar/
+|-- run.py    (runs the server)
+|-- cal/
 \
-|-- calendar.py  (the executable for this application)
-|-- static/     (your static files, such as js, css, imgs)
-|-- tests/      (unittest scripts that should be used during development)
+  |-- __init__.py (sets up Flask app)
+  |-- schema.py   (our SQLAlchemy ORM schema)
+  |-- fb.py       (Facebook utilities)
+  |-- static/     (your static files, such as js, css, imgs)
+  |-- templates/  (Flask Jinja2 templates)
 ```
 
 
-# List of Developers
-
-- Pooja Kathail
-- Kevin Lin
-- David Hao
-- Alan Du
+## Developers
+* Alan Du
+* David Hao
+* Pooja Kathail
+* Kevin Lin
+* Emily Pakulski
+* Angela Wang
