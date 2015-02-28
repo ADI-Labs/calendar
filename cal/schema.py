@@ -1,5 +1,6 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 import flask.ext.whooshalchemy as whooshalchemy
+from pytz import timezone
 
 db = SQLAlchemy()
 
