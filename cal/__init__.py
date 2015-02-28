@@ -35,7 +35,8 @@ def fb_task_test():
     print "Starting FB update"
     update_fb_events()
     print "Finished FB update"
-    fb_task_test.apply_async(countdown=30)
+    # Update every 30 minutes
+    fb_task_test.apply_async(countdown=1800)
 
 # Unfortunate hack, you will need to hit a url once to initialize the updater.
 @app.before_first_request
