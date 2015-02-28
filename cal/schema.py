@@ -19,7 +19,7 @@ class Event(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    def to_JSON(self):
+    def to_json(self):
         eastern = timezone('EST')
         end_time = self.end
         if end_time:

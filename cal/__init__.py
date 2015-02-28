@@ -1,3 +1,5 @@
+import datetime as dt
+
 from flask import Flask, jsonify, render_template
 import flask.ext.whooshalchemy as whooshalchemy
 
@@ -52,27 +54,10 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
-    events = Event.query.order_by(Event.start).all()
+    return render_template('index.html')
 
-    sunday = [event for event in events if event.start.weekday() == 0]
-    monday = [event for event in events if event.start.weekday() == 1]
-    tuesday = [event for event in events if event.start.weekday() == 2]
-    wednesday = [event for event in events if event.start.weekday() == 3]
-    thursday = [event for event in events if event.start.weekday() == 4]
-    fridau = [event for event in events if event.start.weekday() == 5]
-    saturday = [event for event in events if event.start.weekday() == 6]
-
-    events = [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
-    return render_template('index.html', events=events)
-
-
-# TO REMOVE: Manual update route
-@app.route('/update')
-def update():
-    update_fb_events()
-    return jsonify({"success": True})
-
-
-@app.route('/events')
+@app.route("/events/")
 def events():
-    return jsonify({"events": map(lambda x: x.to_JSON(), Event.query.all())})
+    events = Event.query.filter(Event.start > dt.datetime.now())
+
+    return jsonify(data=[event.to_json() for event in events])

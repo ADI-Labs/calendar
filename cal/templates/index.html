@@ -1,57 +1,50 @@
 <!DOCTYPE html>
 <head>
-		<title>Columbia University Calendar</title>
-		<link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }}>
-		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/style.css') }}>
+	<title>Columbia University Calendar</title>
+	<link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }}>
+	<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/style.css') }}>
+        <script src="http://fb.me/react-0.12.2.js"></script>
+        <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 </head>
 
 <body>
-	<div class="container main-body">
-		<h1> Columbia University Calendar</h1>
-                <h2> {{ monday_events }} </h2>
-	</div>
+    <div id="content"></div>
+    <script type="text/jsx">
+        var REvent = React.createClass({
+            render: function() {
+                return (
+                    <div className="event">
+                        { this.props.data }
+                        <br/>
+                    </div>
+                );
+            }
+        })
 
-	<div class="row">
-	<div class="col-md-10">
-	<table class="table table-bordered">
-		<tr>
-			{% for event in events %}
-			<td>
-				<h3>Search Results</h3>
-				<ul id="event">
-					<li>
-						<p>{{ event.name }}</p>
-						<p>{{ event.location }}</p>
-						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
-					</li>
-				</ul>
-			</td>
-			{% endfor %}
-		</tr>
- 		<!-- <tr>
- 			{% for day in events %}
-    		<td>
-    			<h3>Monday</h3>
-    			<ul id="event">
-    				{% for event in day %}
-    				<li>
-    					<p>{{ event.name }}</p>
-						<p>{{ event.location }}</p>
-						<p>{{ event.start.strftime("%b %d, %Y %H:%M:%S")}}</p>
-					</li>
-					{% endfor %}
-    			</ul>
-    		</td>
-    		{% endfor %}
-  		</tr> -->
-	</table>
-	</div>
-	<div class="col-md-2">
-		<h4>Filter your search</h4>
-		<ul>
-			<li>Talks</li>
-			<li>Clubs</li>
-		</ul>
-	</div>
-	</div>
+        var RCalendar = React.createClass({
+            getInitialState: function() {
+                return {eventList: []};
+            },
+            componentDidMount: function() {
+                $.getJSON('{{ url_for("events") }}', function(data) {
+                    this.setState({eventList: data.data});
+                }.bind(this));
+            }, 
+            render: function() {
+                var events = this.state.eventList.map(function(evt, i) {
+                    return <REvent data={ evt }/>;
+                });
+                console.log(events);
+                return (
+                    <div className="calendar">
+                        { events }
+                    </div>
+                );
+            }
+        })
+
+        var calendar = <RCalendar/>
+        React.render(calendar, document.getElementById("content"));
+    </script>
 </body>
