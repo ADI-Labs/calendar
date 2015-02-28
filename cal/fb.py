@@ -117,6 +117,7 @@ def update_fb_events():
 
             current_event = Event.query.filter_by(id=event_id).first()
             if current_event is None:
+                print("New event from %s: %s" % (page_id, event['id']))
                 current_event = Event(id=event_id)
 
             # Parse the start and end times.
