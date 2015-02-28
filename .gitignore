@@ -33,3 +33,4 @@ local
 man
 pip-selfcheck.json
 events.db
+celerybeat-schedule
