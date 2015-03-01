@@ -1,9 +1,19 @@
 body {
-	background-color: rgb(118,179,223);
 }
 h1 {
-	text-align: center;
+    text-align: center;
 }
-table, th, td {
+table {
     border: 1px solid black;
+    table-layout: fixed;
+}
+
+td {
+    border: 1px solid black;
+    width: 12%;
+}
+
+.event {
+    background-color: rgba(200, 54, 54, 0.2);
+    font-size: smaller;
 }
