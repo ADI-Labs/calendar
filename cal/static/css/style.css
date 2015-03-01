@@ -4,3 +4,6 @@ body {
 h1 {
 	text-align: center;
 }
+table, th, td {
+    border: 1px solid black;
+}

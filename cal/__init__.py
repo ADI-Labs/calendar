@@ -58,6 +58,7 @@ def home():
 
 @app.route("/events/")
 def events():
-    events = Event.query.filter(Event.start > dt.datetime.now())
+    events = Event.query.filter(Event.start > dt.datetime.now()).\
+                filter(Event.start < dt.datetime.now() + dt.timedelta(weeks=1))
 
-    return jsonify(data=[event.to_json() for event in events])
+    return jsonify(data=[event.to_json() for event in events.all()])
