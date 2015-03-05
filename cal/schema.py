@@ -42,3 +42,6 @@ class User(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
 
     events = db.relationship("Event", backref="user")
+
+    def to_json(self):
+        return {"id": self.id, "name": self.name}

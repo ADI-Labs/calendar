@@ -9,8 +9,6 @@
 
 <body>
     <div id="content">
-        <div id="calendar"> </div>
-        <div id="search"> </div>
     </div>
 
     <script type="text/jsx">
@@ -18,6 +16,8 @@
             return d.toTimeString().slice(0, 5);
         }
         var REvent = React.createClass({
+            click: function() {
+            }, 
             render: function() {
                 var start = new Date(this.props.data.start);
                 var width = 1;
@@ -30,7 +30,7 @@
                 }
 
                 return (
-                    <div className="event">
+                    <div className="event" onclick={ this.click }>
                         { timeString }  <br/>
                         <a href={this.props.data.url}> { this.props.data.name } </a>
                     </div>
@@ -77,14 +77,6 @@
         })
 
         var RCalendar = React.createClass({
-            getInitialState: function() {
-                return {eventList: []};
-            },
-            componentDidMount: function() {
-                $.getJSON('{{ url_for("events") }}', function(data) {
-                    this.setState({eventList: data.data});
-                }.bind(this));
-            }, 
             render: function() {
                 return (
                     <table className="calendar">
@@ -98,13 +90,93 @@
                             <td> Saturday </td>
                         </thead>
 
-                        <RWeek eventList={ this.state.eventList }/>
+                        <RWeek eventList={ this.props.eventList }/>
                     </table>
                 );
             }
         })
 
-        var calendar = <RCalendar/>;
-        React.render(calendar, document.getElementById("calendar"));
+        var RFiltering = React.createClass({
+            remove: function(uid) {
+                this.props.removeUser(uid)
+            },
+
+            render: function() {
+                var users = [];
+                for (var i = 0; i < this.props.userList.length; i++) {
+                    var user = this.props.userList[i];
+
+                    users.push(
+                        <button onClick={ this.remove.bind(this, user.id) } name={ user.id }> Remove {user.name}</button>
+                    );
+                }
+
+                return (
+                    <div className="filtering"> 
+                        { users }
+                    </div>
+                );
+            }
+        })
+
+        var RSearch = React.createClass({
+            render: function() {
+                return (
+                    <form className="search">
+                        <input type="text"/>
+                        <input type="submit" value="Search"/>
+                    </form>
+                );
+            }
+        })
+
+        var RQuery = React.createClass({
+            render: function() {
+                return (
+                    <div className="query">
+                        <RSearch/>
+                        <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser}/>
+                    </div>
+                );
+            }
+        })
+
+        var RApp = React.createClass({
+            getInitialState: function() {
+                return {eventList: [], userList: []};
+            },
+            componentDidMount: function() {
+                $.getJSON('{{ url_for("events") }}', function(data) {
+                    this.setState({eventList: data.data});
+                }.bind(this));
+
+                $.getJSON('{{ url_for("users") }}', function(data) {
+                    this.setState({userList: data.data});
+                }.bind(this));
+            }, 
+
+            removeUser: function(user_id) {
+                this.setState({
+                    eventList:  this.state.eventList.filter(function (evt) {
+                                    return evt.user_id != user_id;
+                                }),
+                    userList:   this.state.userList.filter(function (user) {
+                                    console.log(user.id);
+                                    return user.id != user_id
+                                })
+                });
+            },
+
+            render: function() {
+                return (
+                    <div className="app">
+                        <RCalendar eventList={ this.state.eventList } />
+                        <RQuery eventList={this.state.eventList} userList={this.state.userList} removeUser={this.removeUser}/>
+                    </div>
+                );
+            }
+        })
+
+        React.render(<RApp/>, document.getElementById("content"));
     </script>
 </body>

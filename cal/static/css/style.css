@@ -3,10 +3,6 @@ body {
 h1 {
     text-align: center;
 }
-table {
-    border: 1px solid black;
-    table-layout: fixed;
-}
 
 td {
     border: 1px solid black;
@@ -16,4 +12,21 @@ td {
 .event {
     background-color: rgba(200, 54, 54, 0.2);
     font-size: smaller;
+}
+
+.calendar {
+    float: left;
+    width: 75%;
+
+    border: 1px solid black;
+    table-layout: fixed;
+}
+
+.app {
+    width: 100%;
+}
+
+.query {
+    float: right;
+    width: 23%;
 }

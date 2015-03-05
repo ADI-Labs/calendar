@@ -3,7 +3,7 @@ import datetime as dt
 from flask import Flask, jsonify, render_template
 import flask.ext.whooshalchemy as whooshalchemy
 
-from schema import db, Event, User
+from cal.schema import db, Event, User
 from cal.fb import update_fb_events
 from celery import Celery
 
@@ -58,7 +58,17 @@ def home():
 
 @app.route("/events/")
 def events():
-    events = Event.query.filter(Event.start > dt.datetime.now()).\
-                filter(Event.start < dt.datetime.now() + dt.timedelta(weeks=1))
+    now = dt.datetime.now()
+    events = Event.query.filter(Event.start > now).\
+                         filter(Event.start < now + dt.timedelta(weeks=1))
 
     return jsonify(data=[event.to_json() for event in events.all()])
+
+@app.route("/users/")
+def users():
+    now = dt.datetime.now()
+    events = Event.query.filter(Event.start > now).\
+                         filter(Event.start < now + dt.timedelta(weeks=1))
+
+    users = {event.user for event in events}    # use set to make users unique
+    return jsonify(data=[user.to_json() for user in users])
