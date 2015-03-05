@@ -26,7 +26,7 @@
                     var end = new Date(this.props.data.end);
                     // TODO handle end of month problems
                     width = end.getDate() - start.getDate() + 1;
-                    timeString += " &ndash; " + formatTime(end);
+                    timeString += " \u2013 " + formatTime(end);
                 }
 
                 return (
