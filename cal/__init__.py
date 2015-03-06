@@ -3,13 +3,35 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 from schema import db, Event, User
 from cal.fb import update_fb_events
+from celery import Celery
+
 
 app = Flask(__name__)
 app.config.from_object('config')
-
 db.init_app(app)
 whooshalchemy.whoosh_index(app, Event)
 
+celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
+TaskBase = celery.Task
+class ContextTask(TaskBase):
+    abstract = True
+    def __call__(self, *args, **kwargs):
+        with app.app_context():
+            return TaskBase.__call__(self, *args, **kwargs)
+celery.Task = ContextTask
+
+# Background task
+@celery.task(name="cal.fb_task")
+def fb_task_test():
+    update_fb_events()
+    # Update every 30 minutes
+    fb_task_test.apply_async(countdown=1800)
+
+# Unfortunate hack, you will need to hit a url once to initialize the updater.
+@app.before_first_request
+def intiialize():
+    fb_task_test.apply_async()
 
 @app.before_request
 def before_request():
@@ -44,6 +66,7 @@ def home():
     return render_template('index.html', events=events)
 
 
+# TO REMOVE: Manual update route
 @app.route('/update')
 def update():
     update_fb_events()
