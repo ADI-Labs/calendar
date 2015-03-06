@@ -113,12 +113,13 @@ def update_fb_events():
         events = graph.get_connections(id=page_id, connection_name="events")
         events = events["data"]
         for event in events:
+            event = graph.get_object(id=event["id"])
             event_id = int(event['id'])
 
-            current_event = Event.query.filter_by(id=event_id).first()
-            if current_event is None:
-                print("New event from %s: %s" % (page_id, event['id']))
-                current_event = Event(id=event_id)
+            current_event = Event.query.filter_by(source="facebook", source_id=event_id).first()
+            if current_event is None:   # create new event
+                print("New fb event from %s: %s" % (page_id, event['id']))
+                current_event = Event(source="facebook", source_id=event_id)
 
             # Parse the start and end times.
             start = iso8601.parse_date(event["start_time"])
@@ -130,6 +131,7 @@ def update_fb_events():
 
             # Update other fields.
             current_event.user = user
+            current_event.description = event["description"]
             current_event.location = event.get('location', None)
             current_event.name = event['name']
             current_event.url = "https://www.facebook.com/" + event['id']
