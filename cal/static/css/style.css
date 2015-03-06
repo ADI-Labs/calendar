@@ -1,6 +1,32 @@
 body {
-	background-color: rgb(118,179,223);
 }
 h1 {
-	text-align: center;
+    text-align: center;
+}
+
+td {
+    border: 1px solid black;
+    width: 12%;
+}
+
+.event {
+    background-color: rgba(200, 54, 54, 0.2);
+    font-size: smaller;
+}
+
+.calendar {
+    float: left;
+    width: 75%;
+
+    border: 1px solid black;
+    table-layout: fixed;
+}
+
+.app {
+    width: 100%;
+}
+
+.query {
+    float: right;
+    width: 23%;
 }

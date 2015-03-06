@@ -1,3 +1,4 @@
+whoosh_index/*
 
 lib-cov
 *.seed

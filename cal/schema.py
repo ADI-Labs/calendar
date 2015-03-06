@@ -19,7 +19,7 @@ class Event(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    def to_JSON(self):
+    def to_json(self):
         eastern = timezone('EST')
         end_time = self.end
         if end_time:
@@ -42,3 +42,6 @@ class User(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
 
     events = db.relationship("Event", backref="user")
+
+    def to_json(self):
+        return {"id": self.id, "name": self.name}
