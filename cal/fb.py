@@ -1,9 +1,11 @@
 from facebook import GraphAPI
 from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
-import iso8601, yaml
+import iso8601
+import yaml
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
+
 
 def update_fb_events():
     f = open('cal/fb_groups.yml')
@@ -22,7 +24,8 @@ def update_fb_events():
             event = graph.get_object(id=event["id"])
             event_id = int(event['id'])
 
-            current_event = Event.query.filter_by(source="facebook", source_id=event_id).first()
+            current_event = Event.query.filter_by(source="facebook",
+                                                  source_id=event_id).first()
             if current_event is None:   # create new event
                 print("New fb event from %s: %s" % (page_id, event['id']))
                 current_event = Event(source="facebook", source_id=event_id)
