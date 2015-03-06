@@ -27,7 +27,7 @@ python run.py
 ````
 
 ## Importing Dev Data
-Start the app, then hit the home URL once. The events will start updating in the background.
+Running create.py will fill the database with real data.
 
 ## Routes
 Supported routes currently include:
