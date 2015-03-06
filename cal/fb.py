@@ -9,9 +9,9 @@ graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 
 
 def update_fb_events():
-    f = open('cal/fb_groups.yml')
-    page_ids = yaml.load(f).keys()
-    f.close()
+    with open('cal/fb_groups.yml') as fin:
+        page_ids = yaml.load(fin).keys()
+
     for page_id in page_ids:
         user = User.query.filter_by(id=page_id).first()
         if user is None:
