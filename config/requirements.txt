@@ -5,6 +5,7 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 SQLAlchemy==0.9.8
 Werkzeug==0.10.1
+PyYAML==3.11
 facebook-sdk==0.4.0
 iso8601==0.1.10
 itsdangerous==0.24
