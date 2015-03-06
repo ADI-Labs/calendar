@@ -28,8 +28,8 @@ def update_fb_events():
             current_event = Event.query.filter_by(source="facebook",
                                                   source_id=event_id).first()
             if current_event is None:   # create new event
-                current_app.logger.debug("New fb event from %s: %s"
-                                         % (page_id, event['id']))
+                current_app.logger.debug("New fb event from {}: {}"
+                                         .format(page_id, event['id']))
                 current_event = Event(source="facebook", source_id=event_id)
 
             # Parse the start and end times.
