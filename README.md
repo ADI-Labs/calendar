@@ -27,14 +27,13 @@ python run.py
 ````
 
 ## Importing Dev Data
-TODO
+Start the app, then hit the home URL once. The events will start updating in the background.
 
 ## Routes
 Supported routes currently include:
 ```
 /       : Calendar homepage with upcoming events
-/update : Update Facebook events
-/events   : Returns all events
+/events   : Returns all events [For development purposes, will be removed eventually]
 ```
 
 ## Data Sources
