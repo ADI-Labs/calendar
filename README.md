@@ -27,14 +27,13 @@ python run.py
 ````
 
 ## Importing Dev Data
-TODO
+Running create.py will fill the database with real data.
 
 ## Routes
 Supported routes currently include:
 ```
 /       : Calendar homepage with upcoming events
-/update : Update Facebook events
-/events   : Returns all events
+/events   : Returns all events [For development purposes, will be removed eventually]
 ```
 
 ## Data Sources
