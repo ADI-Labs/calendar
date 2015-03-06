@@ -13,4 +13,4 @@ if __name__ == "__main__":
     else:
       handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.run(debug=True, host=app.config["HOST"])
+    app.run(debug=app.config['DEBUG'], host=app.config["HOST"])
