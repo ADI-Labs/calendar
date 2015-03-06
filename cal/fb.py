@@ -3,6 +3,7 @@ from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
 import iso8601
 import yaml
+from flask import current_app
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 
@@ -27,7 +28,7 @@ def update_fb_events():
             current_event = Event.query.filter_by(source="facebook",
                                                   source_id=event_id).first()
             if current_event is None:   # create new event
-                print("New fb event from %s: %s" % (page_id, event['id']))
+                current_app.logger.debug("New fb event from %s: %s" % (page_id, event['id']))
                 current_event = Event(source="facebook", source_id=event_id)
 
             # Parse the start and end times.
