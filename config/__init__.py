@@ -21,6 +21,7 @@ try:
     BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
+    LOGFILE = "logs/test.log"
 
 except KeyError as e:
     """ Throw an error if a setting is missing """
@@ -29,4 +30,3 @@ except KeyError as e:
            "You probably need to run:"
            "\n\n\tsource config/<your settings file>")
     exit(1)
-

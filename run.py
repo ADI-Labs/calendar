@@ -1,16 +1,18 @@
-from cal import app
 import logging
-from logging import FileHandler, Formatter
+
+from config import LOGFILE
+from cal import app
 
 if __name__ == "__main__":
-    handler = FileHandler("cal/logs/test.log")
+    handler = logging.FileHandler(LOGFILE)
     format = '%(asctime)s %(levelname)s: %(message)s ' \
-      '[in %(pathname)s:%(lineno)d]'
-    handler.setFormatter(Formatter(format))
+             '[in %(pathname)s:%(lineno)d]'
+    handler.setFormatter(logging.Formatter(format))
 
-    if app.debug:
-      handler.setLevel(logging.DEBUG)
+    if app.config['DEBUG']:
+        handler.setLevel(logging.DEBUG)
     else:
-      handler.setLevel(logging.INFO)
+        handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
+
     app.run(debug=app.config['DEBUG'], host=app.config["HOST"])
