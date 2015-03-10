@@ -18,6 +18,7 @@ def update_fb_events():
             u = graph.get_object(id=page_id)
             user = User(id=page_id, name=u["name"])
             db.session.add(user)
+            db.session.commit()     # autoincrement user.id
 
         events = graph.get_connections(id=page_id, connection_name="events")
         events = events["data"]
@@ -41,7 +42,7 @@ def update_fb_events():
                 current_event.end = end.replace(tzinfo=None)
 
             # Update other fields.
-            current_event.user = user
+            current_event.user_id = user.id
             current_event.description = event.get("description", None)
             current_event.location = event.get('location', None)
             current_event.name = event['name']
