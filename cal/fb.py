@@ -42,7 +42,7 @@ def update_fb_events():
 
             # Update other fields.
             current_event.user = user
-            current_event.description = event["description"]
+            current_event.description = event.get("description", None)
             current_event.location = event.get('location', None)
             current_event.name = event['name']
             current_event.url = "https://www.facebook.com/" + event['id']
