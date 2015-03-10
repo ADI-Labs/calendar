@@ -48,6 +48,6 @@ def update_fb_events():
             current_event.name = event['name']
             current_event.url = "https://www.facebook.com/" + event['id']
 
-            db.session.add(current_event)
+            # db.session.add(current_event)
 
     db.session.commit()
