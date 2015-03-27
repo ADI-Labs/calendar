@@ -63,11 +63,13 @@ For now, we get events from Facebook using their API. The Facebook groups that w
 |-- run.py    (runs the server)
 |-- cal/
 \
-  |-- __init__.py (sets up Flask app)
-  |-- schema.py   (our SQLAlchemy ORM schema)
-  |-- fb.py       (Facebook utilities)
-  |-- static/     (your static files, such as js, css, imgs)
-  |-- templates/  (Flask Jinja2 templates)
+  |-- __init__.py   (Sets up Flask app)
+  |-- schema.py     (Our SQLAlchemy ORM schema)
+  |-- fb.py         (Facebook utilities)
+  |-- fb_groups.yml (Contains the facebook group ID's)
+  |-- logs/         (Log files will be added here)
+  |-- static/       (Your static files, such as js, css, imgs)
+  |-- templates/    (Flask Jinja2 templates)
 ```
 
 
