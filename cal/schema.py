@@ -23,13 +23,13 @@ class Event(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def to_json(self):
-        eastern = timezone('EST')
+        eastern = timezone('US/Eastern')
         end_time = self.end
         if end_time:
-            end_time = end_time.replace(tzinfo=eastern).isoformat()
+            end_time = eastern.localize(end_time).isoformat()
         return {
             "id": self.id,
-            "start": self.start.replace(tzinfo=eastern).isoformat(),
+            "start": eastern.localize(self.start).isoformat(),
             "end": end_time,
             "location": self.location,
             "url": self.url,
