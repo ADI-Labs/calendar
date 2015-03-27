@@ -41,6 +41,10 @@ class Event(db.Model):
 
     @staticmethod
     def fuzzy_match(event):
+        """ Find all `Event`s that approximately match `event`
+            event: Event 
+        """
+
         tfuzz = dt.timedelta(days=1)
 
         start_match = (Event.start > event.start - tfuzz) & \
@@ -53,6 +57,9 @@ class Event(db.Model):
                           .filter(Event.id != event.id)
     @staticmethod
     def fuzzy_contains(event):
+        """ Checks if `event` is already in the database
+            event: Event
+        """
         query = Event.fuzzy_match(event)
         return query.first() is not None
 
