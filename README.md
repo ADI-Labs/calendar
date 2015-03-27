@@ -26,6 +26,22 @@ To run the server, run:
 python run.py
 ````
 
+If you want to run the event updater every 30 minutes, run:
+```bash
+celery worker -A cal.celery & python run.py
+```
+
+Try to avoid running this, since killing Celery is annoying. When finished, run:
+```bash
+ps
+```
+and kill the processes with the name "celery":
+```bash
+kill -9 <process-id>
+```
+
+I recommend running the database setup script to refresh the data.
+
 ## Importing Dev Data
 Running create.py will fill the database with real data.
 
@@ -47,11 +63,13 @@ For now, we get events from Facebook using their API. The Facebook groups that w
 |-- run.py    (runs the server)
 |-- cal/
 \
-  |-- __init__.py (sets up Flask app)
-  |-- schema.py   (our SQLAlchemy ORM schema)
-  |-- fb.py       (Facebook utilities)
-  |-- static/     (your static files, such as js, css, imgs)
-  |-- templates/  (Flask Jinja2 templates)
+  |-- __init__.py   (Sets up Flask app)
+  |-- schema.py     (Our SQLAlchemy ORM schema)
+  |-- fb.py         (Facebook utilities)
+  |-- fb_groups.yml (Contains the facebook group ID's)
+  |-- logs/         (Log files will be added here)
+  |-- static/       (Your static files, such as js, css, imgs)
+  |-- templates/    (Flask Jinja2 templates)
 ```
 
 
