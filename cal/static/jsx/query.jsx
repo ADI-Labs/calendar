@@ -36,6 +36,8 @@ var RReset = React.createClass({
     }
 })
 
+=======
+>>>>>>> Merge conflict
 var RFiltering = React.createClass({
     remove: function(uid) {
         this.props.removeUser(uid)
@@ -59,10 +61,22 @@ var RFiltering = React.createClass({
     }
 })
 
+var RDownload = React.createClass({
+    onClick: function() {
+        this.props.userList
+    },
+    render: function() {
+        return (
+            <button onClick=this.onClick.bind(this)/>
+        )
+    }
+})
+
 var RQuery = React.createClass({
     render: function() {
         return (
             <div className="query">
+                <RDownload userList={ this.props.userList }/>
                 <RSearch setGlobalState={this.props.setGlobalState} />
                 <RReset setGlobalState={this.props.setGlobalState} />
                 <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser} />
