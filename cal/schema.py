@@ -47,9 +47,9 @@ class Event(db.Model):
                       (Event.start < event.start + tfuzz)
         end_match = (Event.end is None) | ((Event.end > event.end - tfuzz) &
                                             Event.end < event.end + tfuzz)
-        name_match = (Event.name == event.name) # TODO fuzzy string match
 
-        return Event.query.filter(start_match & end_match & name_match) \
+        return Event.query.whoosh_search(event.name, fields=["name"]) \
+                          .filter(start_match & end_match)
                           .filter(Event.id != event.id)
     @staticmethod
     def fuzzy_contains(event):
