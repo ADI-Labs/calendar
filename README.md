@@ -26,6 +26,22 @@ To run the server, run:
 python run.py
 ````
 
+If you want to run the event updater every 30 minutes, run:
+```bash
+celery worker -A cal.celery & python run.py
+```
+
+Try to avoid running this, since killing Celery is annoying. When finished, run:
+```bash
+ps
+```
+and kill the processes with the name "celery":
+```bash
+kill -9 <process-id>
+```
+
+I recommend running the database setup script to refresh the data.
+
 ## Importing Dev Data
 Running create.py will fill the database with real data.
 
