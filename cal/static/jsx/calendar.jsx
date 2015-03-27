@@ -1,5 +1,22 @@
 function formatTime(d) {
-    return d.toTimeString().slice(0, 5);
+    // Remove the minutes if the time is on the hour
+    var timeString = "";
+    var hour = d.getHours();
+
+    // Humanize hours.
+    timeString += hour % 12 || 12;
+
+    // Humanize minutes.
+    if (d.getMinutes() != 0) {
+        timeString += ":" + d.getMinutes();
+    }
+
+    return timeString;
+}
+
+function AMPM(d) {
+    // Determine whether the time is AM or PM.
+    return d.getHours() < 12 ? "AM" : "PM";
 }
 
 var REvent = React.createClass({
@@ -7,13 +24,23 @@ var REvent = React.createClass({
     }, 
     render: function() {
         var start = new Date(this.props.data.start);
-        var width = 1;
+
         var timeString = formatTime(start);
         if (this.props.data.end !== null) {
             var end = new Date(this.props.data.end);
-            // TODO handle end of month problems
-            width = end.getDate() - start.getDate() + 1;
-            timeString += " \u2013 " + formatTime(end);
+            var endTimeString = formatTime(end);
+
+            // Only add start time's AM/PM if start and end dates are
+            // different, or start and end are in different halves of
+            // the day.
+            if (start.toDateString() == end.toDateString()
+                || AMPM(start) != AMPM(end)) {
+                timeString += AMPM(start);
+            }
+            timeString += " \u2013 " + formatTime(end) + AMPM(end);
+        }
+        else {
+            timeString += AMPM(start);
         }
 
         return (
