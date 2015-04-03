@@ -1,3 +1,5 @@
+import datetime as dt
+
 from flask.ext.sqlalchemy import SQLAlchemy
 from pytz import timezone
 
@@ -36,6 +38,30 @@ class Event(db.Model):
             "name": self.name,
             "user_id": self.user_id
         }
+
+    @staticmethod
+    def fuzzy_match(event):
+        """ Find all `Event`s that approximately match `event`
+            event: Event 
+        """
+
+        tfuzz = dt.timedelta(days=1)
+
+        start_match = (Event.start > event.start - tfuzz) & \
+                      (Event.start < event.start + tfuzz)
+        end_match = (Event.end is None) | ((Event.end > event.end - tfuzz) &
+                                            Event.end < event.end + tfuzz)
+
+        return Event.query.whoosh_search(event.name, fields=["name"]) \
+                          .filter(start_match & end_match)
+                          .filter(Event.id != event.id)
+    @staticmethod
+    def fuzzy_contains(event):
+        """ Checks if `event` is already in the database
+            event: Event
+        """
+        query = Event.fuzzy_match(event)
+        return query.first() is not None
 
 
 class User(db.Model):

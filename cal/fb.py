@@ -13,12 +13,12 @@ def update_fb_events():
         page_ids = yaml.load(fin).keys()
 
     for page_id in page_ids:
-        user = User.query.filter_by(id=page_id).first()
+        u = graph.get_object(id=page_id)
+        user = User.query.filter_by(name=u["name"]).first()
         if user is None:
-            u = graph.get_object(id=page_id)
-            user = User(id=page_id, name=u["name"])
+            user = User(name=u["name"])
             db.session.add(user)
-            db.session.commit()     # autoincrement user.id
+            db.session.commit() # autoincrement user.id
 
         events = graph.get_connections(id=page_id, connection_name="events")
         events = events["data"]
