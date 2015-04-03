@@ -7,6 +7,7 @@ from flask import current_app
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 
+
 def update_fb_events():
     with open('cal/fb_groups.yml') as fin:
         page_ids = yaml.load(fin).keys()

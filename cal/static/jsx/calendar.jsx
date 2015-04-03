@@ -1,4 +1,5 @@
 function formatTime(d) {
+    return d.toTimeString().slice(0, 5);
     // Remove the minutes if the time is on the hour
     var timeString = "";
     var hour = d.getHours();
@@ -24,7 +25,6 @@ var REvent = React.createClass({
     }, 
     render: function() {
         var start = new Date(this.props.data.start);
-
         var timeString = formatTime(start);
         if (this.props.data.end !== null) {
             var end = new Date(this.props.data.end);
@@ -109,3 +109,4 @@ var RCalendar = React.createClass({
         );
     }
 })
+
