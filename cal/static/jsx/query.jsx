@@ -1,10 +1,36 @@
 var RSearch = React.createClass({
+    onclick: function() {
+        tag = $("input")[0]
+        url = "/search/" + tag.value
+        $.getJSON(url, function(data) {
+            this.props.setGlobalState({eventList: data.data});
+        });
+    },
     render: function() {
         return (
             <form className="search">
                 <input type="text"/>
-                <input type="submit" value="Search"/>
+                <button onClick={this.onclick}> Search </button>
             </form>
+        );
+    }
+})
+
+var RReset = React.createClass({
+    onclick: function() {
+        $.getJSON('/events/', function(data) {
+            this.props.setGlobalState({eventList: data.data});
+        }.bind(this));
+
+        $.getJSON('/users', function(data) {
+            this.props.setGlobalState({userList: data.data});
+        }.bind(this));
+    },
+    render: function() {
+        return (
+            <div className="reset">
+                <button onClick={this.onclick}> Reset Events </button>
+            </div>
         );
     }
 })
@@ -36,10 +62,10 @@ var RQuery = React.createClass({
     render: function() {
         return (
             <div className="query">
-                <RSearch/>
-                <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser}/>
+                <RSearch setGlobalState={this.props.setGlobalState} />
+                <RReset setGlobalState={this.props.setGlobalState} />
+                <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser} />
             </div>
         );
     }
 })
-

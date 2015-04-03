@@ -24,7 +24,7 @@ var REvent = React.createClass({
     }, 
     render: function() {
         var start = new Date(this.props.data.start);
-
+        
         var timeString = formatTime(start);
         if (this.props.data.end !== null) {
             var end = new Date(this.props.data.end);
@@ -109,3 +109,4 @@ var RCalendar = React.createClass({
         );
     }
 })
+
