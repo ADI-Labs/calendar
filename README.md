@@ -1,6 +1,8 @@
 Calendar
 ---
 
+[![Build Status](https://travis-ci.org/adicu/calendar.svg?branch=master)](https://travis-ci.org/adicu/calendar)<F37>
+
 Calendar is a project to provide easy access to campus events at a centralized location.
 
 ## Development Setup
