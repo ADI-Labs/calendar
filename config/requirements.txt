@@ -13,3 +13,4 @@ itsdangerous==0.24
 pytz==2015.2
 icalendar==3.9.0
 celery==3.1.17
+fuzzywuzzy==0.5.0
