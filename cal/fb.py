@@ -17,12 +17,11 @@ def update_fb_events():
             event = graph.get_object(id=event["id"])
             event_id = int(event['id'])
 
-            current_event = Event.query.filter_by(source="facebook",
-                                                  source_id=event_id).first()
+            current_event = Event.query.filter_by(fb_id=event_id).first()
             if current_event is None:   # create new event
                 current_app.logger.debug("New fb event from {}: {}"
                                          .format(user.fb_id, event['id']))
-                current_event = Event(source="facebook", source_id=event_id)
+                current_event = Event(fb_id=event_id)
 
             # Parse the start and end times.
             start = iso8601.parse_date(event["start_time"])
