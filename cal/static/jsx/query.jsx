@@ -36,8 +36,6 @@ var RReset = React.createClass({
     }
 })
 
-=======
->>>>>>> Merge conflict
 var RFiltering = React.createClass({
     remove: function(uid) {
         this.props.removeUser(uid)
@@ -63,11 +61,16 @@ var RFiltering = React.createClass({
 
 var RDownload = React.createClass({
     onClick: function() {
-        this.props.userList
+        var uids = this.props.userList.map(function (user) {
+            return user.id
+        });
+        url = "/isc/?" + $.param({event_ids: uids});
+        // kind of a hack, don't know how else to do it
+        window.location.href = url;
     },
     render: function() {
         return (
-            <button onClick=this.onClick.bind(this)/>
+            <button onClick={ this.onClick.bind(this) }> Export Events </button>
         )
     }
 })

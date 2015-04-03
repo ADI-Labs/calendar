@@ -1,8 +1,9 @@
 import datetime as dt
+from StringIO import StringIO
 
 from celery import Celery
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_file
 import flask.ext.whooshalchemy as whooshalchemy
 
 from cal.schema import db, Event, User  # noqa
@@ -101,6 +102,11 @@ def search(searchfield):
     return jsonify(data=[event.to_json() for event in search_results])
 
 
-@app.route("/isc/", methods=["POST"])
+@app.route("/isc/", methods=["GET"])
 def to_isc():
-    event_ids = request.data["event_ids"]
+    # get list of ids from GET request
+    event_ids = request.args.getlist("event_ids[]", type=int)
+    events = Event.query.filter(Event.id.in_(event_ids))
+
+    return send_file(StringIO(to_icalendar(events)), mimetype="text/calendar",
+                     as_attachment=True, attachment_filename="calendar.isc")

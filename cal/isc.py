@@ -5,7 +5,7 @@ from icalendar import Calendar as iCalendar, Event as iEvent, vText, vDatetime
 
 def to_icalendar(events):
     """ Converts events to .isc format
-    :param events = iterable(cal.schema.Event)
+    :param events = Iterable(cal.schema.Event)
     :return str
     """
     summary = "Calendar for Columbia University made by ADI (adicu.com)"
