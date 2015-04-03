@@ -1,6 +1,5 @@
 var RSearch = React.createClass({
     onclick: function() {
-        console.log("Clicked!");
         tag = $("input")[0]
         url = "/search/" + tag.value
         $.getJSON(url, function(data) {

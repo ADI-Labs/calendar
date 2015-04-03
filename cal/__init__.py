@@ -8,7 +8,7 @@ import flask.ext.whooshalchemy as whooshalchemy
 from cal.schema import db, Event
 from cal.fb import update_fb_events
 
-# Intialize the app
+# Initialize the app
 app = Flask(__name__)
 app.config.from_object('config')
 db.init_app(app)
