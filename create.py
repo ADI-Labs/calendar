@@ -1,5 +1,4 @@
-from cal import app
-from cal.schema import db
+from cal import app, db
 from cal.fb import update_fb_events
 
 with app.app_context():
