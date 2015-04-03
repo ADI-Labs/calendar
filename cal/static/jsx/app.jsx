@@ -29,7 +29,7 @@ var RApp = React.createClass({
             <div className="app">
                 <RCalendar eventList={ this.state.eventList } />
                 <RQuery eventList={this.state.eventList} userList={this.state.userList} 
-                        removeUser={this.removeUser} setGlobalState={this.setState.bind(this)}/>
+                        removeUser={this.removeUser} setGlobalState={this.setState.bind(this)} />
             </div>
         );
     }

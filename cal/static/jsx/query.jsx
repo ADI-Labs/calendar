@@ -3,36 +3,34 @@ var RSearch = React.createClass({
         console.log("Clicked!");
         tag = $("input")[0]
         url = "/search/" + tag.value
-        var setGlobalState = this.props.setGlobalState;
         $.getJSON(url, function(data) {
-            setGlobalState({eventList: data.data});
+            this.props.setGlobalState({eventList: data.data});
         });
     },
     render: function() {
         return (
-            <div className="search">
+            <form className="search">
                 <input type="text"/>
                 <button onClick={this.onclick}> Search </button>
-            </div>
+            </form>
         );
     }
 })
 
 var RReset = React.createClass({
     onclick: function() {
-        var setGlobalState = this.props.setGlobalState;
         $.getJSON('/events/', function(data) {
-            setGlobalState({eventList: data.data});
+            this.props.setGlobalState({eventList: data.data});
         }.bind(this));
 
         $.getJSON('/users', function(data) {
-            setGlobalState({userList: data.data});
+            this.props.setGlobalState({userList: data.data});
         }.bind(this));
     },
     render: function() {
         return (
             <div className="reset">
-                <button onClick={this.onclick}> Reset Events</button>
+                <button onClick={this.onclick}> Reset Events </button>
             </div>
         );
     }
@@ -65,9 +63,9 @@ var RQuery = React.createClass({
     render: function() {
         return (
             <div className="query">
-                <RSearch setGlobalState={this.props.setGlobalState}/>
-                <RReset setGlobalState={this.props.setGlobalState}/>
-                <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser}/>
+                <RSearch setGlobalState={this.props.setGlobalState} />
+                <RReset setGlobalState={this.props.setGlobalState} />
+                <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser} />
             </div>
         );
     }
