@@ -43,6 +43,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
+    fb_id = db.Column(db.String, unique=True)
 
     events = db.relationship("Event", backref="user")
 

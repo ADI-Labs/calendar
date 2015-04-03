@@ -2,25 +2,16 @@ from facebook import GraphAPI
 from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
 import iso8601
-import yaml
 from flask import current_app
 
 graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
 
 
 def update_fb_events():
-    with open('cal/fb_groups.yml') as fin:
-        page_ids = yaml.load(fin).keys()
-
-    for page_id in page_ids:
-        user = User.query.filter_by(id=page_id).first()
-        if user is None:
-            u = graph.get_object(id=page_id)
-            user = User(id=page_id, name=u["name"])
-            db.session.add(user)
-            db.session.commit()     # autoincrement user.id
-
-        events = graph.get_connections(id=page_id, connection_name="events")
+    for user in User.query.all():
+        if user.fb_id is None:
+            continue
+        events = graph.get_connections(id=user.fb_id, connection_name="events")
         events = events["data"]
         for event in events:
             event = graph.get_object(id=event["id"])
@@ -30,7 +21,7 @@ def update_fb_events():
                                                   source_id=event_id).first()
             if current_event is None:   # create new event
                 current_app.logger.debug("New fb event from {}: {}"
-                                         .format(page_id, event['id']))
+                                         .format(user.fb_id, event['id']))
                 current_event = Event(source="facebook", source_id=event_id)
 
             # Parse the start and end times.
