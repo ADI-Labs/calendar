@@ -5,7 +5,7 @@ from celery import Celery
 from flask import Flask, jsonify, render_template, request
 import flask.ext.whooshalchemy as whooshalchemy
 
-from cal.schema import db, Event
+from cal.schema import db, Event, User  # noqa
 from cal.fb import update_fb_events
 
 # Initialize the app
