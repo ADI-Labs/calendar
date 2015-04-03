@@ -17,8 +17,7 @@ class Event(db.Model):
     url = db.Column(db.String(128), unique=True)
     description = db.Column(db.Text)
 
-    source = db.Column(db.Enum("facebook"), nullable=False)
-    source_id = db.Column(db.Integer)
+    fb_id = db.Column(db.String, unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
@@ -43,6 +42,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
+    fb_id = db.Column(db.String, unique=True)
 
     events = db.relationship("Event", backref="user")
 
