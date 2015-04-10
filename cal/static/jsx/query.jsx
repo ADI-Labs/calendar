@@ -59,10 +59,27 @@ var RFiltering = React.createClass({
     }
 })
 
+var RDownload = React.createClass({
+    onClick: function() {
+        var uids = this.props.userList.map(function (user) {
+            return user.id
+        });
+        url = "/isc/?" + $.param({event_ids: uids});
+        // kind of a hack, don't know how else to do it
+        window.location.href = url;
+    },
+    render: function() {
+        return (
+            <button onClick={ this.onClick.bind(this) }> Export Events </button>
+        )
+    }
+})
+
 var RQuery = React.createClass({
     render: function() {
         return (
             <div className="query">
+                <RDownload userList={ this.props.userList }/>
                 <RSearch setGlobalState={this.props.setGlobalState} />
                 <RReset setGlobalState={this.props.setGlobalState} />
                 <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser} />
