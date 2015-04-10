@@ -20,3 +20,4 @@ script:
   - flake8 *.py
   - flake8 config
   - flake8 cal
+  - py.test

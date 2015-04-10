@@ -15,11 +15,16 @@ try:
     HOST = environ['HOST']
     PORT = environ['PORT']
     SECRET_KEY = environ['SECRET_KEY']
-    DEBUG = True if environ['DEBUG'] == 'TRUE' else False
+    DEBUG = environ['DEBUG'] == 'TRUE'
+    TESTING = environ['TESTING'] == 'TRUE'
     FACEBOOK_ACCESS_TOKEN = environ['FACEBOOK_ACCESS_TOKEN']
 
     BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
+
+    if not TESTING:
+        SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
+    else:
+        SQLALCHEMY_DATABASE_URI = "sqlite:///:memory"
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
     LOGFILE = path.join(BASEDIR, "logs/test.log")
 
