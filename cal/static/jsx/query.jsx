@@ -4,14 +4,15 @@ var RSearch = React.createClass({
         url = "/search/" + tag.value
         $.getJSON(url, function(data) {
             this.props.setGlobalState({eventList: data.data});
-        });
+        }.bind(this));
     },
     render: function() {
+        //div instead of form so that page doesn't reload
         return (
-            <form className="search">
+            <div className="search">
                 <input type="text"/>
                 <button onClick={this.onclick}> Search </button>
-            </form>
+            </div>
         );
     }
 })

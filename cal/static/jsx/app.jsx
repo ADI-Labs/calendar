@@ -18,7 +18,6 @@ var RApp = React.createClass({
                             return evt.user_id != user_id;
                         }),
             userList:   this.state.userList.filter(function (user) {
-                            console.log(user.id);
                             return user.id != user_id
                         })
         });
