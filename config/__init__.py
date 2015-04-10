@@ -27,7 +27,7 @@ try:
     else:
         SQLALCHEMY_DATABASE_URI = "sqlite://"   # in memory database
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
-    LOGFILE = join(BASEDIR, "logs/test.log")
+    LOGFILE = join(BASEDIR, "logs/applog.log")
 
 except KeyError as e:
     """ Throw an error if a setting is missing """

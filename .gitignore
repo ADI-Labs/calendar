@@ -17,7 +17,7 @@ lib-cov
 
 .Python
 pids
-logs
+logs/*
 results
 include
 share
