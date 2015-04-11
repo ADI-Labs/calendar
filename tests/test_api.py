@@ -1,21 +1,22 @@
 import datetime as dt
 import json
 
-import pytest
-
 
 def assert_json_equal(response, data):
     assert response.status_code == 200
     rdata = json.loads(response.data)
-    assert "data" in rdata and len(rdata) == 1  # "data" is only key
-    assert rdata["data"] == data
+    # "data" is only key in rdata
+    assert "data" in rdata and len(rdata) == 1
+
+    # check equality, but ignore order
+    assert len(rdata["data"]) == len(data)
+    for d in rdata["data"]:
+        assert d in data
 
 
 def test_homepage(app, db, User, Event):
     client = app.test_client()
-    r = client.get('/')
-
-    assert r.status_code == 200
+    assert client.get("/").status_code == 200
 
 
 def test_events(app, db, User, Event):
@@ -40,10 +41,7 @@ def test_users(app, db, User, Event):
 
 
 def test_search(app, db, User, Event):
-    now = dt.datetime.now()
-    events = Event.query.filter(Event.start > now) \
-                        .filter(Event.start < now + dt.timedelta(weeks=1)) \
-                        .whoosh_search("Cthulhu")
+    events = Event.query.filter(Event.id.in_([1, 3, 4]))
     event_data = [event.to_json() for event in events.all()]
 
     client = app.test_client()

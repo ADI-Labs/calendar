@@ -1,6 +1,10 @@
 import datetime as dt
+import json
+from os.path import join
 
 import pytest
+
+from config import BASEDIR
 
 
 @pytest.fixture(scope="session")
@@ -32,6 +36,7 @@ def db(app, request):
 @pytest.fixture(scope="session")
 def User(app, db):
     from cal import User
+
     db.session.add_all([User(id=1, name="Cthulhu", fb_id=1),
                         User(id=2, name="Gandalf", fb_id=2)])
     db.session.commit()
@@ -45,19 +50,14 @@ def Event(app, db, User):
 
     now = dt.datetime.now()
     day = dt.timedelta(days=1)
-    u1 = User.query.filter(User.name == "Cthulhu").first()
-    u2 = User.query.filter(User.name == "Gandalf").first()
 
-    events = [
-        Event(name="Cthulhu Awakens", start=now + day, user=u1),
-        Event(name="Cthulhu Sleeps", start=now - day, user=u1),
-        Event(name="Ph'nglui mglw'nafh Cthulhu", start=now + day * 3, user=u1),
-        Event(name="Cthulhu R'lyeh wgah'nagl", start=now + day * 6, user=u1),
-        Event(name="Cthulhu fhtagn!", start=now + day * 9, user=u1),
-        Event(name="Mithrandir", start=now + day, user=u2),
-    ]
+    with open(join(BASEDIR, "tests/events.json")) as fin:
+        events = json.load(fin)
 
-    db.session.add_all(events)
+    for event in events:
+        event["start"] = now + day * event["start"]
+        db.session.add(Event(**event))
+
     db.session.commit()
 
     return Event
