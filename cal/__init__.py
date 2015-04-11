@@ -76,7 +76,7 @@ def home():
 def events():
     now = dt.datetime.now()
     events = Event.query.filter(Event.start > now) \
-        .filter(Event.start < now + dt.timedelta(weeks=1))
+                        .filter(Event.start < now + dt.timedelta(weeks=1))
 
     return jsonify(data=[event.to_json() for event in events.all()])
 
@@ -87,7 +87,8 @@ def users():
     events = Event.query.filter(Event.start > now) \
                         .filter(Event.start < now + dt.timedelta(weeks=1))
 
-    users = {event.user for event in events}    # use set to make users unique
+    # use set to make users unique
+    users = sorted({event.user for event in events}, key=lambda u: u.name)
     return jsonify(data=[user.to_json() for user in users])
 
 
