@@ -24,7 +24,7 @@ try:
     if not TESTING:
         SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
     else:
-        SQLALCHEMY_DATABASE_URI = "sqlite:///:memory"
+        SQLALCHEMY_DATABASE_URI = "sqlite://"   # in memory database
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
     LOGFILE = path.join(BASEDIR, "logs/test.log")
 
