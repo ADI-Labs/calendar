@@ -6,7 +6,8 @@ in the config object as well.
 """
 
 
-from os import environ, path, pardir
+from os import environ, pardir
+from os.path import join, abspath, dirname
 from sys import exit
 
 
@@ -19,14 +20,14 @@ try:
     TESTING = environ['TESTING'] == 'TRUE'
     FACEBOOK_ACCESS_TOKEN = environ['FACEBOOK_ACCESS_TOKEN']
 
-    BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
+    BASEDIR = abspath(join(dirname(__file__), pardir))
 
     if not TESTING:
-        SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(BASEDIR, "events.db")
+        SQLALCHEMY_DATABASE_URI = "sqlite:///" + join(BASEDIR, "events.db")
     else:
         SQLALCHEMY_DATABASE_URI = "sqlite://"   # in memory database
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
-    LOGFILE = path.join(BASEDIR, "logs/test.log")
+    LOGFILE = join(BASEDIR, "logs/test.log")
 
 except KeyError as e:
     """ Throw an error if a setting is missing """
