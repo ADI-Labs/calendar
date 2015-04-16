@@ -38,7 +38,8 @@ def User(app, db):
     from cal import User
 
     db.session.add_all([User(id=1, name="Cthulhu", fb_id=1),
-                        User(id=2, name="Gandalf", fb_id=2)])
+                        User(id=2, name="Monty Python", fb_id=2),
+                        User(id=3, name="Sauron", fb_id=3)])
     db.session.commit()
 
     return User
