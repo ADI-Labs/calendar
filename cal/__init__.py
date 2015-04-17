@@ -88,8 +88,7 @@ def users():
                         .filter(Event.start < now + dt.timedelta(weeks=1))
 
     users = {event.user for event in events}    # use set to make users unique
-    users = [user.to_json() for user in sorted(list(users),  # sort by name
-                                               key=lambda user: user.name)]
+    users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
 
 

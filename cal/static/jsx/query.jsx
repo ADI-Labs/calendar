@@ -19,6 +19,7 @@ var RSearch = React.createClass({
 
 var RReset = React.createClass({
     onclick: function() {
+        // Check all checkboxes.
         $("input[name='user'").prop('checked', true);
         $.getJSON('/events/', function(data) {
             this.props.setGlobalState({eventList: data.data});
@@ -42,7 +43,8 @@ var RFilterCheckbox = React.createClass({
         var user = this.props.user;
         return (
             <div className="filterForm">
-                <input type="checkbox" name="user" id={user.id} onChange={this.handleChange} defaultChecked="true"/>
+                <input type="checkbox" name="user" id={user.id}
+                        onChange={this.handleChange} defaultChecked="true"/>
                 <label for={user.id}>{user.name}</label>
                 <br />
             </div>
@@ -52,29 +54,22 @@ var RFilterCheckbox = React.createClass({
     handleChange: function(e) {
         // If user is checked, add events.
         if (e.target.checked) {
-            this.props.add(e.target.id);
+            this.props.addUser(e.target.id);
         }
         else {
-            this.props.remove(e.target.id);
+            this.props.removeUser(e.target.id);
         }
     }
 })
 
 var RFilterForm = React.createClass({
-    remove: function(uid) {
-        this.props.removeUser(uid)
-    },
-
-    add: function(uid) {
-        this.props.addUser(uid)
-    },
-
     render: function() {
-        var removeFunction = this.remove;
-        var addFunction = this.add;
+        var addFunction = this.props.addUser;
+        var removeFunction = this.props.removeUser;
         var userNodes = this.props.userList.map(function(user) {
             return (
-                <RFilterCheckbox user={user} remove={removeFunction} add={addFunction}/>
+                <RFilterCheckbox user={user} removeUser={removeFunction}
+                                 addUser={addFunction}/>
             );
         });
 
