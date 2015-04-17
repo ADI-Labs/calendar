@@ -88,7 +88,9 @@ def users():
                         .filter(Event.start < now + dt.timedelta(weeks=1))
 
     users = {event.user for event in events}    # use set to make users unique
-    return jsonify(data=[user.to_json() for user in users])
+    users = [user.to_json() for user in sorted(list(users),  # sort by name
+                                               key=lambda user: user.name)]
+    return jsonify(data=users)
 
 
 @app.route("/search/<searchfield>")

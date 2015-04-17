@@ -19,6 +19,7 @@ var RSearch = React.createClass({
 
 var RReset = React.createClass({
     onclick: function() {
+        $("input[name='user'").prop('checked', true);
         $.getJSON('/events/', function(data) {
             this.props.setGlobalState({eventList: data.data});
         }.bind(this));
@@ -36,24 +37,52 @@ var RReset = React.createClass({
     }
 })
 
-var RFiltering = React.createClass({
+var RFilterCheckbox = React.createClass({
+    render: function() {
+        var user = this.props.user;
+        return (
+            <div className="filterForm">
+                <input type="checkbox" name="user" id={user.id} onChange={this.handleChange} defaultChecked="true"/>
+                <label for={user.id}>{user.name}</label>
+                <br />
+            </div>
+        );
+    },
+
+    handleChange: function(e) {
+        // If user is checked, add events.
+        if (e.target.checked) {
+            this.props.add(e.target.id);
+        }
+        else {
+            this.props.remove(e.target.id);
+        }
+    }
+})
+
+var RFilterForm = React.createClass({
     remove: function(uid) {
         this.props.removeUser(uid)
     },
 
-    render: function() {
-        var users = [];
-        for (var i = 0; i < this.props.userList.length; i++) {
-            var user = this.props.userList[i];
+    add: function(uid) {
+        this.props.addUser(uid)
+    },
 
-            users.push(
-                <button onClick={ this.remove.bind(this, user.id) } name={ user.id }> Remove {user.name}</button>
+    render: function() {
+        var removeFunction = this.remove;
+        var addFunction = this.add;
+        var userNodes = this.props.userList.map(function(user) {
+            return (
+                <RFilterCheckbox user={user} remove={removeFunction} add={addFunction}/>
             );
-        }
+        });
 
         return (
-            <div className="filtering"> 
-                { users }
+            <div className="filterForm">
+                <form action=""> 
+                    { userNodes }
+                </form>
             </div>
         );
     }
@@ -82,7 +111,7 @@ var RQuery = React.createClass({
                 <RDownload userList={ this.props.userList }/>
                 <RSearch setGlobalState={this.props.setGlobalState} />
                 <RReset setGlobalState={this.props.setGlobalState} />
-                <RFiltering userList={ this.props.userList } removeUser={this.props.removeUser} />
+                <RFilterForm userList={ this.props.userList } removeUser={this.props.removeUser} addUser={this.props.addUser}/>
             </div>
         );
     }
