@@ -20,8 +20,5 @@ before_script:
   - export PYTHONPATH=.
 
 script:
-  - flake8 *.py
-  - flake8 config
-  - flake8 cal
-  - flake8 tests
+  - flake8 .
   - py.test
