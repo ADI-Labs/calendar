@@ -72,21 +72,27 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/events/")
-def events():
+@app.route("/events/<week>")
+def events(week):
     now = dt.datetime.now()
-    events = Event.query.filter(Event.start > now) \
-                        .filter(Event.start < now + dt.timedelta(weeks=1))
-
+    if week != "0":
+        now = dt.datetime.now() + dt.timedelta(weeks=int(week))
+    beginweek = now - dt.timedelta(days=now.weekday() + 2)
+    events = Event.query.filter(Event.start > beginweek) \
+        .filter(Event.start < beginweek + dt.timedelta(weeks=1))
+        
     return jsonify(data=[event.to_json() for event in events.all()])
 
 
-@app.route("/users/")
-def users():
+@app.route("/users/<week>")
+def users(week):
     now = dt.datetime.now()
-    events = Event.query.filter(Event.start > now) \
-                        .filter(Event.start < now + dt.timedelta(weeks=1))
-
+    if week != "0":
+        now = dt.datetime.now() + dt.timedelta(weeks=int(week))
+    beginweek = now - dt.timedelta(days=now.weekday() + 2)
+    one_week = dt.timedelta(weeks=1)
+    events = Event.query.filter(Event.start > beginweek) \
+                        .filter(Event.start < beginweek + one_week)
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
@@ -95,10 +101,11 @@ def users():
 @app.route("/search/<searchfield>")
 def search(searchfield):
     now = dt.datetime.now()
-    week_later = now + dt.timedelta(weeks=1)
+    beginweek = now - dt.timedelta(days=now.weekday()+2)
+    one_week = dt.timedelta(weeks=1)
     search_results = Event.query.whoosh_search(searchfield) \
-                                .filter(Event.start > now) \
-                                .filter(Event.start < week_later)
+                                .filter(Event.start > beginweek) \
+                                .filter(Event.start < beginweek + one_week)
 
     return jsonify(data=[event.to_json() for event in search_results])
 
