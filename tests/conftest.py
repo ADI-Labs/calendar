@@ -4,7 +4,7 @@ from os.path import join
 
 import pytest
 
-from config import BASEDIR
+from config import BASEDIR, TESTING
 
 
 @pytest.fixture(scope="session")
@@ -62,3 +62,6 @@ def Event(app, db, User):
     db.session.commit()
 
     return Event
+
+assert TESTING, ("\n\nYou are not in a testing environment. Please run:\n"
+                 "   source config/settings.test")
