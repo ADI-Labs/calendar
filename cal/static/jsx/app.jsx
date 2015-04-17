@@ -1,17 +1,19 @@
+var toDateString = function(date) {
+    return (date.getFullYear().toString() + "/" +
+            (date.getMonth() + 1).toString() + "/" + // +1 b/c js months start at 0
+            date.getDate().toString());
+}
+
 var RApp = React.createClass({
     getInitialState: function() {
         return {eventList: [], userList: [], date: new Date()}
     },
     componentDidMount: function() {
-        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/events/" + toDateString(this.state.date), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/users/" + toDateString(this.state.date), function(data) {
             this.setState({userList: data.data});
         }.bind(this));
     },
@@ -37,15 +39,11 @@ var RApp = React.createClass({
         var state = this.state;
         state.date = date;
         this.setState(state);
-        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/events/" + toDateString(this.state.date), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/users/" + toDateString(this.state.date), function(data) {
             this.props.setState({userList: data.data});
         }.bind(this));
     },
@@ -54,15 +52,11 @@ var RApp = React.createClass({
         var state = this.state;
         state.date.setDate(state.date.getDate() + days);
         this.setState(state);
-        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/events/" + toDateString(this.state.date), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
-                (this.state.date.getMonth() + 1).toString() + "/" + 
-                this.state.date.getDate().toString(), function(data) {
+        $.getJSON("/users/" + toDateString(this.state.date), function(data) {
             this.props.setState({userList: data.data});
         }.bind(this));
     },
