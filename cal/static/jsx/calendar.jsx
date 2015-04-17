@@ -102,11 +102,25 @@ var RCalendar = React.createClass({
                     <td> Thursday </td>
                     <td> Friday </td>
                     <td> Saturday </td>
+                    <RNextWeek incrementDate={this.props.incrementDate}/>
                 </thead>
 
-                <RWeek eventList={ this.props.eventList }/>
+                <RWeek eventList={ this.props.eventList } />
             </table>
         );
     }
 })
 
+var RNextWeek = React.createClass({
+    next: function() {
+        this.props.incrementDate(7);
+    },
+    previous: function() {
+        this.props.incrementDate(-7);
+    },
+    render: function() {
+        return (
+            <td> <button onClick={this.previous}> Previous Week </button> <button onClick={this.next}> Next Week </button> </td>
+        );
+    }
+})

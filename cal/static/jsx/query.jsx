@@ -21,13 +21,7 @@ var RReset = React.createClass({
     onclick: function() {
         // Check all checkboxes.
         $("input[name='user'").prop('checked', true);
-        $.getJSON('/events/', function(data) {
-            this.props.setGlobalState({eventList: data.data});
-        }.bind(this));
-
-        $.getJSON('/users', function(data) {
-            this.props.setGlobalState({userList: data.data});
-        }.bind(this));
+        this.props.setDate(new Date());
     },
     render: function() {
         return (
@@ -105,8 +99,8 @@ var RQuery = React.createClass({
             <div className="query">
                 <RDownload userList={ this.props.userList }/>
                 <RSearch setGlobalState={this.props.setGlobalState} />
-                <RReset setGlobalState={this.props.setGlobalState} />
                 <RFilterForm userList={ this.props.userList } removeUser={this.props.removeUser} addUser={this.props.addUser}/>
+                <RReset setGlobalState={this.props.setGlobalState} date={this.props.date} setDate={this.props.setDate}/>
             </div>
         );
     }
