@@ -7,6 +7,9 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 from cal.schema import db, Event, User  # noqa
 from cal.fb import update_fb_events
+from cal.engineeringevents import update_engineering_events
+
+from celery import Celery
 
 # Initialize the app
 app = Flask(__name__)
@@ -77,6 +80,11 @@ def events():
         .filter(Event.start < now + dt.timedelta(weeks=1))
 
     return jsonify(data=[event.to_json() for event in events.all()])
+
+@app.route("/test/")
+def test():
+    update_engineering_events()
+    return jsonify({})
 
 
 @app.route("/users/")

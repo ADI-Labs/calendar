@@ -14,7 +14,7 @@ class Event(db.Model):
     start = db.Column(db.DateTime, nullable=False)
     end = db.Column(db.DateTime)
     location = db.Column(db.String(64))
-    url = db.Column(db.String(128), unique=True)
+    url = db.Column(db.String(128), unique=True, nullable=True)
     description = db.Column(db.Text)
 
     fb_id = db.Column(db.String, unique=True)
