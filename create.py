@@ -15,3 +15,4 @@ with app.app_context():
             db.session.commit()
 
     update_fb_events()
+    update_engineering_events()
