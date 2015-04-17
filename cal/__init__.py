@@ -72,11 +72,9 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/events/<week>")
-def events(week):
-    now = dt.datetime.now()
-    if week != "0":
-        now = dt.datetime.now() + dt.timedelta(weeks=int(week))
+@app.route("/events/<int:month>/<int:day>/<int:year>")
+def events(month, day, year):
+    now = dt.date(year, month, day)
     beginweek = now - dt.timedelta(days=now.weekday() + 2)
     events = Event.query.filter(Event.start > beginweek) \
         .filter(Event.start < beginweek + dt.timedelta(weeks=1))
@@ -84,11 +82,9 @@ def events(week):
     return jsonify(data=[event.to_json() for event in events.all()])
 
 
-@app.route("/users/<week>")
-def users(week):
-    now = dt.datetime.now()
-    if week != "0":
-        now = dt.datetime.now() + dt.timedelta(weeks=int(week))
+@app.route("/users/<int:month>/<int:day>/<int:year>")
+def users(month, day, year):
+    now = dt.date(year, month, day)
     beginweek = now - dt.timedelta(days=now.weekday() + 2)
     one_week = dt.timedelta(weeks=1)
     events = Event.query.filter(Event.start > beginweek) \

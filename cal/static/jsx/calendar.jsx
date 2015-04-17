@@ -102,7 +102,7 @@ var RCalendar = React.createClass({
                     <td> Thursday </td>
                     <td> Friday </td>
                     <td> Saturday </td>
-                    <RNextWeek week={this.props.week} setWeek={this.props.setWeek} setGlobalState={this.props.setGlobalState}/>
+                    <RNextWeek incrementDate={this.props.incrementDate}/>
                 </thead>
 
                 <RWeek eventList={ this.props.eventList } />
@@ -113,24 +113,10 @@ var RCalendar = React.createClass({
 
 var RNextWeek = React.createClass({
     next: function() {
-        $.getJSON("/events/" + (this.props.week + 1).toString(), function(data) {
-            this.props.setGlobalState({eventList: data.data});
-        }.bind(this));
-
-        $.getJSON("/users/" + this.props.week.toString(), function(data) {
-            this.props.setGlobalState({userList: data.data});
-        }.bind(this));
-        this.props.setWeek(this.props.week + 1);
+        this.props.incrementDate(7);
     },
     previous: function() {
-        $.getJSON("/events/" + (this.props.week - 1).toString(), function(data) {
-            this.props.setGlobalState({eventList: data.data});
-        }.bind(this));
-
-        $.getJSON("/users/" + this.props.week.toString(), function(data) {
-            this.props.setGlobalState({userList: data.data});
-        }.bind(this));
-        this.props.setWeek(this.props.week - 1);
+        this.props.incrementDate(-7);
     },
     render: function() {
         return (

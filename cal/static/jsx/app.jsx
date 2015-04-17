@@ -1,13 +1,13 @@
 var RApp = React.createClass({
     getInitialState: function() {
-        return {eventList: [], userList: [], week: 0};
+        return {eventList: [], userList: [], date: new Date()}
     },
     componentDidMount: function() {
-        $.getJSON("/events/" + this.state.week.toString() , function(data) {
+        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.week.toString() , function(data) {
+        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
             this.setState({userList: data.data});
         }.bind(this));
     },
@@ -29,22 +29,43 @@ var RApp = React.createClass({
         });
     },
 
-    setWeek: function(i) {
+    setDate: function(date) {
         var state = this.state;
-        state.week = i;
+        state.date = date;
         this.setState(state);
+        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
+            this.setState({eventList: data.data});
+        }.bind(this));
+
+        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
+            this.props.setState({userList: data.data});
+        }.bind(this));
+    },
+
+    incrementDate: function(days) {
+        var state = this.state;
+        state.date.setDate(state.date.getDate() + days);
+        this.setState(state);
+        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
+            this.setState({eventList: data.data});
+        }.bind(this));
+
+        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
+            this.props.setState({userList: data.data});
+        }.bind(this));
     },
 
     render: function() {
         return (
             <div className="app">
                 <RCalendar eventList={ this.state.eventList } 
+                    incrementDate = {this.incrementDate}/>
+                <RQuery eventList={this.state.eventList} 
+                    userList={this.state.userList} 
+                    removeUser={this.removeUser} 
                     setGlobalState={this.setState.bind(this)} 
-                    setWeek = {this.setWeek}
-                    week = {this.state.week}/>
-                <RQuery eventList={this.state.eventList} userList={this.state.userList} 
-                        removeUser={this.removeUser} setGlobalState={this.setState.bind(this)} 
-                        week={this.state.week} setWeek = {this.setWeek}/>
+                    setDate = {this.setDate}
+                    date = {this.state.date}/>
             </div>
         );
     }
