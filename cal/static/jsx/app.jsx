@@ -3,11 +3,15 @@ var RApp = React.createClass({
         return {eventList: [], userList: [], date: new Date()}
     },
     componentDidMount: function() {
-        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.setState({userList: data.data});
         }.bind(this));
     },
@@ -33,11 +37,15 @@ var RApp = React.createClass({
         var state = this.state;
         state.date = date;
         this.setState(state);
-        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.props.setState({userList: data.data});
         }.bind(this));
     },
@@ -46,11 +54,15 @@ var RApp = React.createClass({
         var state = this.state;
         state.date.setDate(state.date.getDate() + days);
         this.setState(state);
-        $.getJSON("/events/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/events/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.setState({eventList: data.data});
         }.bind(this));
 
-        $.getJSON("/users/" + this.state.date.toLocaleDateString(), function(data) {
+        $.getJSON("/users/" + this.state.date.getFullYear().toString() + "/" +
+                (this.state.date.getMonth() + 1).toString() + "/" + 
+                this.state.date.getDate().toString(), function(data) {
             this.props.setState({userList: data.data});
         }.bind(this));
     },

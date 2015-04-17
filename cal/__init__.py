@@ -72,23 +72,23 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/events/<int:month>/<int:day>/<int:year>")
-def events(month, day, year):
+@app.route("/events/<int:year>/<int:month>/<int:day>")
+def events(year, month, day):
     now = dt.date(year, month, day)
-    beginweek = now - dt.timedelta(days=now.weekday() + 2)
-    events = Event.query.filter(Event.start > beginweek) \
-        .filter(Event.start < beginweek + dt.timedelta(weeks=1))
-        
+    begin_week = now - dt.timedelta(days=now.weekday() + 1)
+    one_week = dt.timedelta(weeks=1)
+    events = Event.query.filter(Event.start > begin_week) \
+                        .filter(Event.start < begin_week + one_week)
     return jsonify(data=[event.to_json() for event in events.all()])
 
 
-@app.route("/users/<int:month>/<int:day>/<int:year>")
-def users(month, day, year):
+@app.route("/users/<int:year>/<int:month>/<int:day>")
+def users(year, month, day):
     now = dt.date(year, month, day)
-    beginweek = now - dt.timedelta(days=now.weekday() + 2)
+    begin_week = now - dt.timedelta(days=now.weekday() + 1)
     one_week = dt.timedelta(weeks=1)
-    events = Event.query.filter(Event.start > beginweek) \
-                        .filter(Event.start < beginweek + one_week)
+    events = Event.query.filter(Event.start > begin_week) \
+                        .filter(Event.start < begin_week + one_week)
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
@@ -97,11 +97,11 @@ def users(month, day, year):
 @app.route("/search/<searchfield>")
 def search(searchfield):
     now = dt.datetime.now()
-    beginweek = now - dt.timedelta(days=now.weekday()+2)
+    begin_week = now - dt.timedelta(days=now.weekday() + 1)
     one_week = dt.timedelta(weeks=1)
     search_results = Event.query.whoosh_search(searchfield) \
-                                .filter(Event.start > beginweek) \
-                                .filter(Event.start < beginweek + one_week)
+                                .filter(Event.start > begin_week) \
+                                .filter(Event.start < begin_week + one_week)
 
     return jsonify(data=[event.to_json() for event in search_results])
 
