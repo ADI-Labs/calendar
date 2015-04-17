@@ -76,7 +76,7 @@ def home():
 def events():
     now = dt.datetime.now()
     events = Event.query.filter(Event.start > now) \
-        .filter(Event.start < now + dt.timedelta(weeks=1))
+                        .filter(Event.start < now + dt.timedelta(weeks=1))
 
     return jsonify(data=[event.to_json() for event in events.all()])
 
