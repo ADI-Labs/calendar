@@ -74,12 +74,19 @@ def home():
 
 @app.route("/events/<int:year>/<int:month>/<int:day>")
 def events(year, month, day):
+
+    search = request.args.get("search")
+    if search is not None:
+        events = Event.query.whoosh_search(search)
+    else:
+        events = Event.query
+
     start = dt.date(year, month, day)
     start -= dt.timedelta(days=start.isoweekday() % 7) # Sunday 7 -> 0
-    one_week = dt.timedelta(weeks=1)
 
-    events = Event.query.filter(start <= Event.start) \
-                        .filter(Event.start < start + one_week)
+    events = events.filter(start <= Event.start) \
+                   .filter(Event.start < start + dt.timedelta(weeks=1))
+
     return jsonify(data=[event.to_json() for event in events.all()])
 
 

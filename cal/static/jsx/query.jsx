@@ -1,8 +1,16 @@
+var toDateString = function(date) {
+    return (date.getFullYear().toString() + "/" +
+            (date.getMonth() + 1).toString() + "/" + // +1 b/c js months start at 0
+            date.getDate().toString());
+}
+
 var RSearch = React.createClass({
     onclick: function() {
-        tag = $("input")[0]
-        url = "/search/" + tag.value
-        $.getJSON(url, function(data) {
+        var url = "/events/" + toDateString(this.props.date);
+        var search_string = document.getElementById("searchbar").value;
+        var payload = {search: search_string};
+
+        $.getJSON(url, {search: search_string}, function(data) {
             this.props.setGlobalState({eventList: data.data});
         }.bind(this));
     },
@@ -10,7 +18,7 @@ var RSearch = React.createClass({
         //div instead of form so that page doesn't reload
         return (
             <div className="search">
-                <input type="text"/>
+                <input id="searchbar" type="text"/>
                 <button onClick={this.onclick}> Search </button>
             </div>
         );
@@ -98,7 +106,7 @@ var RQuery = React.createClass({
         return (
             <div className="query">
                 <RDownload userList={ this.props.userList }/>
-                <RSearch setGlobalState={this.props.setGlobalState} />
+                <RSearch setGlobalState={this.props.setGlobalState} date={this.props.date} />
                 <RFilterForm userList={ this.props.userList } removeUser={this.props.removeUser} addUser={this.props.addUser}/>
                 <RReset setGlobalState={this.props.setGlobalState} date={this.props.date} setDate={this.props.setDate}/>
             </div>

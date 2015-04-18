@@ -1,4 +1,5 @@
 import json
+from urllib import urlencode
 
 
 def assert_json_equal(response, data):
@@ -39,11 +40,14 @@ def test_users(app, db, User, Event):
         url = '/users/2015/3/{}'.format(15 + i)
         assert_json_equal(client.get(url), user_data)
 
-"""
+
 def test_search(app, db, User, Event):
     events = Event.query.filter(Event.id.in_([1, 3, 4]))
     event_data = [event.to_json() for event in events.all()]
 
     client = app.test_client()
-    assert_json_equal(client.get('/search/Cthulhu'), event_data)
-"""
+    for i in range(7):
+        url = '/events/2015/3/{}'.format(15 + i)
+        url += "?" + urlencode({"search": "Cthulhu"})
+
+        assert_json_equal(client.get(url), event_data)
