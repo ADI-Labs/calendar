@@ -49,14 +49,15 @@ def User(app, db):
 def Event(app, db, User):
     from cal import Event
 
-    now = dt.datetime.now()
+    start = dt.datetime(2015, 3, 14)  # Saturday
     day = dt.timedelta(days=1)
 
     with open(join(BASEDIR, "tests/events.json")) as fin:
         events = json.load(fin)
 
     for event in events:
-        event["start"] = now + day * event["start"]
+        event["start"] = start + day * event["start"]
+        print event["start"]
         db.session.add(Event(**event))
 
     db.session.commit()

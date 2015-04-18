@@ -24,7 +24,10 @@ def test_events(app, db, User, Event):
     event_data = [event.to_json() for event in events.all()]
 
     client = app.test_client()
-    assert_json_equal(client.get('/events/'), event_data)
+
+    for i in range(7):  # 7 days a week
+        url = '/events/2015/3/{}'.format(15 + i)
+        assert_json_equal(client.get(url), event_data)
 
 
 def test_users(app, db, User, Event):
@@ -32,12 +35,15 @@ def test_users(app, db, User, Event):
     user_data = [user.to_json() for user in users.all()]
 
     client = app.test_client()
-    assert_json_equal(client.get('/users/'), user_data)
+    for i in range(7):  # 7 days a week
+        url = '/users/2015/3/{}'.format(15 + i)
+        assert_json_equal(client.get(url), user_data)
 
-
+"""
 def test_search(app, db, User, Event):
     events = Event.query.filter(Event.id.in_([1, 3, 4]))
     event_data = [event.to_json() for event in events.all()]
 
     client = app.test_client()
     assert_json_equal(client.get('/search/Cthulhu'), event_data)
+"""

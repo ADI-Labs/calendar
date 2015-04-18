@@ -74,21 +74,23 @@ def home():
 
 @app.route("/events/<int:year>/<int:month>/<int:day>")
 def events(year, month, day):
-    now = dt.date(year, month, day)
-    begin_week = now - dt.timedelta(days=now.weekday() + 1)
+    start = dt.date(year, month, day)
+    start -= dt.timedelta(days=start.isoweekday() % 7) # Sunday 7 -> 0
     one_week = dt.timedelta(weeks=1)
-    events = Event.query.filter(Event.start > begin_week) \
-                        .filter(Event.start < begin_week + one_week)
+
+    events = Event.query.filter(start <= Event.start) \
+                        .filter(Event.start < start + one_week)
     return jsonify(data=[event.to_json() for event in events.all()])
 
 
 @app.route("/users/<int:year>/<int:month>/<int:day>")
 def users(year, month, day):
-    now = dt.date(year, month, day)
-    begin_week = now - dt.timedelta(days=now.weekday() + 1)
+    start = dt.date(year, month, day)
+    start -= dt.timedelta(days=start.isoweekday() % 7) # Sunday 7 -> 0
     one_week = dt.timedelta(weeks=1)
-    events = Event.query.filter(Event.start > begin_week) \
-                        .filter(Event.start < begin_week + one_week)
+
+    events = Event.query.filter(Event.start >= start) \
+                        .filter(Event.start < start + one_week)
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
