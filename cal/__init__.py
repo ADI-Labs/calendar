@@ -82,7 +82,7 @@ def events(year, month, day):
         events = Event.query
 
     start = dt.date(year, month, day)
-    start -= dt.timedelta(days=start.isoweekday() % 7) # Sunday 7 -> 0
+    start -= dt.timedelta(days=start.isoweekday() % 7)  # Sunday 7 -> 0
 
     events = events.filter(start <= Event.start) \
                    .filter(Event.start < start + dt.timedelta(weeks=1))
@@ -93,7 +93,7 @@ def events(year, month, day):
 @app.route("/users/<int:year>/<int:month>/<int:day>")
 def users(year, month, day):
     start = dt.date(year, month, day)
-    start -= dt.timedelta(days=start.isoweekday() % 7) # Sunday 7 -> 0
+    start -= dt.timedelta(days=start.isoweekday() % 7)  # Sunday 7 -> 0
     one_week = dt.timedelta(weeks=1)
 
     events = Event.query.filter(Event.start >= start) \
@@ -101,18 +101,6 @@ def users(year, month, day):
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
-
-
-@app.route("/search/<searchfield>")
-def search(searchfield):
-    now = dt.datetime.now()
-    begin_week = now - dt.timedelta(days=now.weekday() + 1)
-    one_week = dt.timedelta(weeks=1)
-    search_results = Event.query.whoosh_search(searchfield) \
-                                .filter(Event.start > begin_week) \
-                                .filter(Event.start < begin_week + one_week)
-
-    return jsonify(data=[event.to_json() for event in search_results])
 
 
 @app.route("/isc/", methods=["GET"])
