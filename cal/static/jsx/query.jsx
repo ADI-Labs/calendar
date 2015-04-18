@@ -96,7 +96,7 @@ var RDownload = React.createClass({
     },
     render: function() {
         return (
-            <button onClick={ this.onClick.bind(this) }> Export Events </button>
+            <button onClick={ this.onClick }> Export Events </button>
         )
     }
 })
