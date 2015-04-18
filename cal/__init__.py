@@ -83,9 +83,10 @@ def events(year, month, day):
 
     start = dt.date(year, month, day)
     start -= dt.timedelta(days=start.isoweekday() % 7)  # Sunday 7 -> 0
+    end = start + dt.timedelta(weeks=1)
 
-    events = events.filter(start <= Event.start) \
-                   .filter(Event.start < start + dt.timedelta(weeks=1))
+    events = events.filter((start <= Event.start) | (Event.end >= start)) \
+                   .filter((Event.start < end) | (Event.end < end))
 
     return jsonify(data=[event.to_json() for event in events.all()])
 
@@ -94,10 +95,12 @@ def events(year, month, day):
 def users(year, month, day):
     start = dt.date(year, month, day)
     start -= dt.timedelta(days=start.isoweekday() % 7)  # Sunday 7 -> 0
-    one_week = dt.timedelta(weeks=1)
+    end = start + dt.timedelta(weeks=1)
 
-    events = Event.query.filter(Event.start >= start) \
-                        .filter(Event.start < start + one_week)
+    events = Event.query
+    events = events.filter((start <= Event.start) | (Event.end >= start)) \
+                   .filter((Event.start < end) | (Event.end < end))
+
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)
