@@ -1,10 +1,39 @@
-from facebook import GraphAPI
+import json
+
+import requests
+from flask import current_app
+import iso8601
+from external import utils
+
 from cal.schema import db, User, Event
 from config import FACEBOOK_ACCESS_TOKEN
-import iso8601
-from flask import current_app
 
-graph = GraphAPI(FACEBOOK_ACCESS_TOKEN)
+
+def depaginate(data):
+    if "paging" in data and "next" in data["paging"]:
+        r = requests.get(data["paging"]["next"])
+        data["data"] += depaginate(json.loads(r.text))
+
+    return data["data"]
+
+
+def get_users():
+    url = "https://graph.facebook.com/v2.3/events"
+    payload = {"access_token": FACEBOOK_ACCESS_TOKEN, "limit": 500}
+
+    users = {}
+
+    for chunk in utils.grouper(User.query.all()):
+        ids = ",".join(str(user.fb_id)
+                       for user in chunk
+                       if user.fb_id is not None)
+        payload["ids"] = ids
+
+        r = requests.get(url, params=payload)
+        users.update(json.loads(r.text))
+
+    return {key: depaginate(value)
+            for key, value in users.items()}
 
 
 def update_fb_events():
