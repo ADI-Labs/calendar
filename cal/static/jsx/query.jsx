@@ -1,4 +1,4 @@
-var toDateString = function(date) {
+function toDateString(date) {
     return (date.getFullYear().toString() + "/" +
             (date.getMonth() + 1).toString() + "/" + // +1 b/c js months start at 0
             date.getDate().toString());
@@ -23,7 +23,7 @@ var RSearch = React.createClass({
             </div>
         );
     }
-})
+});
 
 var RReset = React.createClass({
     onclick: function() {
@@ -38,7 +38,7 @@ var RReset = React.createClass({
             </div>
         );
     }
-})
+});
 
 var RFilterCheckbox = React.createClass({
     render: function() {
@@ -62,7 +62,7 @@ var RFilterCheckbox = React.createClass({
             this.props.removeUser(e.target.id);
         }
     }
-})
+});
 
 var RFilterForm = React.createClass({
     render: function() {
@@ -83,23 +83,21 @@ var RFilterForm = React.createClass({
             </div>
         );
     }
-})
+});
 
 var RDownload = React.createClass({
     onClick: function() {
         var uids = this.props.userList.map(function (user) {
-            return user.id
+            return user.id;
         });
         url = "/isc/?" + $.param({event_ids: uids});
         // kind of a hack, don't know how else to do it
         window.location.href = url;
     },
     render: function() {
-        return (
-            <button onClick={ this.onClick }> Export Events </button>
-        )
+        return <button onClick={ this.onClick }> Export Events </button>;
     }
-})
+});
 
 var RQuery = React.createClass({
     render: function() {
@@ -112,4 +110,4 @@ var RQuery = React.createClass({
             </div>
         );
     }
-})
+});

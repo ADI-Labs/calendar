@@ -2,11 +2,12 @@ var toDateString = function(date) {
     return (date.getFullYear().toString() + "/" +
             (date.getMonth() + 1).toString() + "/" + // +1 b/c js months start at 0
             date.getDate().toString());
-}
+};
 
 var RApp = React.createClass({
     getInitialState: function() {
-        return {eventList: [], userList: [], date: new Date(), allEventList: []}
+        return {eventList: [], userList: [], 
+                date: new Date(), allEventList: []};
     },
 
     componentDidMount: function() {
@@ -50,7 +51,7 @@ var RApp = React.createClass({
     },
 
     incrementDate: function(days) {
-        var date = this.state.date
+        var date = this.state.date;
         date.setDate(date.getDate() + days);
         this.setDate(date);
     },
@@ -71,6 +72,6 @@ var RApp = React.createClass({
             </div>
         );
     }
-})
+});
 
 React.render(<RApp/>, document.getElementById("content"));
