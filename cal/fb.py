@@ -10,6 +10,14 @@ from config import FACEBOOK_ACCESS_TOKEN
 
 
 def depaginate(data):
+    """Depaginates facebook data.
+
+    Facebook only returns a certain number of results for each request.
+    To get the full results, we have to follow "next" urls.
+
+    :param json - Full json of front page
+    :return List[json] - List of all result data
+    """
     if "paging" in data and "next" in data["paging"]:
         r = requests.get(data["paging"]["next"])
         data["data"] += depaginate(json.loads(r.text))
@@ -18,25 +26,27 @@ def depaginate(data):
 
 
 def get_users():
+    """Gets list of Facebook users and their events.
+
+    :return Dict[str, List[str]] - Maps user id to (incomplete) event blobs
+    """
     url = "https://graph.facebook.com/v2.3/events"
     payload = {"access_token": FACEBOOK_ACCESS_TOKEN, "limit": 500}
 
     users = {}
 
-    for chunk in utils.grouper(User.query.all()):
-        ids = ",".join(str(user.fb_id)
-                       for user in chunk
-                       if user.fb_id is not None)
-        payload["ids"] = ids
+    query = User.query.filter(User.fb_id.isnot(None))
+    for chunk in utils.grouper(query):
+        payload["ids"] = ",".join(str(user.fb_id) for user in chunk)
 
         r = requests.get(url, params=payload)
         users.update(json.loads(r.text))
 
-    return {key: depaginate(value)
-            for key, value in users.items()}
+    return {key: depaginate(value) for key, value in users.items()}
 
 
 def update_fb_events():
+<<<<<<< HEAD
     for user in User.query.all():
         if user.fb_id is None:
             continue
@@ -69,5 +79,40 @@ def update_fb_events():
             current_event.url = "https://www.facebook.com/" + event['id']
 
             db.session.add(current_event)
+=======
+    url = "https://graph.facebook.com/v2.3/"
+    payload = {"access_token": FACEBOOK_ACCESS_TOKEN}
 
+    for user_id, events in get_users().items():
+        user = User.query.filter(User.fb_id == user_id).first()
+
+        for chunk in utils.grouper(events):
+            ids = ",".join(event_data["id"] for event_data in chunk)
+            payload["ids"] = ids
+
+            # new request to get complete information
+            r = requests.get(url, params=payload)
+            data = json.loads(r.text)
+
+            for event_id, event_data in data.items():
+                event = Event.query.filter(Event.fb_id == event_id).first()
+                if event is None:   # create new event
+                    msg = "New fb event from {}: {}".format(user_id, event_id)
+                    current_app.logger.debug(msg)
+                    event = Event(fb_id=event_id)
+
+                start = iso8601.parse_date(event_data["start_time"])
+                event.start = start.replace(tzinfo=None)
+
+                if "end_time" in event_data:
+                    end = iso8601.parse_date(event_data["end_time"])
+                    event.end = end.replace(tzinfo=None)
+
+                event.user_id = user.id
+                event.description = event_data.get("description", None)
+                event.location = event_data.get('location', None)
+                event.name = event_data['name']
+                event.url = "https://www.facebook.com/" + event_data['id']
+
+                db.session.add(event)
     db.session.commit()
