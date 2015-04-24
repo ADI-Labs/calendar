@@ -4,7 +4,7 @@ Flask-WhooshAlchemy==0.56
 Flask-Testing==0.4.2
 Jinja2==2.7.3
 MarkupSafe==0.23
-SQLAlchemy==0.9.9
+SQLAlchemy==1.0.1
 Werkzeug==0.10.4
 PyYAML==3.11
 facebook-sdk==0.4.0
@@ -12,5 +12,6 @@ iso8601==0.1.10
 itsdangerous==0.24
 pytz==2015.2
 icalendar==3.9.0
-celery==3.1.17
+celery==3.1.18
 fuzzywuzzy==0.5.0
+python-Levenshtein==0.12.0
