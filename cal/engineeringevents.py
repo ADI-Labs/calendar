@@ -24,22 +24,23 @@ def update_engineering_events():
 
         base = "http://calendar.columbia.edu/sundial/webapi/"
         ical_url = base + "iCalendar.php?EventID={}".format(event_id)
+        url = base + "get.php?vt=detail&id={}&con=standalone".format(event_id)
 
         r_event = requests.get(ical_url)
         cal = Calendar.from_ical(r_event.text)
-        current_event = Event()
+
+	current_event = Event.query.filter(Event.sundial_id == event_id).first()
+        if current_event is None:
+            current_event = Event(name=event_name, url=url, 
+                                  sundial_id=event_id, user_id=user.id)
 
         # only one event in cal
         for event in cal.walk('vevent'):
-            current_event.start = event.get('dtstart').dt
-            current_event.end = event.get('dtend').dt
+            current_event.start = event.get('dtstart').dt.replace(tzinfo=None)
+            current_event.end = event.get('dtend').dt.replace(tzinfo=None)
             current_event.description = event.get('description')
             current_event.location = event.get('location')
 
-        current_event.name = event_name
-        url = base + "get.php?vt=detail&id={}&con=standalone".format(event_id)
-        current_event.url = url
-        current_event.user_id = user.id
 
         db.session.add(current_event)
     db.session.commit()

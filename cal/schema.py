@@ -20,6 +20,7 @@ class Event(db.Model):
     description = db.Column(db.Text)
 
     fb_id = db.Column(db.String, unique=True, nullable=True)
+    sundial_id = db.Column(db.String, unique=True, nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
