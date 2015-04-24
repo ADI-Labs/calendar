@@ -60,7 +60,8 @@ var RApp = React.createClass({
         return (
             <div className="app">
                 <RCalendar eventList={ this.state.eventList } 
-                    incrementDate = {this.incrementDate}/>
+                    incrementDate = {this.incrementDate}
+                    date = {this.state.date}/>
                 <RQuery eventList={this.state.eventList} 
                     userList={this.state.userList} 
                     removeUser={this.removeUser} 

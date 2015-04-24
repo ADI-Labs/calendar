@@ -93,18 +93,25 @@ var RCalendar = React.createClass({
         return (
             <table className="calendar">
                 <thead>
-                    <td> Sunday </td>
-                    <td> Monday </td>
-                    <td> Tuesday </td>
-                    <td> Wednesday </td>
-                    <td> Thursday </td>
-                    <td> Friday </td>
-                    <td> Saturday </td>
+                    <td> Sunday {this.getDate(0)} </td>
+                    <td> Monday {this.getDate(1)} </td>
+                    <td> Tuesday {this.getDate(2)} </td>
+                    <td> Wednesday {this.getDate(3)} </td>
+                    <td> Thursday {this.getDate(4)} </td>
+                    <td> Friday {this.getDate(5)} </td>
+                    <td> Saturday {this.getDate(6)} </td>
                     <RNextWeek incrementDate={this.props.incrementDate}/>
                 </thead>
 
                 <RWeek eventList={ this.props.eventList } />
             </table>
+        );
+    },
+    getDate: function(day_of_week) {
+        date = this.props.date;
+        date.setDate(date.getDate() - date.getDay() + day_of_week);
+        return (
+            date.getMonth().toString() + "/" + date.getDate().toString()
         );
     }
 });
