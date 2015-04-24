@@ -22,7 +22,9 @@ results
 include
 share
 lib/python2.7
+src
 
+config/src
 config/settings.*
 !config/settings.dev
 !config/settings.test

@@ -1,10 +1,10 @@
 import json
-from urllib import urlencode
+from urllib.parse import urlencode
 
 
 def assert_json_equal(response, query):
     assert response.status_code == 200
-    rdata = json.loads(response.data)
+    rdata = json.loads(response.data.decode())
     data = [d.to_json() for d in query.all()]
 
     # "data" is only key in rdata

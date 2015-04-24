@@ -7,7 +7,7 @@ with app.app_context():
     # Populate the user database
     with open('cal/groups.yml') as fin:
         users = yaml.load(fin)
-    for username, ids in users.iteritems():
+    for username, ids in users.items():
         if User.query.filter_by(name=username).first() is None:
             new_user = User(name=username)
             new_user.fb_id = ids.get('fb', None)

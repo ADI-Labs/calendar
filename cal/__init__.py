@@ -1,5 +1,5 @@
 import datetime as dt
-from StringIO import StringIO
+from io import StringIO
 
 from celery import Celery
 

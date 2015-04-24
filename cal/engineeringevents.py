@@ -1,13 +1,13 @@
-from __future__ import absolute_import
+from urllib import parse as urlparse
+
+from bs4 import BeautifulSoup
+import requests
+from icalendar import Calendar
+
+from cal.schema import db, User, Event
 
 
 def update_engineering_events():
-    from cal.schema import db, User, Event
-    from bs4 import BeautifulSoup
-    import requests
-    from icalendar import Calendar
-    import urlparse
-
     r = requests.get('http://engineering.columbia.edu/feeds/events')
     soup = BeautifulSoup(r.text)
 
@@ -18,7 +18,6 @@ def update_engineering_events():
 
         event_name = current_soup.find('title').text
         url = current_soup.find('link').get_text()
-        # event url
         u = urlparse.urlparse(url)
         event_id = urlparse.parse_qs(u.query)["id"][0]
 
@@ -29,18 +28,17 @@ def update_engineering_events():
         r_event = requests.get(ical_url)
         cal = Calendar.from_ical(r_event.text)
 
-	current_event = Event.query.filter(Event.sundial_id == event_id).first()
-        if current_event is None:
-            current_event = Event(name=event_name, url=url, 
-                                  sundial_id=event_id, user_id=user.id)
+        cevent = Event.query.filter(Event.sundial_id == event_id).first()
+        if cevent is None:
+            cevent = Event(name=event_name, url=url, sundial_id=event_id,
+                           user_id=user.id)
 
         # only one event in cal
         for event in cal.walk('vevent'):
-            current_event.start = event.get('dtstart').dt.replace(tzinfo=None)
-            current_event.end = event.get('dtend').dt.replace(tzinfo=None)
-            current_event.description = event.get('description')
-            current_event.location = event.get('location')
+            cevent.start = event.get('dtstart').dt.replace(tzinfo=None)
+            cevent.end = event.get('dtend').dt.replace(tzinfo=None)
+            cevent.description = event.get('description')
+            cevent.location = event.get('location')
 
-
-        db.session.add(current_event)
+        db.session.add(cevent)
     db.session.commit()

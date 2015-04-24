@@ -10,7 +10,6 @@ from os import environ, pardir
 from os.path import join, abspath, dirname
 from sys import exit
 
-
 try:
     # flask settings
     HOST = environ['HOST']
@@ -31,8 +30,6 @@ try:
 
 except KeyError as e:
     """ Throw an error if a setting is missing """
-    print "ERR MSG: {}".format(e.message)
-    print ("Some of your settings aren't in the environment."
-           "You probably need to run:"
-           "\n\n\tsource config/<your settings file>")
-    exit(1)
+    exit("Some of your settings aren't in the environment."
+         "You probably need to run:"
+         "\n\tsource config/<your settings file>\n")
