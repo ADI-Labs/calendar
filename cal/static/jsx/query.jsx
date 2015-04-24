@@ -70,8 +70,8 @@ var RFilterForm = React.createClass({
         var removeFunction = this.props.removeUser;
         var userNodes = this.props.userList.map(function(user) {
             return (
-                <RFilterCheckbox user={user} removeUser={removeFunction}
-                                 addUser={addFunction}/>
+                <RFilterCheckbox key={user.id} user={user} 
+                    removeUser={removeFunction} addUser={addFunction}/>
             );
         });
 
