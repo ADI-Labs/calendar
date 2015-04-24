@@ -1,5 +1,5 @@
 import yaml
-from cal import app, db, User, update_fb_events
+from cal import app, db, User, update_fb_events, update_engineering_events
 
 with app.app_context():
     db.create_all()
