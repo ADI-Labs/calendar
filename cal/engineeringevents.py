@@ -1,13 +1,14 @@
-from __future__ import absolute_import
+from urllib import parse
+
+from bs4 import BeautifulSoup
+import requests
+from icalendar import Calendar
+
+from cal.schema import db, User, Event
+import urlparse
 
 
 def update_engineering_events():
-    from cal.schema import db, User, Event
-    from bs4 import BeautifulSoup
-    import requests
-    from icalendar import Calendar
-    import urlparse
-
     r = requests.get('http://engineering.columbia.edu/feeds/events')
     soup = BeautifulSoup(r.text)
 
@@ -18,7 +19,6 @@ def update_engineering_events():
 
         event_name = current_soup.find('title').text
         url = current_soup.find('link').get_text()
-        # event url
         u = urlparse.urlparse(url)
         event_id = urlparse.parse_qs(u.query)["id"][0]
 
