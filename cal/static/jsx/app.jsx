@@ -42,7 +42,7 @@ var RApp = React.createClass({
         state.date = date;
         this.setState(state);
         $.getJSON("/events/" + toDateString(this.state.date), function(data) {
-            this.setState({eventList: data.data});
+            this.setState({eventList: data.data, allEventList: data.data});
         }.bind(this));
 
         $.getJSON("/users/" + toDateString(this.state.date), function(data) {
@@ -59,6 +59,11 @@ var RApp = React.createClass({
     render: function() {
         return (
             <div className="app">
+                <RSearch setGlobalState={this.setState.bind(this)}
+                    userList={this.state.userList}
+                    incrementDate={this.incrementDate}
+                    date = {this.state.date}
+                />
                 <RCalendar eventList={ this.state.eventList } 
                     incrementDate = {this.incrementDate}
                     date = {this.state.date}/>

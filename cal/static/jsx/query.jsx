@@ -8,18 +8,29 @@ var RSearch = React.createClass({
     onclick: function() {
         var url = "/events/" + toDateString(this.props.date);
         var search_string = document.getElementById("searchbar").value;
-        var payload = {search: search_string};
+        // Empty search string check.
+        var payload = search_string == "" ? {} : {search: search_string};
 
-        $.getJSON(url, {search: search_string}, function(data) {
+        $.getJSON(url, payload, function(data) {
             this.props.setGlobalState({eventList: data.data});
         }.bind(this));
     },
+
+    onKeyPress: function(e) {
+        var RETURN = 13;
+        if (e.charCode == RETURN) {
+            this.onclick();
+        }
+    },
+
     render: function() {
         //div instead of form so that page doesn't reload
         return (
             <div className="search">
-                <input id="searchbar" type="text"/>
+                <input id="searchbar" className="searchBar" type="text" onKeyPress={this.onKeyPress}/>
                 <button onClick={this.onclick}> Search </button>
+                <RDownload userList={ this.props.userList }/>
+                <RNextWeek incrementDate={this.props.incrementDate}/>
             </div>
         );
     }
@@ -33,9 +44,7 @@ var RReset = React.createClass({
     },
     render: function() {
         return (
-            <div className="reset">
-                <button onClick={this.onclick}> Reset Events </button>
-            </div>
+            <button className="reset" onClick={this.onclick}> Reset </button>
         );
     }
 });
@@ -95,7 +104,9 @@ var RDownload = React.createClass({
         window.location.href = url;
     },
     render: function() {
-        return <button onClick={ this.onClick }> Export Events </button>;
+        return (
+            <button className="exportButton" onClick={ this.onClick }> Export </button>
+        )
     }
 });
 
@@ -103,10 +114,8 @@ var RQuery = React.createClass({
     render: function() {
         return (
             <div className="query">
-                <RDownload userList={ this.props.userList }/>
-                <RSearch setGlobalState={this.props.setGlobalState} date={this.props.date} />
-                <RFilterForm userList={ this.props.userList } removeUser={this.props.removeUser} addUser={this.props.addUser}/>
                 <RReset setGlobalState={this.props.setGlobalState} date={this.props.date} setDate={this.props.setDate}/>
+                <RFilterForm userList={ this.props.userList } removeUser={this.props.removeUser} addUser={this.props.addUser}/>
             </div>
         );
     }

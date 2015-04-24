@@ -45,8 +45,8 @@ var REvent = React.createClass({
 
         return (
             <div className="event" onclick={ this.click }>
-                { timeString }  <br/>
-                <a href={this.props.data.url}> { this.props.data.name } </a>
+                <a href={this.props.data.url}> { this.props.data.name } </a> <br />
+                { timeString }
             </div>
         );
     }
@@ -100,7 +100,6 @@ var RCalendar = React.createClass({
                     <td> Thursday {this.getDate(4)} </td>
                     <td> Friday {this.getDate(5)} </td>
                     <td> Saturday {this.getDate(6)} </td>
-                    <RNextWeek incrementDate={this.props.incrementDate}/>
                 </thead>
 
                 <RWeek eventList={ this.props.eventList } />
@@ -125,7 +124,7 @@ var RNextWeek = React.createClass({
     },
     render: function() {
         return (
-            <td> <button onClick={this.previous}> Previous Week </button> <button onClick={this.next}> Next Week </button> </td>
+            <div className="nextWeek"><button onClick={this.previous}> Previous Week </button> <button onClick={this.next}> Next Week </button></div>
         );
     }
 });
