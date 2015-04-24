@@ -55,7 +55,7 @@ var REvent = React.createClass({
 var RDay = React.createClass({
     render: function() {
         var events = this.props.eventList.map(function(evt, i) {
-            return <REvent data={ evt }/>;
+            return <REvent key={ evt.id } data={ evt }/>;
         });
 
         return (
@@ -77,7 +77,7 @@ var RWeek = React.createClass({
 
         var days = [];
         for (i = 0; i < 7; i++) {
-            days.push( <RDay eventList={ events[i] }/> );
+            days.push( <RDay key={ i } eventList={ events[i] }/> );
         }
 
         return (

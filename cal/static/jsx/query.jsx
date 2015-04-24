@@ -47,7 +47,7 @@ var RFilterCheckbox = React.createClass({
             <div className="filterForm">
                 <input type="checkbox" name="user" id={user.id}
                         onChange={this.handleChange} defaultChecked="true"/>
-                <label for={user.id}>{user.name}</label>
+                <label htmlFor={user.id}>{user.name}</label>
                 <br />
             </div>
         );
@@ -70,8 +70,8 @@ var RFilterForm = React.createClass({
         var removeFunction = this.props.removeUser;
         var userNodes = this.props.userList.map(function(user) {
             return (
-                <RFilterCheckbox user={user} removeUser={removeFunction}
-                                 addUser={addFunction}/>
+                <RFilterCheckbox key={user.id} user={user} 
+                    removeUser={removeFunction} addUser={addFunction}/>
             );
         });
 
