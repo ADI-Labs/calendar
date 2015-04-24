@@ -14,6 +14,7 @@ before_install:
 install:
   - pip install -r config/requirements.txt
   - pip install flake8
+  - npm install -g jsxhint
 
 before_script:
   - source config/settings.test 
@@ -21,4 +22,5 @@ before_script:
 
 script:
   - flake8 .
-  - py.test
+  - py.test -v
+  - jsxhint cal/static/jsx/*

@@ -1,9 +1,12 @@
 import json
+from urllib import urlencode
 
 
-def assert_json_equal(response, data):
+def assert_json_equal(response, query):
     assert response.status_code == 200
     rdata = json.loads(response.data)
+    data = [d.to_json() for d in query.all()]
+
     # "data" is only key in rdata
     assert "data" in rdata and len(rdata) == 1
 
@@ -13,31 +16,35 @@ def assert_json_equal(response, data):
         assert d in data
 
 
-def test_homepage(app, db, User, Event):
+def test_homepage(app, User, Event):
     client = app.test_client()
     assert client.get("/").status_code == 200
 
 
-def test_events(app, db, User, Event):
+def test_events(app, User, Event):
     events = Event.query.filter(Event.id.in_([1, 3, 4, 6]))
 
-    event_data = [event.to_json() for event in events.all()]
-
     client = app.test_client()
-    assert_json_equal(client.get('/events/'), event_data)
+    for i in range(7):  # 7 days a week
+        url = '/events/2015/3/{}'.format(15 + i)
+        assert_json_equal(client.get(url), events)
 
 
-def test_users(app, db, User, Event):
+def test_users(app, User, Event):
     users = User.query.filter(User.id.in_([1, 2]))
-    user_data = [user.to_json() for user in users.all()]
 
     client = app.test_client()
-    assert_json_equal(client.get('/users/'), user_data)
+    for i in range(7):  # 7 days a week
+        url = '/users/2015/3/{}'.format(15 + i)
+        assert_json_equal(client.get(url), users)
 
 
-def test_search(app, db, User, Event):
+def test_search(app, User, Event):
     events = Event.query.filter(Event.id.in_([1, 3, 4]))
-    event_data = [event.to_json() for event in events.all()]
 
     client = app.test_client()
-    assert_json_equal(client.get('/search/Cthulhu'), event_data)
+    for i in range(7):
+        url = '/events/2015/3/{}'.format(15 + i)
+        url += "?" + urlencode({"search": "Cthulhu"})
+
+        assert_json_equal(client.get(url), events)

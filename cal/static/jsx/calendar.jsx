@@ -7,7 +7,7 @@ function formatTime(d) {
     timeString += hour % 12 || 12;
 
     // Humanize minutes.
-    if (d.getMinutes() != 0) {
+    if (d.getMinutes() !== 0) {
         timeString += ":" + d.getMinutes();
     }
 
@@ -33,8 +33,8 @@ var REvent = React.createClass({
             // Only add start time's AM/PM if start and end dates are
             // different, or start and end are in different halves of
             // the day.
-            if (start.toDateString() == end.toDateString()
-                || AMPM(start) != AMPM(end)) {
+            equal_dates = start.toDateString() == end.toDateString();
+            if (equal_dates || AMPM(start) != AMPM(end)) {
                 timeString += AMPM(start);
             }
             timeString += " \u2013 " + formatTime(end) + AMPM(end);
@@ -50,12 +50,12 @@ var REvent = React.createClass({
             </div>
         );
     }
-})
+});
 
 var RDay = React.createClass({
     render: function() {
         var events = this.props.eventList.map(function(evt, i) {
-            return <REvent data={ evt }/>
+            return <REvent data={ evt }/>;
         });
 
         return (
@@ -64,7 +64,7 @@ var RDay = React.createClass({
             </td>
         );
     }
-})
+});
 
 var RWeek = React.createClass({
     render: function() {
@@ -76,10 +76,8 @@ var RWeek = React.createClass({
         }
 
         var days = [];
-        for (var i = 0; i < 7; i++) {
-            days.push(
-                <RDay eventList={ events[i] }/>
-            )
+        for (i = 0; i < 7; i++) {
+            days.push( <RDay eventList={ events[i] }/> );
         }
 
         return (
@@ -88,7 +86,7 @@ var RWeek = React.createClass({
             </tr>
         );
     }
-})
+});
 
 var RCalendar = React.createClass({
     render: function() {
@@ -109,7 +107,7 @@ var RCalendar = React.createClass({
             </table>
         );
     }
-})
+});
 
 var RNextWeek = React.createClass({
     next: function() {
@@ -123,4 +121,4 @@ var RNextWeek = React.createClass({
             <td> <button onClick={this.previous}> Previous Week </button> <button onClick={this.next}> Next Week </button> </td>
         );
     }
-})
+});
