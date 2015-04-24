@@ -9,6 +9,7 @@ import flask.ext.whooshalchemy as whooshalchemy
 from cal.schema import db, Event, User  # noqa
 from cal.fb import update_fb_events
 from cal.isc import to_icalendar
+from cal.engineeringevents import update_engineering_events  # noqa
 
 # Initialize the app
 app = Flask(__name__)
@@ -100,7 +101,6 @@ def users(year, month, day):
     events = Event.query
     events = events.filter((start <= Event.start) | (Event.end >= start)) \
                    .filter((Event.start < end) | (Event.end < end))
-
     users = {event.user for event in events}    # use set to make users unique
     users = [user.to_json() for user in sorted(users, key=lambda u: u.name)]
     return jsonify(data=users)

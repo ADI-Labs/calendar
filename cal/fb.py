@@ -11,6 +11,7 @@ def update_fb_events():
     for user in User.query.all():
         if user.fb_id is None:
             continue
+
         events = graph.get_connections(id=user.fb_id, connection_name="events")
         events = events["data"]
         for event in events:
