@@ -87,9 +87,10 @@ def events(year, month, day):
     end = start + dt.timedelta(weeks=1)
 
     events = events.filter((start <= Event.start) | (Event.end >= start)) \
-                   .filter((Event.start < end) | (Event.end < end))
-
-    return jsonify(data=[event.to_json() for event in events.all()])
+                   .filter((Event.start < end) | (Event.end < end)) \
+                   .order_by(Event.start, Event.end, Event.name)
+    events = [event.to_json() for event in events]
+    return jsonify(data=events)
 
 
 @app.route("/users/<int:year>/<int:month>/<int:day>")
