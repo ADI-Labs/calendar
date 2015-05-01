@@ -41,7 +41,7 @@ var REvent = React.createClass({
 
         return (
             <div className="event" onclick={ this.click }>
-                <a href={this.props.data.url}> { this.props.data.name } </a> <br />
+                <a href={this.props.data.url} target="_blank"> { this.props.data.name } </a> <br />
                 { timeString }
             </div>
         );
