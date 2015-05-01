@@ -30,7 +30,7 @@ var RSearch = React.createClass({
             <div className="search">
                 <input id="searchbar" className="searchBar" type="text" onKeyPress={this.onKeyPress}/>
                 <button onClick={this.onclick}> Search </button>
-                <RDownload userList={ this.props.userList }/>
+                <RDownload eventList={ this.props.eventList }/>
                 <RNextWeek incrementDate={this.props.incrementDate}/>
             </div>
         );
@@ -97,10 +97,10 @@ var RFilterForm = React.createClass({
 
 var RDownload = React.createClass({
     onClick: function() {
-        var uids = this.props.userList.map(function (user) {
-            return user.id;
+        var eids = this.props.eventList.map(function (e) {
+            return e.id;
         });
-        url = "/isc/?" + $.param({event_ids: uids});
+        url = "/ics/?" + $.param({event_ids: eids});
         // kind of a hack, don't know how else to do it
         window.location.href = url;
     },
