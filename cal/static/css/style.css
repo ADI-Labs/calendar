@@ -23,6 +23,7 @@ td {
     width: 12%;
     padding: 0;
     margin: 0;
+    vertical-align: top;
 }
 
 a {
@@ -36,6 +37,7 @@ button {
 .event {
     font-size: smaller;
     padding: 5%;
+    min-height: 100px;
 }
 
 .event:nth-child(odd) {
