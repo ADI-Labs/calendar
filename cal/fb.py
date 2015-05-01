@@ -75,7 +75,7 @@ def update_fb_events():
                     event.end = end.replace(tzinfo=None)
 
                 event.user_id = user.id
-                event.description = event_data.get("description", None)
+                event.description = event_data.get("description", "")
                 event.location = event_data.get('location', None)
                 event.name = event_data['name']
                 event.url = "https://www.facebook.com/" + event_data['id']

@@ -59,6 +59,7 @@ def Event(app, db, User):
         event["start"] = start + day * event["start"]
         if "end" in event:
             event["end"] = start + day * event["end"]
+        event["description"] = ""
         db.session.add(Event(**event))
 
     db.session.commit()
