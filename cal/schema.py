@@ -14,10 +14,10 @@ class Event(db.Model):
     name = db.Column(db.String(128), nullable=False)
 
     start = db.Column(db.DateTime, nullable=False)
-    end = db.Column(db.DateTime)
-    location = db.Column(db.String(64))
+    end = db.Column(db.DateTime, nullable=True)
+    location = db.Column(db.String(64), nullable=True)
     url = db.Column(db.String(128), unique=True)
-    description = db.Column(db.Text)
+    description = db.Column(db.Text, nullable=False)
 
     fb_id = db.Column(db.String, unique=True, nullable=True)
     sundial_id = db.Column(db.String, unique=True, nullable=True)
@@ -80,7 +80,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    fb_id = db.Column(db.String, unique=True)
+    fb_id = db.Column(db.String, unique=True, nullable=True)
 
     events = db.relationship("Event", backref="user")
 
