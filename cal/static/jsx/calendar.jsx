@@ -7,7 +7,10 @@ function formatTime(d) {
     timeString += hour % 12 || 12;
 
     // Humanize minutes.
-    if (d.getMinutes() !== 0) {
+    if (d.getMinutes() < 10) {
+        timeString += ":0" + d.getMinutes();
+    }
+    else {
         timeString += ":" + d.getMinutes();
     }
 
@@ -30,14 +33,7 @@ var REvent = React.createClass({
             var end = new Date(this.props.data.end);
             var endTimeString = formatTime(end);
 
-            // Only add start time's AM/PM if start and end dates are
-            // different, or start and end are in different halves of
-            // the day.
-            equal_dates = start.toDateString() == end.toDateString();
-            if (equal_dates || AMPM(start) != AMPM(end)) {
-                timeString += AMPM(start);
-            }
-            timeString += " \u2013 " + formatTime(end) + AMPM(end);
+            timeString += AMPM(start) + " \u2013 " + formatTime(end) + AMPM(end);
         }
         else {
             timeString += AMPM(start);
