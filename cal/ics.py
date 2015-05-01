@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from icalendar import Calendar as iCalendar, Event as iEvent, vText, vDatetime
+from icalendar import Calendar as iCalendar, Event as iEvent, vText, \
+    vDatetime, vCalAddress
 
 
 def to_icalendar(events):
-    """ Converts events to .isc format
+    """ Converts events to .ics format
     :param events = Iterable(cal.schema.Event)
-    :return str
+    :return bytes
     """
     summary = "Calendar for Columbia University made by ADI (adicu.com)"
     cal = iCalendar(dtstart=vDatetime(datetime.now()),
@@ -14,7 +15,9 @@ def to_icalendar(events):
 
     for e in events:
         # for every event, create an event object
-        vevent = iEvent(summary=e.name, organizer=e.user.name,
+        organizer = vCalAddress("MAILTO:''")
+        organizer.params['cn'] = e.user.name
+        vevent = iEvent(summary=e.name, organizer=organizer,
                         location=vText(e.location), dtstart=vDatetime(e.start),
                         description=e.url)
 

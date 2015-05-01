@@ -1,5 +1,5 @@
 import datetime as dt
-from io import StringIO
+from io import BytesIO
 
 from celery import Celery
 
@@ -8,7 +8,7 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 from cal.schema import db, Event, User  # noqa
 from cal.fb import update_fb_events
-from cal.isc import to_icalendar
+from cal.ics import to_icalendar
 from cal.engineeringevents import update_engineering_events  # noqa
 
 # Initialize the app
@@ -106,11 +106,11 @@ def users(year, month, day):
     return jsonify(data=users)
 
 
-@app.route("/isc/", methods=["GET"])
-def to_isc():
+@app.route("/ics/", methods=["GET"])
+def to_ics():
     # get list of ids from GET request
     event_ids = request.args.getlist("event_ids[]", type=int)
     events = Event.query.filter(Event.id.in_(event_ids))
 
-    return send_file(StringIO(to_icalendar(events)), mimetype="text/calendar",
-                     as_attachment=True, attachment_filename="calendar.isc")
+    return send_file(BytesIO(to_icalendar(events)), mimetype="text/calendar",
+                     as_attachment=True, attachment_filename="calendar.ics")

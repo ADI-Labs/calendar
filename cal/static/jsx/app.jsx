@@ -60,7 +60,7 @@ var RApp = React.createClass({
         return (
             <div className="app">
                 <RSearch setGlobalState={this.setState}
-                    userList={this.state.userList}
+                    eventList={this.state.eventList}
                     incrementDate={this.incrementDate}
                     date = {this.state.date}
                 />
