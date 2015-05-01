@@ -11,12 +11,12 @@ class Event(db.Model):
     __searchable__ = ['location', 'name']
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String, nullable=False)
 
     start = db.Column(db.DateTime, nullable=False)
     end = db.Column(db.DateTime, nullable=True)
-    location = db.Column(db.String(64), nullable=True)
-    url = db.Column(db.String(128), unique=True)
+    location = db.Column(db.String, nullable=True)
+    url = db.Column(db.String, unique=True)
     description = db.Column(db.Text, nullable=False)
 
     fb_id = db.Column(db.String, unique=True, nullable=True)
