@@ -59,7 +59,7 @@ var RApp = React.createClass({
     render: function() {
         return (
             <div className="app">
-                <RSearch setGlobalState={this.setState.bind(this)}
+                <RSearch setGlobalState={this.setState}
                     userList={this.state.userList}
                     incrementDate={this.incrementDate}
                     date = {this.state.date}

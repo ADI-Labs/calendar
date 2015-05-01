@@ -40,18 +40,6 @@ button {
     min-height: 100px;
 }
 
-.event:nth-child(odd) {
-}
-
-.event:nth-child(odd) > a {
-}
-
-.event:nth-child(even) {
-}
-
-.event:nth-child(even) > a {
-}
-
 .calendar {
     float: left;
     width: 100%;

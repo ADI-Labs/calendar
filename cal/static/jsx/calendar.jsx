@@ -33,6 +33,7 @@ var REvent = React.createClass({
             var end = new Date(this.props.data.end);
             var endTimeString = formatTime(end);
 
+            // \u2013 is a -
             timeString += AMPM(start) + " \u2013 " + formatTime(end) + AMPM(end);
         }
         else {

@@ -9,7 +9,7 @@ var RSearch = React.createClass({
         var url = "/events/" + toDateString(this.props.date);
         var search_string = document.getElementById("searchbar").value;
         // Empty search string check.
-        var payload = search_string == "" ? {} : {search: search_string};
+        var payload = search_string === "" ? {} : {search: search_string};
 
         $.getJSON(url, payload, function(data) {
             this.props.setGlobalState({eventList: data.data});
@@ -17,6 +17,7 @@ var RSearch = React.createClass({
     },
 
     onKeyPress: function(e) {
+        // When user presses enter in the search bar, start a search.
         var RETURN = 13;
         if (e.charCode == RETURN) {
             this.onclick();
@@ -106,7 +107,7 @@ var RDownload = React.createClass({
     render: function() {
         return (
             <button className="exportButton" onClick={ this.onClick }> Export </button>
-        )
+        );
     }
 });
 
