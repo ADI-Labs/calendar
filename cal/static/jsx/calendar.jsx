@@ -103,12 +103,11 @@ var RCalendar = React.createClass({
             </table>
         );
     },
+
     getDate: function(day_of_week) {
         date = this.props.date;
         date.setDate(date.getDate() - date.getDay() + day_of_week);
-        return (
-            date.getMonth().toString() + "/" + date.getDate().toString()
-        );
+        return (date.getMonth() + 1) + "/" + date.getDate();
     }
 });
 
