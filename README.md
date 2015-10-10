@@ -83,5 +83,3 @@ For now, we get events from Facebook using their API. The Facebook groups that w
 * Emily Pakulski
 * Angela Wang
 
-
-test
