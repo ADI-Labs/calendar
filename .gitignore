@@ -39,3 +39,6 @@ pip-selfcheck.json
 events.db
 celerybeat-schedule
 whoosh_index
+
+.cache
+

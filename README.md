@@ -87,6 +87,5 @@ For now, we get events from Facebook using their API. The Facebook groups that w
 * Jonathan
 * Gabrielle
 * Diana
-* Ray
-
+* Sophie
 
