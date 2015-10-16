@@ -6,11 +6,18 @@ Calendar
 Calendar is a project to provide easy access to campus events at a centralized location.
 
 ## Development Setup
-We use [vagrant](http://www.vagrantup.com/) to run our server. First install vagrant, and then run `vagrant up` to provision the virtual machine for you.
+Please be sure to fork this repository to your own repository before beginning any work. 
+
+We use [vagrant](http://www.vagrantup.com/) to run our server. First [install vagrant](https://www.vagrantup.com/downloads.html)
+
+Run `vagrant up` to provision the virtual machine for you.
 
 Once vagrant is setup, run:
 ```bash
 vagrant ssh
+.
+.
+.
 cd /vagrant
 source config/settings.dev
 ```
