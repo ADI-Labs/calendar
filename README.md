@@ -15,9 +15,6 @@ Run `vagrant up` to provision the virtual machine for you.
 Once vagrant is setup, run:
 ```bash
 vagrant ssh
-.
-.
-.
 cd /vagrant
 source config/settings.dev
 ```
