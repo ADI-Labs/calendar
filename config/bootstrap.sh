@@ -11,19 +11,10 @@ install () {
 
 apt-get update
 
-install sqlite3
-
-# install python
+install git
 install python3
 install python3-dev
-install python3-software-properties
-install git
-
-wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-sudo python3 get-pip.py
-rm get-pip.py
+install python3-pip
+install sqlite3
 
 sudo pip3 install -r /vagrant/config/requirements.txt
-
-
-exit 0
