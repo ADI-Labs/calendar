@@ -41,4 +41,4 @@ celerybeat-schedule
 whoosh_index
 
 .cache
-
+node_modules
