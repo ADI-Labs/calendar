@@ -22,7 +22,7 @@ results
 include
 share
 lib/python2.7
-src
+./src
 
 config/src
 config/settings.*
