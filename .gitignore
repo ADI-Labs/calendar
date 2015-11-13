@@ -22,7 +22,7 @@ results
 include
 share
 lib/python2.7
-src
+./src
 
 config/src
 config/settings.*
@@ -39,3 +39,6 @@ pip-selfcheck.json
 events.db
 celerybeat-schedule
 whoosh_index
+
+.cache
+node_modules

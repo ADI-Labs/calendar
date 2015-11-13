@@ -5,11 +5,12 @@ install () {
     package=$1
     dpkg-query -l $package &> /dev/null
     if [ $? -ne 0 ]; then
-        apt-get -y install $package
+      apt-get -y install $package
     fi
 }
 
 apt-get update
+apt-get upgrade
 
 install git
 install python3
