@@ -1,37 +1,53 @@
 'use strict';
 
-var webpack = require('webpack'),  
+var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   path = require('path'),
   srcPath = path.join(__dirname, 'cal/src');
 
-module.exports = {  
+module.exports = {
   target: 'web',
   cache: true,
   entry: {
-    app: path.join(srcPath, 'index.js'),
-    common: ['react', 'react-dom', 'react-router', 'alt']
+    index: path.join(srcPath, 'index.js'),
+    common: ['react', 'react-dom', 'react-bootstrap', 'react-router', 'alt'] //'react-router-bootstrap'
   },
   resolve: {
     root: srcPath,
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.styl'],
     modulesDirectories: ['node_modules', 'cal/src']
   },
   output: {
-    path: path.join(__dirname, 'cal/tmp'),
+    path: path.join(__dirname, 'cal/dist'),
     publicPath: '',
     filename: '[name].js',
     library: ['Example', '[name]'],
     pathInfo: true
   },
-
   module: {
     loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
+      // required to write "require('./style.css')"
+      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style-loader!css-loader" },
+
+      // Stylus loader
+      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
+
+      // required for bootstrap icons.
+      // the url-loader uses DataUrls. 
+      // the file-loader emits files. 
+      { test: /\.(woff|woff2)$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf$/, loader: "file-loader?prefix=font/" },
+      { test: /\.eot$/, loader: "file-loader?prefix=font/" },
+      { test: /\.svg$/, loader: "file-loader?prefix=font/" },
+
+      // required for react jsx
+      { test: /\.js$/, exclude: /(node_modules)/, loader: "babel-loader" },
+      { test: /\.jsx$/, loader: "babel-loader" },
+
+      // misc
+      { test: /\.json$/, loader: "json-loader" },
+      { test: /\.png$/, loader: "url-loader?limit=100000" },
+      { test: /\.jpg$/, loader: "file-loader" }
     ]
   },
   plugins: [
@@ -40,24 +56,22 @@ module.exports = {
       inject: true,
       template: 'cal/templates/index.html'
     }),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+    })
   ],
+  node: {
+    net: "empty",
+    tls: "empty"
+  },
 
   debug: true,
   devtool: 'eval-cheap-module-source-map',
   devServer: {
-    contentBase: './cal/tmp',
+    contentBase: './cal/dist',
     historyApiFallback: true
   }
 };
-
-
-
-
-  // module: {
-  //   loaders: [
-  //     {test: /\.js?$/, exclude: /node_modules/, loader: 'babel?cacheDirectory'}
-  //   ]
-  // },
-
-
