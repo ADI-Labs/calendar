@@ -9,12 +9,12 @@ module.exports = {
   target: 'web',
   cache: true,
   entry: {
-    index: path.join(srcPath, 'index.js'),
-    common: ['react', 'react-dom', 'react-bootstrap', 'react-router', 'alt'] //'react-router-bootstrap'
+    common: ['react', 'react-dom', 'react-bootstrap', 'react-router', 'react-router-bootstrap', 'alt'],
+    index: path.join(srcPath, 'index.js')
   },
   resolve: {
     root: srcPath,
-    extensions: ['', '.js', '.styl'],
+    extensions: ['', '.js', '.jsx'],
     modulesDirectories: ['node_modules', 'cal/src']
   },
   output: {
@@ -42,7 +42,7 @@ module.exports = {
 
       // required for react jsx
       { test: /\.js$/, exclude: /(node_modules)/, loader: "babel-loader" },
-      { test: /\.jsx$/, loader: "babel-loader" },
+      { test: /\.jsx$/, exclude: /(node_modules)/, loader: "babel-loader" },
 
       // misc
       { test: /\.json$/, loader: "json-loader" },

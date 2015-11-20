@@ -1,24 +1,20 @@
 import React from 'react'
-import Calendar from './calendar/calendar'
+import Calendar from 'components/Calendar'
 import { RouteHandler, Link } from 'react-router'
 import moment from 'moment'
 import './calendar/calendar.styl'
 
-class Main extends React.Component {
+export default class Main extends React.Component {
   render() {
 
     let date = moment();
-    console.log(date)
 
     return (
       <div>
-        <h1>Example</h1>
-        <Link to='example'>Go to the Example page...</Link>
-        <RouteHandler />
+        <h1>Front Page!</h1>
         <Calendar selected={ date } />
       </div>
     );
   }
 }
 
-export default Main;
