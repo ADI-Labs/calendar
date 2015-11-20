@@ -1,13 +1,14 @@
 import React from 'react'
 import Calendar from './calendar/calendar'
 import { RouteHandler, Link } from 'react-router'
-import Moment from 'moment'
+import moment from 'moment'
 
 class Main extends React.Component {
   render() {
 
-    let date = Moment.moment();
+    let date = moment();
     console.log(date)
+
     return (
       <div>
         <h1>Example</h1>
