@@ -2,6 +2,7 @@ import React from 'react'
 import Calendar from './calendar/calendar'
 import { RouteHandler, Link } from 'react-router'
 import moment from 'moment'
+import './calendar/calendar.styl'
 
 class Main extends React.Component {
   render() {
