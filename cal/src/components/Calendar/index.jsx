@@ -1,6 +1,7 @@
 import React from 'react'
-import Week from './week'
+import Week from './Week'
 import DayNames from './dayNames'
+import './calendar.styl'
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class Calendar extends React.Component {
     this.state = {
       month: this.props.selected.clone()
     }
+    // console.log(this.props.selected)
   }
 
   previous() {
@@ -22,10 +24,6 @@ class Calendar extends React.Component {
     this.setState({month: month});
   }
 
-  select(day) {
-    this.props.selected = day.date;
-    this.forceUpdate();
-  }
 
   render() {
     return(
@@ -54,7 +52,7 @@ class Calendar extends React.Component {
           key={ date.toString() }
           date={ date.clone() }
           month={ this.state.month }
-          select={ this.select }
+          select={ this.props.setDate }
           selected={ this.props.selected }
         />
       );
@@ -67,7 +65,7 @@ class Calendar extends React.Component {
   }
 
   renderMonthLabel() {
-    return <span>{ this.state.month.format("MMMM, YYYY") }</span>;
+    return <span><strong>{ this.state.month.format("MMMM") }</strong>{ this.state.month.format(" YYYY") }</span>;
   }
 
 }
