@@ -7,7 +7,7 @@ Calendar
 Calendar is a project to provide easy access to campus events at a centralized location.
 
 ## Development Setup
-Please be sure to fork this repository to your own repository before beginning any work. 
+
 
 We use [vagrant](http://www.vagrantup.com/) to run our server. First [install vagrant](https://www.vagrantup.com/downloads.html)
 
