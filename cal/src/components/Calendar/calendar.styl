@@ -1,0 +1,29 @@
+borders =
+  -moz-box-sizing border-box
+  box-sizing border-box
+
+$border = solid 1px #FFF
+$calendar-width = 20em
+$header-height = 4em
+$background-color = #FBFBFB
+$secondary-color = #2875C7
+$text-color = #797979
+$secondary-text-color = #CCC
+
+.calendar
+  background white
+  font-family sans-serif
+  float left
+  display block
+  {borders}
+  width $calendar-width // change this eventually
+  
+  .header
+    float left
+    width 100%
+    height $header-height
+    color $text-color
+    text-align center
+    font-size inherit
+    vertical-center(@height)
+
