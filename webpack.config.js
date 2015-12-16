@@ -69,7 +69,7 @@ module.exports = {
   },
 
   debug: true,
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: './cal/dist',
     historyApiFallback: true
