@@ -33,8 +33,8 @@ module.exports = {
       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
 
       // required for bootstrap icons.
-      // the url-loader uses DataUrls. 
-      // the file-loader emits files. 
+      // the url-loader uses DataUrls.
+      // the file-loader emits files.
       { test: /\.(woff|woff2)$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf$/, loader: "file-loader?prefix=font/" },
       { test: /\.eot$/, loader: "file-loader?prefix=font/" },
