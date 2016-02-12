@@ -13,6 +13,9 @@ apt-get update
 apt-get upgrade
 
 install git
+install sqlite3
+
+
 install python3
 install python3-dev
 install python3-pip

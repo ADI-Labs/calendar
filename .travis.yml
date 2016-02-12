@@ -7,7 +7,6 @@ cache: pip
 
 install:
   - pip install -r config/requirements.txt
-  - pip install flake8
   - npm install -g jsxhint
 
 before_script:
@@ -15,7 +14,7 @@ before_script:
   - export PYTHONPATH=.
 
 script:
-  - flake8 --exclude=src .
+  - flake8
   - py.test -v tests/
   - jsxhint cal/static/jsx/*
 
