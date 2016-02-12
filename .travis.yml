@@ -7,16 +7,15 @@ cache: pip
 
 install:
   - pip install -r config/requirements.txt
-  - npm install -g jsxhint
+  - source config/settings.test
+  - export PYTHONPATH=.
 
 before_script:
-  - source config/settings.test 
-  - export PYTHONPATH=.
+  - pip freeze
 
 script:
   - flake8
   - py.test -v tests/
-  - jsxhint cal/static/jsx/*
 
 notifications:
   slack: adi-labs:u3wTYTfUP675OTmXERvefwON
