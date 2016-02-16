@@ -1,6 +1,8 @@
 import React from 'react'
+import './week.styl'
 
 class Week extends React.Component {
+
   render() {
     let days = [],
         date = this.props.date,
@@ -12,16 +14,19 @@ class Week extends React.Component {
         number: date.date(),
         isCurrentMonth: date.month() === month.month(),
         isToday: date.isSame(new Date(), "day"),
-        date: date
+        date: date,
+        dateFormat: date.format("dddd, MMM Do")
       };
       days.push(
         <span
-          key = { day.date.toString() }
-          className = {
+          key={ day.date.toString() }
+          onClick={ this.props.select.bind(null, day) }
+          className={
             "day" + (day.isToday ? " today" : "")
             + (day.isCurrentMonth ? "" : " different-month")
-            + (day.date.isSame(this.props.selected) ? " selected" : "") }
-          onClick = { this.props.select.bind(null, day) }>
+            + (day.date.isSame(this.props.selected.date) ? " selected" : "")
+          }
+        >
 
           
           {day.number}

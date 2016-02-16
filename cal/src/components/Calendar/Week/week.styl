@@ -1,0 +1,42 @@
+@import '../calendar.styl'
+
+.calendar
+  .week
+    border-top $border
+    float left
+    width 100%
+
+    &:nth-child(1)
+      border none
+
+    $day-height = $calendar-width / 7
+    .day
+      background $background-color
+      color $text-color
+      float left
+      display inline-block
+      width $day-height
+      height $day-height
+      // vertical-center(@height)
+      line-height $day-height
+      border-left $border
+      text-align center
+      
+      &:nth-child(1)
+        border none
+      
+      &.selected
+        background $secondary-color
+        color #FFF
+        opacity 1 !important
+      
+      &.today
+        background $secondary-color
+        color #FFF
+        opacity 0.6
+        
+      &.different-month
+        color $secondary-text-color    
+          
+    .names .week
+      background #FFF
