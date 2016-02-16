@@ -1,3 +1,6 @@
+notifications:
+  email: false
+
 language: python
 
 python:
@@ -17,5 +20,3 @@ script:
   - flake8
   - py.test -v tests/
 
-notifications:
-  slack: adi-labs:u3wTYTfUP675OTmXERvefwON
