@@ -1,4 +1,0 @@
-[submodule "client"]
-	path = cal/client
-	url = https://github.com/ADI-Labs/calendar-web.git
-	branch = production
