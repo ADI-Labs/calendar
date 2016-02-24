@@ -1,8 +1,8 @@
 [![Stories in Ready](https://badge.waffle.io/ADI-Labs/calendar.png?label=ready&title=Ready)](https://waffle.io/ADI-Labs/calendar)
 Calendar
+[![Build Status](https://travis-ci.org/ADI-Labs/calendar.svg?branch=master)](https://travis-ci.org/ADI-Labs/calendar)
 ---
 
-[![Build Status](https://travis-ci.org/adicu/calendar.svg?branch=master)](https://travis-ci.org/adicu/calendar)<F37>
 
 Calendar is a project to provide easy access to campus events at a centralized location.
 
