@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/ADI-Labs/calendar.png?label=ready&title=Ready)](https://waffle.io/ADI-Labs/calendar)
 Calendar
 ---
 
