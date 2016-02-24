@@ -1,0 +1,4 @@
+[submodule "cal/calendar-web"]
+	path = cal/static
+	url = https://github.com/ADI-Labs/calendar-web.git
+	branch = production
