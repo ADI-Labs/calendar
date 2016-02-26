@@ -21,10 +21,38 @@ try:
 
     BASEDIR = abspath(join(dirname(__file__), pardir))
 
+    # DB Settings
+	'''
+export CAL_DB_HOST='localhost'
+export CAL_DB_PORT='5432'
+export CAL_DB_USER='adi_calendar'
+export CAL_DB_PASS='bzYcqT4k' #this should be better hidden
+export CAL_DB_NAME"calendar"
+
+    db_host = 'localhost'
+    db_port = '5432'
+    db_user = 'adi_calendar'
+    db_pass = 'bzYcqT4k'
+    db_name = "calendar"
+    '''    
+    '''
+    DATABASE = {
+        'drivername': 'postgres',
+        'host': 'localhost',
+        'port': '5432',
+        'username': 'adi_calendar',
+        'password': 'bzYcqT4k'
+    }
+    '''
+    
+    '''
     if not TESTING:
         SQLALCHEMY_DATABASE_URI = "sqlite:///" + join(BASEDIR, "events.db")
     else:
         SQLALCHEMY_DATABASE_URI = "sqlite://"   # in memory database
+    '''
+    SQLALCHEMY_DATABASE_URI = "postgresql://%s:%s@%s:%s/%s" % (environ['CAL_DB_USER'], environ['CAL_DB_PASS'], environ['CAL_DB_HOST'], environ['CAL_DB_PORT'], environ['CAL_DB_NAME'])
+    
     CELERY_BROKER_URL = 'sqlalchemy+' + SQLALCHEMY_DATABASE_URI
     LOGFILE = join(BASEDIR, "logs/applog.log")
 
