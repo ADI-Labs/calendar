@@ -13,8 +13,16 @@ install:
   - source config/settings.test
   - export PYTHONPATH=.
 
+services:
+  - postgresql
+
 before_script:
   - pip freeze
+  - psql --version
+  - sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'calpwd';"
+  - sudo -u postgres psql -c "CREATE DATABASE calendar;"
+  - sudo -u postgres psql -c "GRANT CONNECT ON DATABASE calendar TO adi_calendar;"
+  - sudo -u postgres psql -c "GRANT ALL ON DATABASE calendar TO adi_calendar;"
 
 script:
   - flake8
