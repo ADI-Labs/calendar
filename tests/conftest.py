@@ -7,30 +7,22 @@ import pytest
 from config import BASEDIR, TESTING
 
 
-@pytest.fixture(scope="session")
+@pytest.yield_fixture(scope="session")
 def app(request):
     from cal import app
-    context = app.app_context()
-    context.push()
+    with app.app_context():
+        yield app
 
-    def teardown():
-        context.pop()
-    request.addfinalizer(teardown)
-
-    return app
-
-
-@pytest.fixture(scope="session")
+@pytest.yield_fixture(scope="session")
 def db(app, request):
     from cal import db
     db.init_app(app)
     db.create_all()
 
-    def teardown():
-        db.drop_all()
-    request.addfinalizer(teardown)
+    yield db
 
-    return db
+    db.session.close()  # prevent py.test from hanging
+    db.drop_all()
 
 
 @pytest.fixture(scope="session")
