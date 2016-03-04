@@ -11,6 +11,6 @@ export FACEBOOK_ACCESS_TOKEN="752849378144749|2f88b632e830f764d9038f59fdde10db"
 export CAL_DB_HOST='localhost'
 export CAL_DB_PORT='5432'
 export CAL_DB_USER='adi_calendar'
-export CAL_DB_PASS='bzYcqT4k' #this should be better hidden
+export CAL_DB_PASS='calpwd' #this should be better hidden
 export CAL_DB_NAME="calendar"
 
