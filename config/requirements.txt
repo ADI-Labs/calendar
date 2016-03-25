@@ -10,6 +10,7 @@ PyYAML
 requests
 SQLAlchemy
 whoosh
+psycopg2
 
 git+https://github.com/tonet666p/Flask-WhooshAlchemy.git@python-3-compatibility#egg=flask_whooshalchemy_py3
 
