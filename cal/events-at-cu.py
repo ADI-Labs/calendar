@@ -1,15 +1,17 @@
 import requests
 from icalendar import Calendar
-from cal.schema import db, User, Event
+# from cal.schema import db, User, Event
 
 def update_from_eventsatcu():
 
-    url = "https://events.columbia.edu/feeder/main/eventsFeed.gdo?f=y&sort=dtstart.utc:asc&format\=text/calendar&count=200"
+    url = "https://events.columbia.edu/feeder/main/eventsFeed.gdo?sort=dtstart.utc:asc&format=text/calendar&count=200"
     r = requests.get(url)
     cal = Calendar.from_ical(r.text)
     user = User.query.filter(User.name == "events.columbia.edu").first() 
 
-    for event in cal.walk('vevent'):
+    for event in cal.walk('VEVENT'):
+        print(event.get('uid'))
+    
         event_id = event.get('uid')
         event_name = event.get('description')
         event_url = event.get('url')
@@ -24,8 +26,8 @@ def update_from_eventsatcu():
         cevent.location = event.get('location')
 
         db.session.add(cevent)
-
+        
     db.session.commit()
 
 
-
+update_from_eventsatcu()
