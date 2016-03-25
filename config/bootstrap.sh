@@ -20,6 +20,8 @@ install python3
 install python3-dev
 install python3-pip
 #install sqlite3
-install postgresql-server-dev-all
+#install postgresql-server-dev-all
+install postgresql-9.3
+install libpq-dev
 
 sudo pip3 install -r /vagrant/config/requirements.txt
