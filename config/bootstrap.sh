@@ -23,7 +23,7 @@ install python3-pip
 install postgresql-9.3
 install libpq-dev
 
-sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'calpwd';"
+sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'bzYcqT4k';"
 sudo -u postgres psql -c "CREATE DATABASE calendar;"
 sudo -u postgres psql -c "GRANT CONNECT ON DATABASE calendar TO adi_calendar;"
 sudo -u postgres psql -c "GRANT ALL ON DATABASE calendar TO adi_calendar;"
