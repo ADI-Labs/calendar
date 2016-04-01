@@ -2,6 +2,8 @@ import yaml
 from cal import app, db, User, update_fb_events, update_engineering_events
 
 with app.app_context():
+    sa.orm.configure_mappers()
+
     db.create_all()
 
     # Populate the user database

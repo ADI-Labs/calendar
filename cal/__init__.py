@@ -4,7 +4,6 @@ from io import BytesIO
 from celery import Celery
 
 from flask import Flask, jsonify, render_template, request, send_file
-import flask.ext.whooshalchemy as whooshalchemy
 
 from cal.schema import db, Event, User  # noqa
 from cal.fb import update_fb_events
@@ -15,7 +14,6 @@ from cal.engineeringevents import update_engineering_events  # noqa
 app = Flask(__name__)
 app.config.from_object('config')
 db.init_app(app)
-whooshalchemy.whoosh_index(app, Event)
 
 # Initialize celery
 celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
@@ -75,11 +73,9 @@ def home():
 
 @app.route("/events/<int:year>/<int:month>/<int:day>")
 def events(year, month, day):
-
     search = request.args.get("search")
     if search is not None:
-        #events = Event.query.whoosh_search(search)
-        events = Event.query.search(search).all()
+        events = Event.query.search(search)
     else:
         events = Event.query
 
