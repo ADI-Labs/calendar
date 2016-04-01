@@ -2,6 +2,7 @@ import datetime as dt
 import json
 from os.path import join
 
+from sqlalchemy_searchable import make_searchable
 import pytest
 
 from config import BASEDIR, TESTING
@@ -16,15 +17,9 @@ def app(request):
 @pytest.yield_fixture(scope="session")
 def db(app, request):
     from cal import db
+
     db.init_app(app)
-
-    '''
-    #import sqlalchemy as sa
-    #sa.orm.configure_mappers()
-    '''
     db.configure_mappers()
-
-    from sqlalchemy_searchable import make_searchable
     db.create_all()
     make_searchable()
 
