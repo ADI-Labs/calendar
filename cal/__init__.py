@@ -78,7 +78,8 @@ def events(year, month, day):
 
     search = request.args.get("search")
     if search is not None:
-        events = Event.query.whoosh_search(search)
+        #events = Event.query.whoosh_search(search)
+        events = Event.query.search(search).all()
     else:
         events = Event.query
 
