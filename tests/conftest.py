@@ -17,7 +17,16 @@ def app(request):
 def db(app, request):
     from cal import db
     db.init_app(app)
+
+    '''
+    #import sqlalchemy as sa
+    #sa.orm.configure_mappers()
+    '''
+    db.configure_mappers()
+
+    from sqlalchemy_searchable import make_searchable
     db.create_all()
+    make_searchable()
 
     yield db
 
