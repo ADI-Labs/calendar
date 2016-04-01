@@ -1,14 +1,23 @@
-from flask.ext.sqlalchemy import SQLAlchemy
+# SQLAlchemy-Searchable requirements
+from flask.ext.sqlalchemy import SQLAlchemy, BaseQuery
+from sqlalchemy_searchable import SearchQueryMixin
+from sqlalchemy_utils.types import TSVectorType
+from sqlalchemy_searchable import make_searchable
+
 from pytz import timezone
 from fuzzywuzzy import process, fuzz
 import datetime as dt
 
 db = SQLAlchemy()
+make_searchable()
 
+class EventQuery(BaseQuery, SearchQueryMixin):
+    pass
 
 class Event(db.Model):
+    query_class = EventQuery
+
     __tablename__ = "event"
-    __searchable__ = ['location', 'name']
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -18,11 +27,11 @@ class Event(db.Model):
     location = db.Column(db.String, nullable=True)
     url = db.Column(db.String, unique=True)
     description = db.Column(db.Text, nullable=False)
-
     fb_id = db.Column(db.String, unique=True, nullable=True)
     sundial_id = db.Column(db.String, unique=True, nullable=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+    search_vector = db.Column(TSVectorType('location', 'description', 'name'))
 
     def to_json(self):
         eastern = timezone('US/Eastern')
