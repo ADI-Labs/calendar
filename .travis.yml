@@ -4,30 +4,34 @@ notifications:
 language: python
 
 python:
-  - "3.4"
+  - "3.5"
 
-cache: pip
+before_install:
+  - wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p "$HOME/miniconda"
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update --yes --quiet conda
 
 install:
-  - pip install -r config/requirements.txt
-  - source config/settings.test
-  - export PYTHONPATH=.
-
-services:
-  - postgresql
-  
-addons:
-  postgresql: 9.3  
-
-before_script:
-  - pip freeze
-  - psql --version
-  - sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'calpwd';"
+  - conda env create -n calendar --file config/environment.yml
+  - sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'bzYcqT4k';"
   - sudo -u postgres psql -c "CREATE DATABASE calendar;"
   - sudo -u postgres psql -c "GRANT CONNECT ON DATABASE calendar TO adi_calendar;"
   - sudo -u postgres psql -c "GRANT ALL ON DATABASE calendar TO adi_calendar;"
+  - source activate calendar
+  - source config/settings.dev
+
+services:
+  - postgresql
+
+addons:
+  postgresql: 9.3
+
+before_script:
+  - conda env export
+  - psql --version
 
 script:
   - flake8
-  - py.test -v tests/
-
+  - python test.py

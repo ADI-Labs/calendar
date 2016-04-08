@@ -8,9 +8,6 @@ export TESTING=FALSE
 
 export FACEBOOK_ACCESS_TOKEN="752849378144749|2f88b632e830f764d9038f59fdde10db"
 
-#database settings
-#todo: any benefit to using PGHOST, PGPORT, etc environment vars?
-#see http://www.postgresql.org/docs/9.3/static/libpq-envars.html
 export CAL_DB_HOST='localhost'
 export CAL_DB_PORT='5432'
 export CAL_DB_USER='adi_calendar'
