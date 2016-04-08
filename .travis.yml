@@ -34,4 +34,4 @@ before_script:
 
 script:
   - flake8
-  - python test.py
+  - python test.py --verbose
