@@ -5,7 +5,7 @@ from os.path import join
 from sqlalchemy_searchable import make_searchable
 import pytest
 
-from config import BASEDIR, TESTING
+from config import BASEDIR
 
 
 @pytest.yield_fixture(scope="session")
@@ -61,6 +61,3 @@ def Event(app, db, User):
     db.session.commit()
 
     return Event
-
-assert TESTING, ("\n\nYou are not in a testing environment. Please run:\n"
-                 "   source config/settings.test")
