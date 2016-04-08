@@ -1,0 +1,19 @@
+name: calendar
+dependencies:
+- beautifulsoup4
+- flake8    # [test]
+- flask
+- iso8601
+- psycopg2
+- pytest    # [test]
+- python-dateutil
+- python=3.5
+- pytz
+- pyyaml
+- requests
+- sqlalchemy
+- pip:
+  - flask-sqlalchemy
+  - fuzzywuzzy
+  - icalendar
+  - sqlalchemy-searchable
