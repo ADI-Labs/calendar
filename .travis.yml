@@ -15,12 +15,12 @@ before_install:
 
 install:
   - conda env create -n calendar --file config/environment.yml
-  - source activate calendar
-  - export PYTHONPATH=.
   - sudo -u postgres psql -c "CREATE USER adi_calendar WITH PASSWORD 'bzYcqT4k';"
   - sudo -u postgres psql -c "CREATE DATABASE calendar;"
   - sudo -u postgres psql -c "GRANT CONNECT ON DATABASE calendar TO adi_calendar;"
   - sudo -u postgres psql -c "GRANT ALL ON DATABASE calendar TO adi_calendar;"
+  - source activate calendar
+  - source config/settings.dev
 
 services:
   - postgresql
@@ -34,4 +34,4 @@ before_script:
 
 script:
   - flake8
-  - py.test --verbose
+  - python test.py
