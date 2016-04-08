@@ -1,51 +1,15 @@
 import datetime as dt
 from io import BytesIO
 
-from celery import Celery
-
 from flask import Flask, jsonify, render_template, request, send_file
 
 from cal.schema import db, Event, User  # noqa
-from cal.fb import update_fb_events
 from cal.ics import to_icalendar
-from cal.engineeringevents import update_engineering_events  # noqa
 
 # Initialize the app
 app = Flask(__name__)
 app.config.from_object('config')
 db.init_app(app)
-
-# Initialize celery
-celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
-TaskBase = celery.Task
-
-
-class ContextTask(TaskBase):
-    abstract = True
-
-    def __call__(self, *args, **kwargs):
-        with app.app_context():
-            return TaskBase.__call__(self, *args, **kwargs)
-celery.Task = ContextTask
-
-
-# Background task
-@celery.task(name="cal.fb_task")
-def fb_task_test():
-    app.logger.debug("Facebook Updater starting")
-    update_fb_events()
-    app.logger.debug("Facebook Updater finished")
-    # Update every 30 minutes
-    fb_task_test.apply_async(countdown=1800)
-
-
-# Unfortunate hack, you will need to hit a url once to initialize the updater.
-@app.before_first_request
-def intiialize():
-    app.logger.debug("Starting Facebook Updater")
-    fb_task_test.apply_async()
-
 
 @app.before_request
 def before_request():
@@ -53,7 +17,6 @@ def before_request():
     if request.path != '/favicon.ico':
         app.logger.info(request.path)
     return
-
 
 @app.after_request
 def after_request(resp):
