@@ -75,7 +75,7 @@
 "Columbia Elections Board":
   facebook: "656632027711940"
 "Columbia Engineering":
-  facebook: !!null "null"
+  facebook: !!null
 "Columbia Engineering Student Council":
   facebook: "160722737377300"
 "Columbia Engineering Student Council 2015":
@@ -232,6 +232,8 @@
   facebook: "150090971686018"
 "Miller Theatre at Columbia University":
   facebook: "26916178394"
+"Sundial":
+  facebook: !!null
 "The Blue and White":
   facebook: "567567480016627"
 "The Caribbean Students' Association at Columbia University":
