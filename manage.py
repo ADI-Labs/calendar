@@ -1,6 +1,7 @@
 import sys
 
 import click
+import sqlalchemy_searchable
 import yaml
 
 from cal import db, User
@@ -15,7 +16,7 @@ def cli():
 @click.pass_context
 def create(ctx):
     """Create database and run scrapers"""
-    db.configure_mappers()  # must call this before creating tables
+    db.configure_mappers()  # needed for SQLAlchemy-Searchable
     db.create_all()
 
     update.invoke(ctx)
@@ -43,6 +44,12 @@ def delete():
     """Delete the database"""
     db.drop_all()
 
+    # drop sqlalchemy-searchable stuff
+    with db.engine.connect() as conn:
+        for column in sqlalchemy_searchable.search_manager.processed_columns:
+            query = str(sqlalchemy_searchable.DropSearchFunctionSQL(column))
+            conn.execute(query)
+
 
 @cli.command()
 @click.pass_context
@@ -55,6 +62,7 @@ def connect(ctx):
                  "\n\tpip install pgcli")
 
     pgcli.main([str(db.engine.url)])
+
 
 if __name__ == "__main__":
     cli()
