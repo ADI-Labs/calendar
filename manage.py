@@ -1,0 +1,60 @@
+import sys
+
+import click
+import yaml
+
+from cal import db, User
+from scrapers import scrapers
+
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+@click.pass_context
+def create(ctx):
+    """Create database and run scrapers"""
+    db.configure_mappers()  # must call this before creating tables
+    db.create_all()
+
+    update.invoke(ctx)
+
+
+@cli.command()
+def update():
+    """Run scrapers to fill database"""
+    # Populate the user database
+    with open('cal/groups.yml') as fin:
+        users = yaml.load(fin)
+    for username, ids in users.items():
+        if User.query.filter_by(name=username).first() is None:
+            new_user = User(name=username)
+            new_user.fb_id = ids.get('fb', None)
+            db.session.add(new_user)
+    db.session.commit()
+
+    for scraper in scrapers:
+        scraper()
+
+
+@cli.command()
+def delete():
+    """Delete the database"""
+    db.drop_all()
+
+
+@cli.command()
+@click.pass_context
+def connect(ctx):
+    """Open a pgcli REPL to the database"""
+    try:
+        from pgcli.main import cli as pgcli
+    except ImportError:
+        sys.exit("You need to install `pgcli` for this command to work. Try:"
+                 "\n\tpip install pgcli")
+
+    pgcli.main([str(db.engine.url)])
+
+if __name__ == "__main__":
+    cli()
