@@ -1,5 +1,7 @@
 import yaml
-from cal import app, db, User, update_fb_events, update_engineering_events
+
+from cal import app, db, User
+from scrapers import scrapers
 
 with app.app_context():
     # It is important to call this before creating tables
@@ -16,7 +18,8 @@ with app.app_context():
             new_user = User(name=username)
             new_user.fb_id = ids.get('fb', None)
             db.session.add(new_user)
-            db.session.commit()
 
-    update_fb_events()
-    update_engineering_events()
+    db.session.commit()
+
+    for scraper in scrapers:
+        scraper()

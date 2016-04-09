@@ -64,7 +64,6 @@ def update_fb_events():
                 event = Event.query.filter(Event.fb_id == event_id).first()
                 if event is None:   # create new event
                     msg = "New fb event from {}: {}".format(user_id, event_id)
-                    current_app.logger.debug(msg)
                     event = Event(fb_id=event_id)
 
                 start = iso8601.parse_date(event_data["start_time"])
