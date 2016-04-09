@@ -13,8 +13,10 @@ def cli():
 
 
 @cli.command()
+@click.option("--scraper", default="all",
+              type=click.Choice(["all"] + list(scrapers.keys())))
 @click.pass_context
-def create(ctx):
+def create(ctx, scraper):
     """Create database and run scrapers"""
     db.configure_mappers()  # needed for SQLAlchemy-Searchable
     db.create_all()
@@ -23,7 +25,9 @@ def create(ctx):
 
 
 @cli.command()
-def update():
+@click.option("--scraper", default="all",
+              type=click.Choice(["all"] + list(scrapers.keys())))
+def update(scraper):
     """Run scrapers to fill database"""
     # Populate the user database
     with open('config/groups.yml') as fin:
@@ -35,8 +39,11 @@ def update():
             db.session.add(new_user)
     db.session.commit()
 
-    for scraper in scrapers:
-        scraper()
+    if scraper == "all":
+        for s in scrapers.values():
+            s()
+    else:
+        scrapers[scraper]()
 
 
 @cli.command()

@@ -4,8 +4,8 @@ from .events_at_cu import update_from_eventsatcu
 from .engineeringevents import update_engineering_events
 
 
-scrapers = [
-    update_engineering_events,
-    update_fb_events,
-    update_from_eventsatcu,
-]
+scrapers = {
+    "engineering": update_engineering_events,
+    "facebook": update_fb_events,
+    "sundial": update_from_eventsatcu,
+}
