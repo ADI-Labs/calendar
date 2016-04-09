@@ -16,7 +16,7 @@ class EventQuery(BaseQuery, SearchQueryMixin):
 class Event(db.Model):
     query_class = EventQuery
 
-    __tablename__ = "event"
+    __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -28,7 +28,7 @@ class Event(db.Model):
     description = db.Column(db.Text, nullable=False)
     fb_id = db.Column(db.String, unique=True, nullable=True)
     sundial_id = db.Column(db.String, unique=True, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     search_vector = db.Column(TSVectorType('location', 'description', 'name'))
 
@@ -84,7 +84,7 @@ class Event(db.Model):
 
 
 class User(db.Model):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
