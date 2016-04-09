@@ -1,14 +1,13 @@
-# SQLAlchemy-Searchable requirements
-from flask.ext.sqlalchemy import SQLAlchemy, BaseQuery
-from sqlalchemy_searchable import SearchQueryMixin
-from sqlalchemy_utils.types import TSVectorType
-from sqlalchemy_searchable import make_searchable
-
-from pytz import timezone
-from fuzzywuzzy import process, fuzz
 import datetime as dt
 
-db = SQLAlchemy()
+from flask_sqlalchemy import BaseQuery
+from fuzzywuzzy import process, fuzz
+from pytz import timezone
+from sqlalchemy_searchable import SearchQueryMixin, make_searchable
+from sqlalchemy_utils.types import TSVectorType
+
+from . import db
+
 make_searchable()
 
 class EventQuery(BaseQuery, SearchQueryMixin):

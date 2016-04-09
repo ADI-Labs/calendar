@@ -2,14 +2,16 @@ import datetime as dt
 from io import BytesIO
 
 from flask import Flask, jsonify, render_template, request, send_file
+from flask_sqlalchemy import SQLAlchemy
 
-from cal.schema import db, Event, User  # noqa
-from cal.ics import to_icalendar
+from .ics import to_icalendar
 
 # Initialize the app
 app = Flask(__name__)
 app.config.from_object('config')
-db.init_app(app)
+db = SQLAlchemy(app)
+
+from cal.schema import Event, User  # noqa
 
 @app.before_request
 def before_request():

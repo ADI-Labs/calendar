@@ -1,9 +1,10 @@
 import yaml
 
-from cal import app, db, User
+from cal import db, User
 from scrapers import scrapers
 
-with app.app_context():
+
+if __name__ == "__main__":
     # It is important to call this before creating tables
     db.configure_mappers()
 
