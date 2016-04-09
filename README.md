@@ -3,94 +3,88 @@
 Calendar
 ---
 
+Calendar is a project to provide easy access to campus events at a
+centralized location. It's written using
+[Flask](http://flask.pocoo.org/) and
+[SQLAlchemy](http://www.sqlalchemy.org/), using PostgreSQL for the
+database.
 
-Calendar is a project to provide easy access to campus events at a centralized location.
+The front-end is written using React and is being developed at
+[calendar-web](http://github.com/adi-labs/calendar-web).
 
-## Development Setup
+## Environment Setup
 
+We use [Vagrant](http://www.vagrantup.com/) to set up our development
+environment. Behind the scenes, it runs `config/bootstrap.sh` to set-up
+everything up.
 
-We use [vagrant](http://www.vagrantup.com/) to run our server. First [install vagrant](https://www.vagrantup.com/downloads.html)
+To set-up the development environment, run:
 
-Run `vagrant up` to provision the virtual machine for you.
-
-Once vagrant is setup, run:
 ```bash
+vagrant up
 vagrant ssh
 cd /vagrant
 source config/settings.dev
 ```
-and you should be good to go.
 
-## Local Dev
+## Running the app
 
-To setup the database, run
-```bash
-python create.py
-```
+To run the app, just run:
 
-To run the server, run:
 ```bash
 python run.py
-````
+```
 
-If you want to run the event updater every 30 minutes, run:
+You'll need to setup the database first though.
+
+## Interacting with the database
+
+`manage.py` is the main way to interact with the database. It has a
+number of different subcommands:
+
 ```bash
-celery worker -A cal.celery & python run.py
+python manage.py create     # create the database and fill it with data
+python manage.py update     # update the database with new data
+python manage.py delete     # delete everything in the database
+python manage.py connect    # opens a pgcli REPL to Postgres
 ```
 
-Try to avoid running this, since killing Celery is annoying. When finished, run:
+## Tests
+
+We use the `flake8` linter to help ensure the Python code quality.  Unit
+and integration tests live in the `tests/` folder and are written with
+[pytest](http://pytest.org/latest/). To run the tests:
+
 ```bash
-ps
+python test.py
 ```
-and kill the processes with the name "celery":
+
+`test.py` accepts all arguments and options that `pytest` does, so you
+can run things like:
+
 ```bash
-kill -9 <process-id>
+python test.py --pdb        # opens up the Python Debugger on test failure
+python test.py --verbose
 ```
 
-I recommend running the database setup script to refresh the data.
-
-## Importing Dev Data
-Running create.py will fill the database with real data.
-
-## Routes
-Supported routes currently include:
+### App Structure
 ```
-/       : Calendar homepage with upcoming events
-/events   : Returns all events [For development purposes, will be removed eventually]
+├── cal                         -- the Flask app
+│   ├── ics.py
+│   ├── __init__.py             -- routes
+│   ├── schema.py               -- database schemas
+│   └── templates/
+├── config
+│   ├── bootstrap.sh            -- script used for Vagrant bootstrapping
+│   ├── environment.yml         -- specifies app dependencies
+│   ├── groups.yml              -- stores User information
+│   ├── __init__.py
+│   └── settings.dev            -- environment variables
+├── external/                   -- utility functions
+├── manage.py
+├── run.py
+├── scrapers/                   -- list of scrapers
+├── setup.cfg                   -- flake8 and pytest config settings
+├── test.py
+└── tests/                      -- tests
 ```
-
-## Data Sources
-For now, we get events from Facebook using their API. The Facebook groups that we get events from are listed `cal/fb.py`
-
-## app structure
-
-```
-|-- config/ (config settings and install scripts)
-|-- README.md (This file)
-|-- run.py    (runs the server)
-|-- cal/
-\
-  |-- __init__.py   (Sets up Flask app)
-  |-- schema.py     (Our SQLAlchemy ORM schema)
-  |-- fb.py         (Facebook utilities)
-  |-- groups.yml    (Contains the clubs' information)
-  |-- logs/         (Log files will be added here)
-  |-- static/       (Your static files, such as js, css, imgs)
-  |-- templates/    (Flask Jinja2 templates)
-```
-
-
-## Developers
-* Alan Du
-* David Hao
-* Pooja Kathail
-* Kevin Lin
-* Emily Pakulski
-* Angela Wang
-
-## Developers 2.0
-* Jonathan
-* Gabrielle
-* Diana
-* Sophie
-
