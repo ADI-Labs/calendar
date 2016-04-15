@@ -36,7 +36,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/events/<int:year>/<int:month>/<int:day>")
+@app.route("/api/events/<int:year>/<int:month>/<int:day>")
 def events(year, month, day):
     search = request.args.get("search")
     if search is not None:
@@ -55,7 +55,7 @@ def events(year, month, day):
     return jsonify(data=events)
 
 
-@app.route("/users/<int:year>/<int:month>/<int:day>")
+@app.route("/api/users/<int:year>/<int:month>/<int:day>")
 def users(year, month, day):
     start = dt.date(year, month, day)
     start -= dt.timedelta(days=start.isoweekday() % 7)  # Sunday 7 -> 0
@@ -69,7 +69,7 @@ def users(year, month, day):
     return jsonify(data=users)
 
 
-@app.route("/ics/", methods=["GET"])
+@app.route("/api/ics/", methods=["GET"])
 def to_ics():
     # get list of ids from GET request
     event_ids = request.args.getlist("event_ids[]", type=int)
