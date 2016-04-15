@@ -16,8 +16,10 @@ try:
     PORT = environ['PORT']
     SECRET_KEY = environ['SECRET_KEY']
     DEBUG = environ['DEBUG'] == 'TRUE'
-    TESTING = environ['TESTING'] == 'TRUE'
     FACEBOOK_ACCESS_TOKEN = environ['FACEBOOK_ACCESS_TOKEN']
+
+    track = environ["SQLALCHEMY_TRACK_MODIFICATIONS"].upper()
+    SQLALCHEMY_TRACK_MODIFICATIONS = track == "TRUE"
 
     BASEDIR = abspath(join(dirname(__file__), pardir))
 

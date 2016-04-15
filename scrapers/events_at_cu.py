@@ -1,6 +1,8 @@
 import requests
 from icalendar import Calendar
+
 from cal.schema import db, User, Event
+
 
 def update_from_eventsatcu():
     # Parameters for query:
@@ -12,23 +14,31 @@ def update_from_eventsatcu():
           "?sort=dtstart.utc:asc&format=text/calendar&count=200"
     r = requests.get(url)
     cal = Calendar.from_ical(r.text)
-    user = User.query.filter(User.name == "events.columbia.edu").first()
+    user = User.query.filter(User.name == "Sundial").first()
 
     for event in cal.walk('VEVENT'):
+        sundial_id = str(event['uid'])
 
-        event_id = event.get('uid')
-        event_name = event.get('description')
-        event_url = event.get('url')
-
-        cevent = Event.query.filter(Event.sundial_id == event_id).first()
+        cevent = Event.query.filter(Event.sundial_id == sundial_id).first()
         if cevent is None:
-            cevent = Event(name=event_name, url=event_url,
-                           sundial_id=event_id, user_id=user.id)
+            cevent = Event(sundial_id=sundial_id, user_id=user.id)
 
-        cevent.start = event.get('dtstart').dt.replace(tzinfo=None)
-        cevent.end = event.get('dtend').dt.replace(tzinfo=None)
-        cevent.description = event_name
+        cevent.name = event["summary"]
+        cevent.description = event["description"]
         cevent.location = event.get('location')
+        cevent.url = event.get("url")
+
+        try:
+            cevent.start = event["dtstart"].dt.replace(tzinfo=None)
+        except TypeError:   # dtstart is a date, not a datetime
+            cevent.start = event["dtstart"].dt
+
+        try:
+            cevent.end = event["dtend"].dt.replace(tzinfo=None)
+        except TypeError:   # dtend is a date, not a datetime
+            cevent.end = event["dtend"].dt
+        except KeyError:    # no dtend
+            pass
 
         db.session.add(cevent)
     db.session.commit()

@@ -1,14 +1,13 @@
-# SQLAlchemy-Searchable requirements
-from flask.ext.sqlalchemy import SQLAlchemy, BaseQuery
-from sqlalchemy_searchable import SearchQueryMixin
-from sqlalchemy_utils.types import TSVectorType
-from sqlalchemy_searchable import make_searchable
-
-from pytz import timezone
-from fuzzywuzzy import process, fuzz
 import datetime as dt
 
-db = SQLAlchemy()
+from flask_sqlalchemy import BaseQuery
+from fuzzywuzzy import process, fuzz
+from pytz import timezone
+from sqlalchemy_searchable import SearchQueryMixin, make_searchable
+from sqlalchemy_utils.types import TSVectorType
+
+from . import db
+
 make_searchable()
 
 class EventQuery(BaseQuery, SearchQueryMixin):
@@ -17,7 +16,7 @@ class EventQuery(BaseQuery, SearchQueryMixin):
 class Event(db.Model):
     query_class = EventQuery
 
-    __tablename__ = "event"
+    __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -25,11 +24,11 @@ class Event(db.Model):
     start = db.Column(db.DateTime, nullable=False)
     end = db.Column(db.DateTime, nullable=True)
     location = db.Column(db.String, nullable=True)
-    url = db.Column(db.String, unique=True)
+    url = db.Column(db.String, nullable=True)
     description = db.Column(db.Text, nullable=False)
     fb_id = db.Column(db.String, unique=True, nullable=True)
     sundial_id = db.Column(db.String, unique=True, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     search_vector = db.Column(TSVectorType('location', 'description', 'name'))
 
@@ -85,7 +84,7 @@ class Event(db.Model):
 
 
 class User(db.Model):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)

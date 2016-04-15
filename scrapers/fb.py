@@ -1,7 +1,6 @@
 import json
 
 import requests
-from flask import current_app
 import iso8601
 from external import utils
 
@@ -62,9 +61,7 @@ def update_fb_events():
 
             for event_id, event_data in data.items():
                 event = Event.query.filter(Event.fb_id == event_id).first()
-                if event is None:   # create new event
-                    msg = "New fb event from {}: {}".format(user_id, event_id)
-                    current_app.logger.debug(msg)
+                if event is None:
                     event = Event(fb_id=event_id)
 
                 start = iso8601.parse_date(event_data["start_time"])

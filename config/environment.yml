@@ -1,6 +1,7 @@
 name: calendar
 dependencies:
 - beautifulsoup4
+- click     # [dev]
 - flake8    # [test]
 - flask
 - iso8601
