@@ -5,9 +5,9 @@ from cal import app
 
 if __name__ == "__main__":
     handler = logging.FileHandler(LOGFILE)
-    format = '%(asctime)s %(levelname)s: %(message)s ' \
-             '[in %(pathname)s:%(lineno)d]'
-    handler.setFormatter(logging.Formatter(format))
+    fmt = '%(asctime)s %(levelname)s: %(message)s ' \
+          '[in %(pathname)s:%(lineno)d]'
+    handler.setFormatter(logging.Formatter(fmt))
 
     if app.config['DEBUG']:
         handler.setLevel(logging.DEBUG)

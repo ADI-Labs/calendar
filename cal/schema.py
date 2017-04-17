@@ -55,7 +55,7 @@ class Event(db.Model):
         slightly different.
 
         :event Event - The event being checked
-        :return Boolean - True if event exists in database, False otherwise
+        :return bool - True if event exists in database, False otherwise
         """
         time_fuzz = dt.timedelta(days=3)
 
